@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity } from 'framer-motion';
 import {
   ArrowRight,
   BadgeCheck,
@@ -48,8 +48,8 @@ const services = [
     slug: 'design-web',
     title: 'Design Web',
     icon: PanelTop,
-    tag: 'Interfaces premium',
-    desc: 'Experiências visuais modernas, responsivas e pensadas para transmitir confiança no primeiro clique.',
+    tag: 'Identidade visual',
+    desc: 'Direção criativa, UI de precisão e copy orientada a conversão para marcas que exigem distinção.',
     bullets: ['Direção visual', 'Landing pages', 'UI responsiva', 'Copy de conversão'],
     price: 'Sob análise',
     image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&auto=format&fit=crop',
@@ -82,7 +82,7 @@ const services = [
     title: 'Sites Responsivos',
     icon: Globe2,
     tag: 'Presença digital',
-    desc: 'Sites institucionais rápidos, elegantes e preparados para celular, desktop e publicação profissional.',
+    desc: 'Sites institucionais com performance, elegância e presença profissional em qualquer dispositivo.',
     bullets: ['Mobile-first', 'Performance', 'SEO base', 'Hospedagem orientada'],
     price: 'A partir do briefing',
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&auto=format&fit=crop',
@@ -109,23 +109,23 @@ const services = [
     slug: 'sistemas',
     title: 'Sistemas Personalizados',
     icon: Code2,
-    tag: 'Operação sob medida',
-    desc: 'Painéis, fluxos, cadastros, automações e ferramentas internas feitas para o processo real da empresa.',
+    tag: 'Engenharia de software',
+    desc: 'Painéis, fluxos, automações e ferramentas internas desenhadas para o processo real da sua operação.',
     bullets: ['Dashboards', 'Cadastros', 'Controle interno', 'Relatórios'],
     price: 'Projeto personalizado',
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&auto=format&fit=crop',
     packages: [
         { name: 'Módulo Único', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Módulo específico para automatizar um processo.', features: ['Cadastro inteligente', 'Relatórios básicos', 'Exportação dados', 'Suporte 30 dias'], popular: false },
-      { name: 'Sistema Completo', price: 'R$ 4.997', period: '', tag: 'Avulso', desc: 'Sistema com múltiplos módulos e painel admin.', features: ['Múltiplos módulos', 'Dashboard gerencial', 'Controle de acesso', 'Suporte 6 meses'], popular: true },
-      { name: 'Plataforma', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Plataforma integrada com API e app.', features: ['API REST', 'App mobile', 'Escalável', 'Treinamento equipe'], popular: false }
+      { name: 'Sistema Completo', price: 'R$ 4.997', period: '', tag: 'Avulso', desc: 'Sistema com múltiplos módulos e painel administrativo.', features: ['Múltiplos módulos', 'Dashboard gerencial', 'Controle de acesso', 'Suporte 6 meses'], popular: true },
+      { name: 'Plataforma', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Plataforma integrada com API e aplicativo mobile.', features: ['API REST', 'App mobile', 'Escalável', 'Treinamento equipe'], popular: false }
     ]
   },
   {
     slug: 'crm',
     title: 'CRM e Automação',
     icon: BarChart3,
-    tag: 'Vendas e atendimento',
-    desc: 'Gestão de leads, funil comercial, follow-up, integração com WhatsApp e rotina de vendas mais previsível.',
+    tag: 'Inteligência comercial',
+    desc: 'Gestão de leads, funil de vendas, follow-up automatizado e rotina comercial previsível.',
     bullets: ['Leads', 'Funil', 'Comissões', 'Automações'],
     price: 'Plano consultivo',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop',
@@ -140,7 +140,7 @@ const services = [
     title: 'Manutenção de Computadores',
     icon: MonitorCog,
     tag: 'Suporte técnico',
-    desc: 'Diagnóstico, limpeza, formatação, upgrade e otimização para manter equipamentos funcionando bem.',
+    desc: 'Diagnóstico, limpeza, formatação, upgrade e otimização para manter seus equipamentos em desempenho máximo.',
     bullets: ['Desktop', 'Notebook', 'Upgrade', 'Otimização'],
     price: 'Conforme diagnóstico',
     image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=900&auto=format&fit=crop',
@@ -176,15 +176,15 @@ const services = [
     slug: 'consultoria',
     title: 'Consultoria de TI',
     icon: Cpu,
-    tag: 'Decisão técnica',
-    desc: 'Planejamento de ferramentas, estrutura, processos digitais e decisões técnicas para reduzir desperdício.',
+    tag: 'Estratégia tecnológica',
+    desc: 'Planejamento de ferramentas, estrutura, segurança e processos digitais para reduzir desperdício e acelerar resultados.',
     bullets: ['Diagnóstico', 'Projetos', 'Infraestrutura', 'Segurança'],
     price: 'Por escopo',
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop',
     packages: [],
     subCategories: [
       { slug: 'diagnostico', label: 'Diagnóstico', packages: [
-        { name: 'Consultoria Básica', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Diagnóstico rápido e recomendações estratégicas para melhorar a infraestrutura de TI.', features: ['Diagnóstico inicial', 'Relatório de recomendações', 'Mapeamento de processos', 'Sugestão de ferramentas', '1 reunião de alinhamento'], popular: false },
+        { name: 'Consultoria Básica', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Diagnóstico rápido e recomendações estratégicas.', features: ['Diagnóstico inicial', 'Relatório de recomendações', 'Mapeamento de processos', 'Sugestão de ferramentas', '1 reunião de alinhamento'], popular: false },
         { name: 'Diagnóstico Avançado', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Análise aprofundada com plano de ação detalhado.', features: ['Auditoria completa', 'Mapeamento de riscos', 'Plano de ação', 'Apresentação executiva'], popular: true },
         { name: 'Diagnóstico + Roadmap', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Diagnóstico completo com roadmap técnico de 12 meses.', features: ['Diagnóstico total', 'Roadmap mensal', 'Orçamento projetado', 'Suporte 30 dias'], popular: false }
       ]},
@@ -195,7 +195,7 @@ const services = [
       ]},
       { slug: 'infraestrutura', label: 'Infraestrutura', packages: [
         { name: 'Consultoria Infra', price: 'R$ 2.997', period: '', tag: 'Avulso', desc: 'Planejamento completo de infraestrutura de TI.', features: ['Diagnóstico infra', 'Cloud', 'Segurança', 'Governança'], popular: false },
-        { name: 'Migração Cloud', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Migração de servidores on-premise para cloud (AWS, Google, Azure).', features: ['Análise ambiente', 'Plano migração', 'Execução', 'Suporte pós-migração'], popular: true },
+        { name: 'Migração Cloud', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Migração de servidores on-premise para cloud.', features: ['Análise ambiente', 'Plano migração', 'Execução', 'Suporte pós-migração'], popular: true },
         { name: 'Infra Gerenciada', price: 'R$ 1.497', period: '/mês', tag: 'Mensal', desc: 'Gerenciamento contínuo de infraestrutura de TI.', features: ['Monitoramento 24/7', 'Backups', 'Suporte N1/N2', 'Relatórios mensais'], popular: false }
       ]},
       { slug: 'seguranca', label: 'Segurança', packages: [
@@ -284,9 +284,14 @@ function useRoute() {
 }
 
 const pageVariants = {
-  initial: { opacity: 0, y: 18, filter: 'blur(10px)' },
-  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-  exit: { opacity: 0, y: -12, filter: 'blur(8px)', transition: { duration: 0.24 } }
+  initial: { opacity: 0, y: 24, filter: 'blur(12px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, y: -16, filter: 'blur(8px)', transition: { duration: 0.3 } }
+};
+
+const revealVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] } })
 };
 
 function Reveal({ children, delay = 0, className = '', as = 'div' }) {
@@ -294,10 +299,11 @@ function Reveal({ children, delay = 0, className = '', as = 'div' }) {
   return (
     <Component
       className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={revealVariants}
+      initial="hidden"
+      whileInView="visible"
+      custom={delay}
       viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </Component>
@@ -312,7 +318,7 @@ function MagneticButton({ children, className = '', onClick, href, target }) {
       target={target}
       onClick={onClick}
       className={`btn ${className}`}
-      whileHover={{ y: -3, scale: 1.02 }}
+      whileHover={{ y: -2, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
       {children}
@@ -320,11 +326,69 @@ function MagneticButton({ children, className = '', onClick, href, target }) {
   );
 }
 
+function CursorFollower() {
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  useEffect(() => {
+    const move = (e) => { x.set(e.clientX); y.set(e.clientY); };
+    window.addEventListener('mousemove', move);
+    return () => window.removeEventListener('mousemove', move);
+  }, [x, y]);
+  return (
+    <motion.div
+      style={{
+        position: 'fixed', pointerEvents: 'none', zIndex: 9999, left: -4, top: -4, width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 16px color-mix(in srgb var(--accent) 40%,transparent)'
+      }}
+    />
+  );
+}
+
+function Loader() {
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setDone(true), 1600);
+    return () => clearTimeout(t);
+  }, []);
+  if (done) return null;
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.6 } }}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 9998, background: 'var(--bg)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem'
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem,8vw,5rem)', fontWeight: 500, color: 'var(--accent)', letterSpacing: '-0.02em' }}
+      >
+        LRM
+      </motion.div>
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: 120 }}
+        transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        style={{ height: 1, background: 'var(--accent)', opacity: 0.4 }}
+      />
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+        style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'var(--muted)', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 400 }}
+      >
+        Tecnologia premium
+      </motion.span>
+    </motion.div>
+  );
+}
+
 function Shell({ children, route, go, user, setUser }) {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(() => localStorage.getItem('lrm_react_theme') === 'dark');
   const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28 });
+  const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 24 });
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -354,6 +418,7 @@ function Shell({ children, route, go, user, setUser }) {
 
   return (
     <>
+      <CursorFollower />
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <header className="nav">
         <button className="brand" onClick={() => go('/')}>
@@ -363,7 +428,7 @@ function Shell({ children, route, go, user, setUser }) {
         <nav className="nav-links">{nav.map(navLink)}</nav>
         <div className="nav-actions">
           <button className="icon-btn" onClick={() => setDark(!dark)} aria-label="Alternar tema">
-            {dark ? <Sun size={18} /> : <Moon size={18} />}
+            {dark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           {user ? (
             <>
@@ -379,7 +444,7 @@ function Shell({ children, route, go, user, setUser }) {
             </>
           )}
           <button className="icon-btn menu-btn" onClick={() => setOpen(true)} aria-label="Menu">
-            <Menu size={20} />
+            <Menu size={18} />
           </button>
         </div>
       </header>
@@ -389,7 +454,7 @@ function Shell({ children, route, go, user, setUser }) {
             <motion.aside className="drawer" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', stiffness: 250, damping: 28 }}>
               <div className="drawer-head">
                 <strong>LRM TECNO</strong>
-                <button className="icon-btn" onClick={() => setOpen(false)}><X size={20} /></button>
+                <button className="icon-btn" onClick={() => setOpen(false)}><X size={18} /></button>
               </div>
               {[...nav, ['/login', user ? 'Portal' : 'Área do Cliente']].map(([to, label]) => (
                 <button key={to} onClick={() => { setOpen(false); go(to); }} className="drawer-link">{label}</button>
@@ -416,36 +481,44 @@ function Shell({ children, route, go, user, setUser }) {
 
 function HeroScene({ go }) {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 700], [0, 120]);
-  const scale = useTransform(scrollY, [0, 700], [1, 1.14]);
+  const y = useTransform(scrollY, [0, 700], [0, 100]);
+  const scale = useTransform(scrollY, [0, 700], [1, 1.12]);
   return (
     <section className="home-hero">
+      <div className="hero-shield" />
       <motion.div className="hero-video-wrap" style={{ y, scale }}>
         <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline preload="metadata" />
       </motion.div>
-      <div className="hero-shield" />
       <div className="hero-content">
-        <motion.div className="eyebrow" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <Sparkles size={16} /> Tecnologia premium para empresas
+        <motion.div className="eyebrow" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+          Tecnologia premium para empresas
         </motion.div>
-        <motion.h1 initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.7 }}>
+        <motion.h1
+          initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ delay: 0.36, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        >
           LRM TECNO
         </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28, duration: 0.7 }}>
-          Sites, sistemas, CRM, automações e suporte técnico com uma experiência digital à altura de uma empresa de tecnologia.
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+        >
+          Projetamos, construímos e sustentamos a camada digital que coloca sua operação em outro patamar — sites, sistemas, CRM, automações e suporte técnico com padrão enterprise.
         </motion.p>
-        <motion.div className="hero-actions" initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38 }}>
-          <MagneticButton className="primary" onClick={() => go('/login')}>Entrar e solicitar orçamento <ArrowRight size={18} /></MagneticButton>
-          <MagneticButton className="outline" onClick={() => go('/servicos')}>Ver soluções</MagneticButton>
+        <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.64 }}>
+          <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento <ArrowRight size={18} /></MagneticButton>
+          <MagneticButton className="outline" onClick={() => go('/servicos')}>Nossas soluções</MagneticButton>
           <MagneticButton className="whatsapp" href="https://wa.me/5512987076691" target="_blank"><MessageCircle size={18} /> WhatsApp</MagneticButton>
         </motion.div>
       </div>
-      <motion.div className="hero-dashboard" initial={{ opacity: 0, y: 40, rotateX: 12 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ delay: 0.52, duration: 0.8 }}>
+      <motion.div className="hero-dashboard" initial={{ opacity: 0, y: 50, rotateX: 12 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ delay: 0.76, duration: 0.9 }}>
         <div className="dash-top"><span /><span /><span /><strong>portal.lrmtecno</strong></div>
         <div className="hero-metrics">
           <div><strong>24h</strong><span>triagem</span></div>
-          <div><strong>CRM</strong><span>funil</span></div>
-          <div><strong>Web</strong><span>premium</span></div>
+          <div><strong>CRM</strong><span>funil comercial</span></div>
+          <div><strong>Premium</strong><span>entrega</span></div>
         </div>
       </motion.div>
     </section>
@@ -458,22 +531,22 @@ function Home({ go }) {
       <HeroScene go={go} />
       <section className="trust-strip">
         {['Atendimento online', 'Portal do cliente', 'Orçamento estruturado', 'Suporte pós-entrega'].map((item) => (
-          <span key={item}><BadgeCheck size={16} /> {item}</span>
+          <span key={item}><BadgeCheck size={15} /> {item}</span>
         ))}
       </section>
       <section className="section">
         <Reveal className="section-head">
           <span className="eyebrow">Especialidades</span>
-          <h2>Uma operação digital com cara de empresa grande</h2>
-          <p>Visual premium, processos claros e ferramentas criadas para resolver o que realmente trava seu negócio.</p>
+          <h2>Engenharia digital para operações que exigem excelência</h2>
+          <p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p>
         </Reveal>
         <div className="service-grid">
-          {services.slice(0, 4).map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.07} go={go} />)}
+          {services.slice(0, 4).map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.08} go={go} />)}
         </div>
       </section>
       <PortalPreview go={go} />
       <ProcessSection />
-      <CTA go={go} title="Crie sua conta e peça um orçamento com contexto." text="O cliente entra, descreve o projeto e acompanha a resposta da LRM no portal." />
+      <CTA go={go} title="Solicite um orçamento com contexto." text="Crie sua conta, descreva o projeto e acompanhe a análise no portal do cliente." />
     </Page>
   );
 }
@@ -489,8 +562,8 @@ function Page({ children }) {
 function PageHero({ label, title, text, children }) {
   return (
     <section className="page-hero-react">
-      <motion.div className="orb orb-a" animate={{ y: [0, -28, 0], x: [0, 20, 0] }} transition={{ duration: 8, repeat: Infinity }} />
-      <motion.div className="orb orb-b" animate={{ y: [0, 24, 0], x: [0, -22, 0] }} transition={{ duration: 9, repeat: Infinity }} />
+      <motion.div className="orb orb-a" animate={{ y: [0, -32, 0], x: [0, 24, 0] }} transition={{ duration: 10, repeat: Infinity, ease: 'linear' }} />
+      <motion.div className="orb orb-b" animate={{ y: [0, 28, 0], x: [0, -26, 0] }} transition={{ duration: 11, repeat: Infinity, ease: 'linear' }} />
       <div className="page-hero-inner">
         <Reveal>
           <span className="eyebrow">{label}</span>
@@ -508,15 +581,15 @@ function ServiceCard({ service, delay = 0, go }) {
   return (
     <Reveal delay={delay} className="service-card" as="article">
       <div className="service-card-top">
-        <div className="service-icon"><Icon size={24} /></div>
+        <div className="service-icon"><Icon size={20} /></div>
         <span>{service.tag}</span>
       </div>
       <h3>{service.title}</h3>
       <p>{service.desc}</p>
       <ul>
-        {service.bullets.map((b) => <li key={b}><Check size={14} /> {b}</li>)}
+        {service.bullets.map((b) => <li key={b}><Check size={13} /> {b}</li>)}
       </ul>
-      <button onClick={() => go(`/servicos/${service.slug}`)}>Detalhes <ChevronRight size={16} /></button>
+      <button onClick={() => go(`/servicos/${service.slug}`)}>Ver pacotes e preços <ChevronRight size={15} /></button>
     </Reveal>
   );
 }
@@ -524,13 +597,13 @@ function ServiceCard({ service, delay = 0, go }) {
 function ServicesPage({ go }) {
   return (
     <Page>
-      <PageHero label="Serviços" title="Soluções que parecem premium porque funcionam como premium" text="Escolha uma frente de tecnologia e solicite orçamento pelo portal do cliente." />
+      <PageHero label="Serviços" title="Soluções com padrão enterprise para empresas que não aceitam médio" text="Seis frentes de tecnologia — da identidade visual à consultoria de TI. Cada uma com escopo, prazo e investimento transparentes." />
       <section className="section">
         <div className="service-grid all">
-          {services.map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.06} go={go} />)}
+          {services.map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.07} go={go} />)}
         </div>
       </section>
-      <CTA go={go} title="Quer orçamento sem conversa solta?" text="Entre no portal, envie o briefing e acompanhe a resposta." />
+      <CTA go={go} title="Quer orçamento sem reunião?" text="Entre no portal, envie o briefing e acompanhe a resposta." />
     </Page>
   );
 }
@@ -549,8 +622,8 @@ function ServiceDetail({ slug, go }) {
         <div className="detail-hero-overlay" />
         <div className="detail-hero-content">
           <Reveal>
-            <button className="detail-back" onClick={() => go('/servicos')}>&larr; Voltar para Serviços</button>
-            <span className="eyebrow" style={{ color: 'rgba(255,255,255,.5)' }}>{service.tag}</span>
+            <button className="detail-back" onClick={() => go('/servicos')}>&larr; Voltar</button>
+            <span className="eyebrow" style={{ opacity: 0.5 }}>{service.tag}</span>
             <h1>{service.title}</h1>
             <p>{service.desc}</p>
           </Reveal>
@@ -558,7 +631,7 @@ function ServiceDetail({ slug, go }) {
       </section>
       <section className="section">
         <Reveal className="detail-panel-compact">
-          <div className="service-icon large"><Icon size={32} /></div>
+          <div className="service-icon large"><Icon size={28} /></div>
           {hasSub ? (
             <div className="sub-tabs">
               {service.subCategories.map((sub) => (
@@ -572,13 +645,13 @@ function ServiceDetail({ slug, go }) {
       </section>
       <section className="section section-pricing">
         <Reveal className="section-head" style={{ marginBottom: '1rem' }}>
-          <h2>Preços{hasSub && activeData ? ` — ${activeData.label}` : ''}</h2>
-          <p>Valores de referência — cada orçamento é personalizado conforme o escopo.</p>
+          <h2>Investimento{hasSub && activeData ? ` — ${activeData.label}` : ''}</h2>
+          <p>Valores de referência. Cada orçamento é ajustado ao escopo real do projeto.</p>
         </Reveal>
         <div className="pricing-grid packages-grid">
           {activePkgs.map((pkg, i) => (
             <Reveal key={pkg.name} delay={i * 0.08} className={pkg.popular ? 'price-card featured' : 'price-card'}>
-              {pkg.popular && <div className="popular-badge">Mais popular</div>}
+              {pkg.popular && <div className="popular-badge">Recomendado</div>}
               <span className="pkg-tier">{pkg.tag}</span>
               <h3>{pkg.name}</h3>
               <div className="pkg-price">
@@ -587,18 +660,18 @@ function ServiceDetail({ slug, go }) {
               </div>
               <p>{pkg.desc}</p>
               <ul className="pkg-features">
-                {pkg.features.map((f) => <li key={f}><Check size={14} /> {f}</li>)}
+                {pkg.features.map((f) => <li key={f}><Check size={13} /> {f}</li>)}
               </ul>
               <a href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de solicitar ' + service.title + ' - ' + (hasSub ? activeData.label + ' - ' : '') + pkg.name + '.')}`} target="_blank" className="btn-whatsapp-pkg">
-                <MessageCircle size={16} /> Solicitar via WhatsApp
+                <MessageCircle size={15} /> Solicitar via WhatsApp
               </a>
             </Reveal>
           ))}
         </div>
-        <div className="center-block" style={{ marginTop: '2rem' }}>
+        <div className="center-block" style={{ marginTop: '2.5rem' }}>
           <Reveal>
             <div className="hero-actions center">
-              <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento no portal <ArrowRight size={18} /></MagneticButton>
+              <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar no portal <ArrowRight size={18} /></MagneticButton>
               <MagneticButton className="whatsapp" href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de saber mais sobre ' + service.title + '.' + (hasSub && activeData ? ' (interesse: ' + activeData.label + ')' : '') + '')}`} target="_blank">Falar no WhatsApp</MagneticButton>
             </div>
           </Reveal>
@@ -611,7 +684,7 @@ function ServiceDetail({ slug, go }) {
 function WorksPage({ go }) {
   return (
     <Page>
-      <PageHero label="Trabalhos" title="Projetos com produto, operação e presença" text="A vitrine da LRM combina sistemas próprios e soluções criadas para clientes." />
+      <PageHero label="Trabalhos" title="Projetos que combinam produto, operação e presença" text="A vitrine da LRM reúne sistemas próprios e soluções criadas para clientes." />
       <section className="section works-section">
         {workItems.map((item, i) => (
           <Reveal key={item.title} delay={i * 0.08} className="work-showcase">
@@ -644,19 +717,19 @@ function ReferencesPage({ go }) {
   const data = reviews.length ? reviews : fallback;
   return (
     <Page>
-      <PageHero label="Referências" title="Confiança construída em entrega" text="Depoimentos e avaliações aparecem no portal depois que um serviço é concluído." />
+      <PageHero label="Referências" title="Confiança construída em cada entrega" text="Depoimentos e avaliações registrados no portal ao final de cada serviço." />
       <section className="section">
         <div className="refs-grid">
           {data.map((r, i) => (
             <Reveal key={`${r.name}-${i}`} delay={i * 0.08} className="ref-card-react">
-              <div className="stars">{Array.from({ length: r.rating || 5 }).map((_, idx) => <Star key={idx} size={16} fill="currentColor" />)}</div>
-              <p>“{r.text}”</p>
+              <div className="stars">{Array.from({ length: r.rating || 5 }).map((_, idx) => <Star key={idx} size={14} fill="currentColor" />)}</div>
+              <p>"{r.text}"</p>
               <strong>{r.name || r.clientName}</strong>
               <span>{r.role || 'Cliente LRM'}</span>
             </Reveal>
           ))}
         </div>
-        <div className="center-block">
+        <div className="center-block" style={{ marginTop: '2rem' }}>
           <MagneticButton className="primary" onClick={() => go('/login')}>Acessar portal</MagneticButton>
         </div>
       </section>
@@ -687,7 +760,7 @@ function PartnersPage({ go }) {
 function ContactPage({ go }) {
   return (
     <Page>
-      <PageHero label="Contato" title="Fale com a LRM TECNO" text="Para orçamento estruturado use o portal. Para conversa rápida, WhatsApp, email e Instagram continuam disponíveis." />
+      <PageHero label="Contato" title="Fale com a LRM TECNO" text="Para orçamento estruturado, utilize o portal. Para conversa direta, WhatsApp, email e Instagram estão disponíveis." />
       <section className="section contact-layout">
         <Reveal className="contact-card">
           <h2>Canais diretos</h2>
@@ -697,9 +770,9 @@ function ContactPage({ go }) {
           <MagneticButton className="primary full" onClick={() => go('/login')}>Solicitar orçamento no portal</MagneticButton>
         </Reveal>
         <Reveal delay={0.1} className="contact-visual">
-          <LayoutDashboard size={54} />
+          <LayoutDashboard size={48} />
           <h3>Portal do cliente</h3>
-          <p>Crie a conta, envie briefing, acompanhe resposta, abra tickets e avalie serviços concluídos.</p>
+          <p>Crie a conta, envie o briefing, acompanhe a resposta, abra tickets e avalie serviços concluídos.</p>
         </Reveal>
       </section>
     </Page>
@@ -707,7 +780,7 @@ function ContactPage({ go }) {
 }
 
 function ContactRow({ icon: Icon, label, value, href }) {
-  const body = <><Icon size={20} /><div><span>{label}</span><strong>{value}</strong></div></>;
+  const body = <><Icon size={18} /><div><span>{label}</span><strong>{value}</strong></div></>;
   return href ? <a className="contact-row" href={href} target={href.startsWith('http') ? '_blank' : undefined}>{body}</a> : <div className="contact-row">{body}</div>;
 }
 
@@ -716,13 +789,13 @@ function PortalPreview({ go }) {
     <section className="portal-section">
       <Reveal className="portal-copy">
         <span className="eyebrow">Área do Cliente</span>
-        <h2>Orçamento, tickets e serviços no mesmo painel</h2>
-        <p>O site deixa de ser só vitrine. O cliente entra, descreve o projeto, acompanha status e recebe resposta do admin.</p>
+        <h2>Orçamento, tickets e serviços em um painel</h2>
+        <p>O site deixa de ser vitrine. O cliente entra, descreve o projeto, acompanha o status e recebe a resposta do admin.</p>
         <MagneticButton className="primary" onClick={() => go('/login')}>Abrir portal <ArrowRight size={18} /></MagneticButton>
       </Reveal>
       <Reveal delay={0.12} className="portal-glass">
         {['Orçamento solicitado', 'Proposta técnica', 'Ticket aberto', 'Serviço para avaliar'].map((item, i) => (
-          <motion.div key={item} className={i === 0 ? 'portal-line active' : 'portal-line'} whileHover={{ x: 8 }}>
+          <motion.div key={item} className={i === 0 ? 'portal-line active' : 'portal-line'} whileHover={{ x: 6 }}>
             <span>{item}</span><strong>{i === 0 ? 'Novo' : 'OK'}</strong>
           </motion.div>
         ))}
@@ -734,11 +807,16 @@ function PortalPreview({ go }) {
 function ProcessSection() {
   return (
     <section className="section process">
-      {['Briefing', 'Proposta', 'Execução', 'Entrega'].map((step, i) => (
-        <Reveal key={step} delay={i * 0.08} className="process-step">
+      {[
+        { step: 'Briefing', desc: 'Entendemos a necessidade, o contexto e o objetivo do projeto.' },
+        { step: 'Proposta', desc: 'Registramos escopo, cronograma e investimento.' },
+        { step: 'Execução', desc: 'Construímos com acompanhamento contínuo do cliente.' },
+        { step: 'Entrega', desc: 'Finalizamos, transferimos e abrimos canal de suporte.' }
+      ].map((item, i) => (
+        <Reveal key={item.step} delay={i * 0.08} className="process-step">
           <span>0{i + 1}</span>
-          <h3>{step}</h3>
-          <p>{['Entendemos a necessidade.', 'Registramos escopo e próximos passos.', 'Construímos com acompanhamento.', 'Finalizamos e abrimos suporte.'][i]}</p>
+          <h3>{item.step}</h3>
+          <p>{item.desc}</p>
         </Reveal>
       ))}
     </section>
@@ -792,7 +870,7 @@ function LoginPage({ go, setUser }) {
         <Reveal className="auth-brand">
           <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline />
           <h1>Portal LRM</h1>
-          <p>Solicite orçamento, acompanhe proposta, abra tickets e veja serviços registrados.</p>
+          <p>Solicite orçamento, acompanhe a proposta, abra tickets e consulte seus serviços.</p>
         </Reveal>
         <Reveal delay={0.1} className="auth-box">
           <div className="tabs">
@@ -907,7 +985,7 @@ function PortalHeader({ user, logout, title }) {
         <h1>{user.name}</h1>
         <p>{user.email}</p>
       </div>
-      <button onClick={logout}><LogOut size={16} /> Sair</button>
+      <button onClick={logout}><LogOut size={15} /> Sair</button>
     </section>
   );
 }
@@ -971,7 +1049,7 @@ function AdminPage({ user, go, setUser }) {
       <section className="admin-dashboard">
         <Metric label="Clientes" value={users.length} />
         <Metric label="Orçamentos" value={quotes.length} />
-        <Metric label="Tickets" value={tickets.filter((t) => t.status === 'open').length} />
+        <Metric label="Tickets abertos" value={tickets.filter((t) => t.status === 'open').length} />
         <div className="admin-tabs">
           {['quotes', 'clients', 'tickets'].map((t) => <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>{t === 'quotes' ? 'Orçamentos' : t === 'clients' ? 'Clientes' : 'Tickets'}</button>)}
         </div>
@@ -1030,13 +1108,15 @@ function AdminTicketRow({ t, replyTicket }) {
 }
 
 function RequireLogin({ go }) {
-  return <Page><section className="section center-block"><Lock size={40} /><h1>Acesso restrito</h1><p>Entre para acessar esta área.</p><MagneticButton className="primary" onClick={() => go('/login')}>Entrar</MagneticButton></section></Page>;
+  return <Page><section className="section center-block"><Lock size={36} /><h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 500 }}>Acesso restrito</h1><p>Entre para acessar esta área.</p><MagneticButton className="primary" onClick={() => go('/login')}>Entrar</MagneticButton></section></Page>;
 }
 
 function App() {
   const [route, go] = useRoute();
   const [user, setUser] = useState(getCurrentUser());
+  const [loading, setLoading] = useState(true);
   useEffect(initStore, []);
+  useEffect(() => { const t = setTimeout(() => setLoading(false), 1800); return () => clearTimeout(t); }, []);
 
   const page = useMemo(() => {
     if (route === '/') return <Home go={go} />;
@@ -1053,9 +1133,12 @@ function App() {
   }, [route, user]);
 
   return (
-    <Shell route={route} go={go} user={user} setUser={setUser}>
-      <AnimatePresence mode="wait">{React.cloneElement(page, { key: route })}</AnimatePresence>
-    </Shell>
+    <>
+      <AnimatePresence mode="wait">{loading ? <Loader /> : null}</AnimatePresence>
+      <Shell route={route} go={go} user={user} setUser={setUser}>
+        <AnimatePresence mode="wait">{!loading && React.cloneElement(page, { key: route })}</AnimatePresence>
+      </Shell>
+    </>
   );
 }
 
