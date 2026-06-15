@@ -78,8 +78,8 @@ const services = [
     ]
   },
   {
-    slug: 'sites-responsivos',
-    title: 'Sites Responsivos',
+    slug: 'sites-modernos',
+    title: 'Sites Modernos',
     icon: Globe2,
     tag: 'Presença digital',
     desc: 'Sites institucionais com performance, elegância e presença profissional em qualquer dispositivo.',
