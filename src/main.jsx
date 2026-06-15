@@ -386,12 +386,17 @@ function Loader() {
 
 function Shell({ children, route, go, user, setUser }) {
   const [open, setOpen] = useState(false);
-  const [dark, setDark] = useState(() => localStorage.getItem('lrm_react_theme') === 'dark');
+  const [dark, setDark] = useState(() => {
+    const stored = localStorage.getItem('lrm_react_theme');
+    if (stored) return stored === 'dark';
+    return true;
+  });
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 24 });
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', dark);
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    document.getElementById('theme-color')?.setAttribute('content', dark ? '#0b0e1a' : '#f2efe8');
     localStorage.setItem('lrm_react_theme', dark ? 'dark' : 'light');
   }, [dark]);
 
