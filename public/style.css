@@ -5,7 +5,7 @@
   --muted:   oklch(54% 0.012 250);
   --border:  oklch(92% 0.005 250);
   --accent:  oklch(58% 0.18 255);
-  --accent2: oklch(52% 0.14 170);
+  --accent2: oklch(50% 0.12 280);
   --accent3: oklch(50% 0.12 280);
   --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
   --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
@@ -32,7 +32,7 @@
   --muted:   oklch(60% 0.01 250);
   --border:  oklch(25% 0.015 250);
   --accent:  oklch(68% 0.2 255);
-  --accent2: oklch(62% 0.16 170);
+  --accent2: oklch(60% 0.14 280);
   --accent3: oklch(60% 0.14 280);
   --mesh-1: oklch(68% 0.2 255 / 0.06);
   --mesh-2: oklch(62% 0.16 170 / 0.04);

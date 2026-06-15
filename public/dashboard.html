@@ -477,18 +477,18 @@ function setupStarSelector(){
     el.addEventListener('click', function(){
       currentRating = parseInt(this.dataset.val);
       document.querySelectorAll('.star-btn').forEach(function(s,i){
-        s.style.color = i < currentRating ? '#f59e0b' : 'var(--border)';
+        s.style.color = i < currentRating ? '#818cf8' : 'var(--border)';
       });
     });
     el.addEventListener('mouseenter', function(){
       var val = parseInt(this.dataset.val);
       document.querySelectorAll('.star-btn').forEach(function(s,i){
-        s.style.color = i < val ? '#fbbf24' : 'var(--border)';
+        s.style.color = i < val ? '#6366f1' : 'var(--border)';
       });
     });
     el.addEventListener('mouseleave', function(){
       document.querySelectorAll('.star-btn').forEach(function(s,i){
-        s.style.color = i < currentRating ? '#f59e0b' : 'var(--border)';
+        s.style.color = i < currentRating ? '#818cf8' : 'var(--border)';
       });
     });
   });
