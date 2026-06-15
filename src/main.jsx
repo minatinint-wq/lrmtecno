@@ -550,7 +550,7 @@ function ServiceDetail({ slug, go }) {
           <Reveal>
             <div className="hero-actions center">
               <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento no portal <ArrowRight size={18} /></MagneticButton>
-              <MagneticButton className="outline" href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de saber mais sobre ' + service.title + '.' + (hasSub && activeData ? ' (interesse: ' + activeData.label + ')' : '') + '')}`} target="_blank">Falar no WhatsApp</MagneticButton>
+              <MagneticButton className="whatsapp" href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de saber mais sobre ' + service.title + '.' + (hasSub && activeData ? ' (interesse: ' + activeData.label + ')' : '') + '')}`} target="_blank">Falar no WhatsApp</MagneticButton>
             </div>
           </Reveal>
         </div>
