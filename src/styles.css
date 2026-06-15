@@ -68,7 +68,7 @@ h1,h2,h3,p{margin-top:0}
 .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.service-grid.all{grid-template-columns:repeat(3,1fr)}
 .service-card,.price-card,.panel,.metric,.ref-card-react,.partner-card,.contact-card,.contact-visual,.detail-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 12px 38px rgba(15,23,42,.06)}
 .service-card{padding:1.35rem;min-height:340px;display:flex;flex-direction:column;position:relative;overflow:hidden}
-.service-card:before{content:"";position:absolute;inset:0;border-top:1px solid color-mix(in srgb,var(--blue) 38%,transparent)}
+.service-card:before{content:"";position:absolute;inset:0;border-top:1px solid color-mix(in srgb,var(--blue) 38%,transparent);pointer-events:none}
 .service-card-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:2.5rem}.service-card-top span,.chips span{font-size:.76rem;color:var(--muted);font-weight:900;text-transform:uppercase}
 .service-icon{width:48px;height:48px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:var(--radius);box-shadow:0 14px 34px rgba(14,165,233,.18)}.service-icon.large{width:68px;height:68px}
 .service-card h3{font-size:1.25rem;margin-bottom:.6rem}.service-card p{color:var(--muted)}.service-card ul{list-style:none;padding:0;margin:0 0 1.5rem;display:grid;gap:.35rem}.service-card li{display:flex;gap:.4rem;align-items:center;color:var(--ink);font-weight:700;font-size:.9rem}.service-card button,.price-card button,.admin-form button{margin-top:auto;border:0;background:none;color:var(--blue);font-weight:950;display:flex;align-items:center;gap:.25rem}
