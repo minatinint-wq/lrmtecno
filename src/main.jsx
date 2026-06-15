@@ -165,13 +165,31 @@ const services = [
     icon: Cpu,
     tag: 'Decisão técnica',
     desc: 'Planejamento de ferramentas, estrutura, processos digitais e decisões técnicas para reduzir desperdício.',
-    bullets: ['Diagnóstico', 'Roadmap', 'Infraestrutura', 'Custos'],
+    bullets: ['Diagnóstico', 'Projetos', 'Infraestrutura', 'Segurança'],
     price: 'Por escopo',
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop',
-    packages: [
-      { name: 'Diagnóstico', price: 'R$ 497', period: '', tag: 'Avulso', desc: 'Diagnóstico técnico completo com relatório e recomendações.', features: ['Análise infraestrutura', 'Mapeamento processos', 'Relatório executivo', 'Recomendações'], popular: false },
-      { name: 'Projeto', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Projeto de TI com roadmap, orçamento e cronograma.', features: ['Roadmap técnico', 'Orçamento detalhado', 'Cronograma', 'Apresentação'], popular: true },
-      { name: 'Acompanhamento', price: 'R$ 2.497', period: '', tag: 'Mensal', desc: 'Consultoria mensal para acompanhamento e ajustes.', features: ['Suporte mensal', 'Ajustes processos', 'Relatórios periódicos', 'Disponibilidade'], popular: false }
+    packages: [],
+    subCategories: [
+      { slug: 'diagnostico', label: 'Diagnóstico', packages: [
+        { name: 'Consultoria Básica', price: 'R$ 1.499', period: '', tag: 'Avulso', desc: 'Diagnóstico rápido e recomendações estratégicas para melhorar a infraestrutura de TI.', features: ['Diagnóstico inicial', 'Relatório de recomendações', 'Mapeamento de processos', 'Sugestão de ferramentas', '1 reunião de alinhamento'], popular: false },
+        { name: 'Diagnóstico Avançado', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Análise aprofundada com plano de ação detalhado.', features: ['Auditoria completa', 'Mapeamento de riscos', 'Plano de ação', 'Apresentação executiva'], popular: true },
+        { name: 'Diagnóstico + Roadmap', price: 'R$ 3.497', period: '', tag: 'Avulso', desc: 'Diagnóstico completo com roadmap técnico de 12 meses.', features: ['Diagnóstico total', 'Roadmap mensal', 'Orçamento projetado', 'Suporte 30 dias'], popular: false }
+      ]},
+      { slug: 'projetos', label: 'Projetos', packages: [
+        { name: 'Projeto Simples', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Projeto de TI com escopo definido e cronograma.', features: ['Escopo detalhado', 'Cronograma', 'Orçamento', 'Apresentação'], popular: false },
+        { name: 'Projeto Completo', price: 'R$ 3.499', period: '', tag: 'Avulso', desc: 'Implantação completa com ferramentas e treinamento.', features: ['Implantação ferramentas', 'Treinamento equipe', 'Documentação', 'Suporte 2 meses'], popular: true },
+        { name: 'Transformação Digital', price: 'R$ 5.997', period: '', tag: 'Projeto', desc: 'Projeto de transformação digital com automação e cultura data-driven.', features: ['Automação processos', 'Data-driven', 'Integrações', 'Gestão de mudança'], popular: false }
+      ]},
+      { slug: 'infraestrutura', label: 'Infraestrutura', packages: [
+        { name: 'Consultoria Infra', price: 'R$ 4.999', period: '', tag: 'Avulso', desc: 'Planejamento completo de infraestrutura de TI.', features: ['Diagnóstico infra', 'Cloud', 'Segurança', 'Governança'], popular: false },
+        { name: 'Migração Cloud', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Migração de servidores on-premise para cloud (AWS, Google, Azure).', features: ['Análise ambiente', 'Plano migração', 'Execução', 'Suporte pós-migração'], popular: true },
+        { name: 'Infra Gerenciada', price: 'R$ 1.997', period: '/mês', tag: 'Mensal', desc: 'Gerenciamento contínuo de infraestrutura de TI.', features: ['Monitoramento 24/7', 'Backups', 'Suporte N1/N2', 'Relatórios mensais'], popular: false }
+      ]},
+      { slug: 'seguranca', label: 'Segurança', packages: [
+        { name: 'Auditoria Segurança', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Auditoria de segurança da informação e adequação LGPD.', features: ['Análise vulnerabilidades', 'LGPD', 'Políticas', 'Relatório'], popular: false },
+        { name: 'Adequação LGPD', price: 'R$ 2.997', period: '', tag: 'Projeto', desc: 'Projeto completo de adequação à LGPD.', features: ['Mapeamento dados', 'Políticas privacidade', 'Processos LGPD', 'Treinamento equipe'], popular: true },
+        { name: 'Segurança Contínua', price: 'R$ 1.497', period: '/mês', tag: 'Mensal', desc: 'Monitoramento e gestão contínua de segurança.', features: ['Monitoramento', 'Patch management', 'Resposta incidentes', 'Relatórios'], popular: false }
+      ]}
     ]
   }
 ];
