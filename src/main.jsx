@@ -114,9 +114,31 @@ const services = [
     price: 'Conforme diagnóstico',
     image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=900&auto=format&fit=crop',
     packages: [
-      { name: 'Limpeza', price: 'R$ 99', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para aumentar a vida útil.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
-      { name: 'Limpeza + Formatação', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com instalação de SO e drivers.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
+      { name: 'Limpeza', price: 'R$ 99', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para desktop.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
+      { name: 'Limpeza + Formatação', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers atualizados.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
       { name: 'Plano Mensal', price: 'R$ 69', period: '/mês', tag: 'Mensal', desc: 'Manutenção preventiva mensal com suporte remoto ilimitado.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+    ],
+    subCategories: [
+      { slug: 'desktop', label: 'Desktop', packages: [
+        { name: 'Limpeza', price: 'R$ 99', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para desktop.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
+        { name: 'Limpeza + Formatação', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers atualizados.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
+        { name: 'Plano Mensal', price: 'R$ 69', period: '/mês', tag: 'Mensal', desc: 'Manutenção preventiva mensal com suporte remoto ilimitado.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+      ]},
+      { slug: 'notebook', label: 'Notebook', packages: [
+        { name: 'Limpeza', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para notebook.', features: ['Desmontagem parcial', 'Limpeza interna', 'Troca pasta térmica', 'Teste temperatura'], popular: false },
+        { name: 'Limpeza + Formatação', price: 'R$ 199', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
+        { name: 'Plano Mensal', price: 'R$ 89', period: '/mês', tag: 'Mensal', desc: 'Manutenção mensal com suporte prioritário.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+      ]},
+      { slug: 'upgrade', label: 'Upgrade', packages: [
+        { name: 'Memória RAM', price: 'R$ 129', period: '+ peça', tag: 'Mão de obra', desc: 'Instalação de memória RAM com teste de compatibilidade.', features: ['Instalação RAM', 'Teste compatibilidade', 'Teste estabilidade', 'Otimização BIOS'], popular: false },
+        { name: 'SSD + Clonagem', price: 'R$ 169', period: '+ peça', tag: 'Mão de obra', desc: 'Instalação de SSD com clonagem de disco.', features: ['Clonagem disco', 'Instalação SSD', 'Ativação TRIM', 'Teste velocidade'], popular: true },
+        { name: 'Geral (CPU/GPU)', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Upgrade completo de hardware sob consulta.', features: ['Análise compatibilidade', 'Instalação completa', 'Teste desempenho', 'Otimização sistema'], popular: false }
+      ]},
+      { slug: 'otimizacao', label: 'Otimização', packages: [
+        { name: 'Otimização de SO', price: 'R$ 79', period: '', tag: 'Avulso', desc: 'Limpeza de disco, inicialização e serviços.', features: ['Limpeza disco', 'Desfragmentação', 'Startup otimizada', 'Remoção malware'], popular: false },
+        { name: 'Pacote Completo', price: 'R$ 129', period: '', tag: 'Avulso', desc: 'Otimização completa + diagnóstico de hardware.', features: ['Otimização SO', 'Diagnóstico HW', 'Configuração SSD', 'Atualização drivers'], popular: true },
+        { name: 'Plano Trimestral', price: 'R$ 49', period: '/mês', tag: 'Trimestral', desc: 'Otimização trimestral com suporte remoto.', features: ['Otimização trimestral', 'Monitoramento', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+      ]}
     ]
   },
   {
@@ -467,6 +489,10 @@ function ServicesPage({ go }) {
 function ServiceDetail({ slug, go }) {
   const service = services.find((s) => s.slug === slug) || services[0];
   const Icon = service.icon;
+  const hasSub = service.subCategories && service.subCategories.length > 0;
+  const [activeSub, setActiveSub] = useState(hasSub ? service.subCategories[0].slug : null);
+  const activeData = hasSub ? service.subCategories.find(s => s.slug === activeSub) : null;
+  const activePkgs = hasSub && activeData ? activeData.packages : service.packages;
   return (
     <Page>
       <section className="detail-hero">
@@ -484,16 +510,24 @@ function ServiceDetail({ slug, go }) {
       <section className="section">
         <Reveal className="detail-panel-compact">
           <div className="service-icon large"><Icon size={32} /></div>
-          <div className="chips">{service.bullets.map((b) => <span key={b}>{b}</span>)}</div>
+          {hasSub ? (
+            <div className="sub-tabs">
+              {service.subCategories.map((sub) => (
+                <button key={sub.slug} className={`sub-tab${activeSub === sub.slug ? ' active' : ''}`} onClick={() => setActiveSub(sub.slug)}>{sub.label}</button>
+              ))}
+            </div>
+          ) : (
+            <div className="chips">{service.bullets.map((b) => <span key={b}>{b}</span>)}</div>
+          )}
         </Reveal>
       </section>
       <section className="section section-pricing">
         <Reveal className="section-head" style={{ marginBottom: '1rem' }}>
-          <h2>Preços</h2>
+          <h2>Preços{hasSub && activeData ? ` — ${activeData.label}` : ''}</h2>
           <p>Valores de referência — cada orçamento é personalizado conforme o escopo.</p>
         </Reveal>
         <div className="pricing-grid packages-grid">
-          {service.packages.map((pkg, i) => (
+          {activePkgs.map((pkg, i) => (
             <Reveal key={pkg.name} delay={i * 0.08} className={pkg.popular ? 'price-card featured' : 'price-card'}>
               {pkg.popular && <div className="popular-badge">Mais popular</div>}
               <span className="pkg-tier">{pkg.tag}</span>
@@ -506,7 +540,7 @@ function ServiceDetail({ slug, go }) {
               <ul className="pkg-features">
                 {pkg.features.map((f) => <li key={f}><Check size={14} /> {f}</li>)}
               </ul>
-              <a href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de solicitar ' + service.title + ' - ' + pkg.name + '.')}`} target="_blank" className="btn-whatsapp-pkg">
+              <a href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de solicitar ' + service.title + ' - ' + (hasSub ? activeData.label + ' - ' : '') + pkg.name + '.')}`} target="_blank" className="btn-whatsapp-pkg">
                 <MessageCircle size={16} /> Solicitar via WhatsApp
               </a>
             </Reveal>
@@ -516,7 +550,7 @@ function ServiceDetail({ slug, go }) {
           <Reveal>
             <div className="hero-actions center">
               <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento no portal <ArrowRight size={18} /></MagneticButton>
-              <MagneticButton className="outline" href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de saber mais sobre ' + service.title + '.')}`} target="_blank">Falar no WhatsApp</MagneticButton>
+              <MagneticButton className="outline" href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de saber mais sobre ' + service.title + '.' + (hasSub && activeData ? ' (interesse: ' + activeData.label + ')' : '') + '')}`} target="_blank">Falar no WhatsApp</MagneticButton>
             </div>
           </Reveal>
         </div>
