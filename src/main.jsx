@@ -53,10 +53,28 @@ const services = [
     bullets: ['Direção visual', 'Landing pages', 'UI responsiva', 'Copy de conversão'],
     price: 'Sob análise',
     image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&auto=format&fit=crop',
-    packages: [
-      { name: 'Landing Page', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Página única com design premium e formulário de captura.', features: ['Design exclusivo', 'Responsivo', 'Formulário integrado', 'Animação sutil'], popular: false },
-      { name: 'Site Completo', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Site institucional com identidade visual, blog e contato.', features: ['Identidade visual', 'Múltiplas páginas', 'Blog integrado', 'SEO base'], popular: true },
-      { name: 'Portal Sob Medida', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Design system + múltiplos módulos com painel.', features: ['Sistema de design', 'Dashboards', 'Copy profissional', 'Hospedagem'], popular: false }
+    packages: [],
+    subCategories: [
+      { slug: 'direcao-visual', label: 'Direção visual', packages: [
+        { name: 'Logotipo + Paleta', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Logotipo, paleta de cores e tipografia para sua marca.', features: ['Logotipo vetorizado', 'Paleta de cores', 'Tipografia definida', 'Arquivos entregues'], popular: false },
+        { name: 'Identidade Completa', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Identidade visual completa com manual e aplicações.', features: ['Logotipo + variações', 'Manual de marca', 'Cartão/papelaria', 'Aplicações digitais'], popular: true },
+        { name: 'Brand System', price: 'R$ 2.497', period: '', tag: 'Projeto', desc: 'Sistema de marca com guidelines e assets para equipe.', features: ['Guidelines completas', 'Componentes de marca', 'Assets para dev', 'Workshop presencial'], popular: false }
+      ]},
+      { slug: 'landing-pages', label: 'Landing pages', packages: [
+        { name: 'Landing Page Simples', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Página única responsiva com formulário de captura.', features: ['Design premium', 'Responsivo', 'Formulário integrado', 'Animação sutil'], popular: false },
+        { name: 'Landing + Automação', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Landing page com integração de CRM e disparo de email.', features: ['Design exclusivo', 'CRM integrado', 'Email automático', 'Métricas'], popular: true },
+        { name: 'Landing + Copy', price: 'R$ 2.497', period: '', tag: 'Projeto', desc: 'Landing page com copy de conversão e teste A/B.', features: ['Copy profissional', 'Teste A/B', 'SEO otimizado', 'Relatório'], popular: false }
+      ]},
+      { slug: 'ui-responsiva', label: 'UI responsiva', packages: [
+        { name: 'UI Kit (Figma)', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Kit de componentes no Figma com telas responsivas.', features: ['Sistema de componentes', 'Tipografia e paleta', 'Grid responsivo', 'Arquivo Figma'], popular: false },
+        { name: 'UI + Protótipo', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'UI responsiva completa com protótipo navegável.', features: ['Componentes reutilizáveis', 'Todas as telas', 'Protótipo linkado', 'Handoff para dev'], popular: true },
+        { name: 'Design System', price: 'R$ 2.997', period: '', tag: 'Projeto', desc: 'Sistema de design completo com documentação e código.', features: ['Design tokens', 'Componentes CSS/React', 'Documentação', 'Suporte implementação'], popular: false }
+      ]},
+      { slug: 'copy-conversao', label: 'Copy de conversão', packages: [
+        { name: 'Copy Landing', price: 'R$ 297', period: '', tag: 'Avulso', desc: 'Textos persuasivos para landing page ou anúncio.', features: ['Headline + sub', 'Benefícios', 'CTA persuasivo', '2 revisões'], popular: false },
+        { name: 'Copy Completo', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Copy para site completo, blog e redes sociais.', features: ['Todas as páginas', 'Blog posts (3)', 'Redes sociais (5)', 'SEO textual'], popular: true },
+        { name: 'Estratégia + Redação', price: 'R$ 997', period: '', tag: 'Projeto', desc: 'Estratégia de conteúdo + redação com calendário editorial.', features: ['Estratégia definida', 'Calendário mensal', 'Redação semanal', 'Relatórios'], popular: false }
+      ]}
     ]
   },
   {
