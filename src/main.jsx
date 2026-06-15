@@ -582,17 +582,13 @@ function ServiceCard({ service, delay = 0, go }) {
   const Icon = service.icon;
   return (
     <Reveal delay={delay} className="service-card" as="article">
-      <div className="service-card-bg" style={{ backgroundImage: `url(${service.image})` }} />
-      <div className="service-card-overlay" />
-      <div className="service-card-content">
-        <div className="service-card-top">
-          <div className="service-icon"><Icon size={18} /></div>
-          <span>{service.tag}</span>
-        </div>
-        <h3>{service.title}</h3>
-        <p>{service.desc}</p>
-        <button onClick={() => go(`/servicos/${service.slug}`)}>Ver pacotes e preços <ChevronRight size={15} /></button>
+      <div className="service-card-top">
+        <div className="service-icon"><Icon size={18} /></div>
+        <span>{service.tag}</span>
       </div>
+      <h3>{service.title}</h3>
+      <p>{service.desc}</p>
+      <button onClick={() => go(`/servicos/${service.slug}`)}>Ver pacotes e preços <ChevronRight size={15} /></button>
     </Reveal>
   );
 }

@@ -95,20 +95,16 @@ h1,h2,h3,p{margin-top:0}
 .service-card,.price-card,.panel,.metric,.ref-card-react,.partner-card,.contact-card,.contact-visual,.detail-panel{background:var(--surface);border:1px solid var(--line);transition:all .4s var(--ease)}
 .service-card,.price-card,.ref-card-react,.partner-card,.contact-card{border-radius:var(--radius)}
 .service-card,.price-card{position:relative;overflow:hidden}
-.service-card{background:transparent;border-color:color-mix(in srgb var(--line) 60%,transparent);padding:0;box-shadow:none}
-.service-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .7s var(--ease);z-index:0}
-.service-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb var(--bg) 28%,transparent) 0%,color-mix(in srgb var(--bg) 85%,#000) 55%,var(--bg) 100%);z-index:1}
-.service-card-content{position:relative;z-index:2;padding:2rem 1.75rem;display:flex;flex-direction:column;min-height:400px;justify-content:flex-end}
-.service-card:hover .service-card-bg{transform:scale(1.07)}
+.service-card{background:var(--surface);border-color:var(--line);padding:2rem 1.75rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.85rem}
 .service-card:hover{border-color:color-mix(in srgb var(--accent) 30%,transparent);box-shadow:var(--glow)}
-.service-card-top{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+.service-card-top{display:flex;align-items:center;gap:.75rem}
 .service-card-top span{font-size:.65rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:color-mix(in srgb var(--bg) 50%,transparent);padding:.25rem .7rem;border-radius:50px;border:1px solid color-mix(in srgb var(--line) 25%,transparent);backdrop-filter:blur(6px)}
 .service-icon{width:42px;height:42px;display:grid;place-items:center;background:color-mix(in srgb var(--accent) 14%,transparent);border:1px solid color-mix(in srgb var(--accent) 20%,transparent);border-radius:var(--radius);color:var(--accent);backdrop-filter:blur(8px)}
 .service-icon.large{width:60px;height:60px}
-.service-card-content h3{font-size:1.35rem;font-weight:500;margin-bottom:.5rem;letter-spacing:-.01em;font-family:var(--font-display)}
-.service-card-content p{color:var(--muted);font-weight:300;font-size:.92rem;line-height:1.6;max-width:440px}
-.service-card-content button{margin-top:auto;border:0;background:transparent;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:.35rem;font-size:.88rem;padding:.65rem 0;transition:gap .3s;align-self:flex-start;cursor:pointer}
-.service-card-content button:hover{gap:.7rem;color:color-mix(in srgb var(--accent) 80%,#fff)}
+.service-card h3{font-size:1.35rem;font-weight:500;letter-spacing:-.01em;font-family:var(--font-display)}
+.service-card p{color:var(--muted);font-weight:300;font-size:.92rem;line-height:1.6}
+.service-card button{border:0;background:transparent;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:.35rem;font-size:.88rem;padding:.65rem 0;transition:gap .3s;align-self:flex-start;cursor:pointer;margin-top:auto}
+.service-card button:hover{gap:.7rem;color:color-mix(in srgb var(--accent) 80%,#fff)}
 .price-card,.ref-card-react,.partner-card,.contact-card{box-shadow:var(--shadow)}
 .price-card{padding:1.5rem}
 .price-card::before{content:"";position:absolute;top:0;left:1rem;right:1rem;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb var(--accent) 40%,transparent),transparent);opacity:0;transition:opacity .4s var(--ease)}
