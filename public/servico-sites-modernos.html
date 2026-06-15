@@ -43,7 +43,7 @@
         <p class="reveal reveal-delay-2">Sites que funcionam perfeitamente em qualquer dispositivo — celular, tablet ou desktop. Mobile-first, performance otimizada e carregamento rápido.</p>
         <div class="price-disclaimer reveal reveal-delay-3"><strong>Preços aproximados — R$</strong> — valores de referência do mercado. Cada orçamento é personalizado.</div>
         <div class="hero-split-actions reveal reveal-delay-3">
-          <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20servi%C3%A7o%20de%20Sites%20Responsivos." target="_blank" class="btn btn-whatsapp">
+          <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20servi%C3%A7o%20de%20Sites%20Modernos." target="_blank" class="btn btn-whatsapp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-3.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M10 9.5c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5v1c0 .8-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5v1c0 .8.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5"/></svg>
             Solicitar via WhatsApp
           </a>
@@ -59,57 +59,113 @@
 
 <section>
   <div class="container">
-    <div class="packages-grid">
-      <div class="package-card reveal">
+    <div class="sub-tabs" id="subTabNav">
+      <button class="sub-tab active" data-sub="pagina-estatica" onclick="switchSubTab('pagina-estatica')">Página Estática</button>
+      <button class="sub-tab" data-sub="pagina-responsiva" onclick="switchSubTab('pagina-responsiva')">Página Responsiva</button>
+      <button class="sub-tab" data-sub="portal-automatizado" onclick="switchSubTab('portal-automatizado')">Portal + Painel</button>
+    </div>
+    <div class="packages-grid" id="subTabContent">
+      <div class="package-card reveal" data-sub-packages="pagina-estatica">
         <div class="package-card-accent"></div>
-        <span class="package-tier package-tier-basic">Simples</span>
-        <h3>Site Simples</h3>
-        <div class="package-price">R$ 597</div>
-        <p>Site de página única responsivo com performance e SEO. Ideal para quem precisa de presença digital rápida.</p>
+        <span class="package-tier package-tier-basic">Avulso</span>
+        <h3>Landing Page</h3>
+        <div class="package-price">R$ 397</div>
+        <p>Página única de alta conversão, responsiva e otimizada para SEO.</p>
         <ul class="package-features">
-          <li>Mobile-first</li>
-          <li>Performance otimizada</li>
+          <li>Design focado em conversão</li>
+          <li>Responsiva</li>
           <li>SEO base</li>
           <li>Hospedagem 1 ano</li>
         </ul>
-        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20Site%20Simples." target="_blank" class="btn btn-whatsapp">
+        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20Landing%20Page." target="_blank" class="btn btn-whatsapp">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-3.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M10 9.5c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5v1c0 .8-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5v1c0 .8.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5"/></svg>
           Solicitar via WhatsApp
         </a>
       </div>
-
-      <div class="package-card package-premium reveal reveal-delay-1">
+      <div class="package-card package-premium reveal reveal-delay-1" data-sub-packages="pagina-estatica">
         <div class="package-card-accent"></div>
         <div class="package-premium-badge">Premium</div>
-        <span class="package-tier package-tier-premium">Premium</span>
-        <h3>Site Premium</h3>
-        <div class="package-price">R$ 1.497</div>
-        <p>Site completo com múltiplas páginas, blog e animações. Para empresas que querem se destacar.</p>
+        <span class="package-tier package-tier-premium">Avulso</span>
+        <h3>Página Única Premium</h3>
+        <div class="package-price">R$ 797</div>
+        <p>Landing page com animações premium, formulário inteligente e analytics integrado.</p>
         <ul class="package-features">
-          <li>Responsivo</li>
-          <li>Blog integrado</li>
-          <li>Animações suaves</li>
+          <li>Animações premium</li>
+          <li>Formulário inteligente</li>
+          <li>Analytics integrado</li>
           <li>Hospedagem 1 ano</li>
+        </ul>
+        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20P%C3%A1gina%20%C3%9Anica%20Premium." target="_blank" class="btn btn-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-3.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M10 9.5c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5v1c0 .8-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5v1c0 .8.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5"/></svg>
+          Solicitar via WhatsApp
+        </a>
+      </div>
+      <div class="package-card reveal reveal-delay-2" data-sub-packages="pagina-responsiva" style="display:none">
+        <div class="package-card-accent"></div>
+        <span class="package-tier package-tier-basic">Avulso</span>
+        <h3>Site Básico</h3>
+        <div class="package-price">R$ 1.197</div>
+        <p>Site responsivo com múltiplas seções e navegação fluida.</p>
+        <ul class="package-features">
+          <li>Multi-seções</li>
+          <li>Navegação fluida</li>
+          <li>SEO completo</li>
+          <li>Hospedagem 1 ano</li>
+        </ul>
+        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20Site%20B%C3%A1sico." target="_blank" class="btn btn-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-3.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M10 9.5c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5v1c0 .8-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5v1c0 .8.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5"/></svg>
+          Solicitar via WhatsApp
+        </a>
+      </div>
+      <div class="package-card package-premium reveal reveal-delay-1" data-sub-packages="pagina-responsiva" style="display:none">
+        <div class="package-card-accent"></div>
+        <div class="package-premium-badge">Premium</div>
+        <span class="package-tier package-tier-premium">Avulso</span>
+        <h3>Site Premium</h3>
+        <div class="package-price">R$ 1.997</div>
+        <p>Site completo com blog, galeria, formulários e painel simples.</p>
+        <ul class="package-features">
+          <li>Blog integrado</li>
+          <li>Galeria de imagens</li>
+          <li>Formulários</li>
+          <li>Painel simples</li>
         </ul>
         <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20Site%20Premium." target="_blank" class="btn btn-whatsapp">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-3.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M10 9.5c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5v1c0 .8-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5v1c0 .8.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5"/></svg>
           Solicitar via WhatsApp
         </a>
       </div>
-
-      <div class="package-card reveal reveal-delay-2">
+      <div class="package-card reveal" data-sub-packages="portal-automatizado" style="display:none">
         <div class="package-card-accent"></div>
-        <span class="package-tier package-tier-enterprise">Automatizado</span>
-        <h3>Site Automatizado</h3>
+        <span class="package-tier package-tier-basic">Projeto</span>
+        <h3>Portal Automatizado</h3>
         <div class="package-price">R$ 2.497</div>
-        <p>Site premium com CRM, automação de disparo e dashboard administrativo para gestão completa.</p>
+        <p>Site com área do cliente, notificações e dashboard gerencial.</p>
         <ul class="package-features">
-          <li>CRM integrado</li>
-          <li>Email automático</li>
-          <li>Dashboard admin</li>
+          <li>Área do cliente</li>
+          <li>Notificações</li>
+          <li>Dashboard gerencial</li>
           <li>Suporte 6 meses</li>
         </ul>
-        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20Site%20Automatizado." target="_blank" class="btn btn-whatsapp">
+        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20Portal%20Automatizado." target="_blank" class="btn btn-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-3.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M10 9.5c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5v1c0 .8-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5v1c0 .8.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5"/></svg>
+          Solicitar via WhatsApp
+        </a>
+      </div>
+      <div class="package-card package-premium reveal reveal-delay-1" data-sub-packages="portal-automatizado" style="display:none">
+        <div class="package-card-accent"></div>
+        <div class="package-premium-badge">Premium</div>
+        <span class="package-tier package-tier-premium">Projeto</span>
+        <h3>Portal Completo</h3>
+        <div class="package-price">R$ 3.997</div>
+        <p>Portal institucional + CRM + automação de disparos para gestão completa.</p>
+        <ul class="package-features">
+          <li>CRM integrado</li>
+          <li>Automação de email</li>
+          <li>Múltiplos dashboards</li>
+          <li>Suporte 12 meses</li>
+        </ul>
+        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20solicitar%20o%20pacote%20Portal%20Completo." target="_blank" class="btn btn-whatsapp">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-3.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M10 9.5c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5v1c0 .8-.7 1.5-1.5 1.5h-1c-.8 0-1.5.7-1.5 1.5v1c0 .8.7 1.5 1.5 1.5h1c.8 0 1.5-.7 1.5-1.5"/></svg>
           Solicitar via WhatsApp
         </a>
@@ -126,7 +182,7 @@
       <h2 class="reveal reveal-delay-1">Não encontrou o que precisa?</h2>
       <p class="reveal reveal-delay-2" style="margin:0 auto 2rem;max-width:500px">Montamos um pacote personalizado para seu projeto. Converse comigo no WhatsApp.</p>
       <div class="reveal reveal-delay-3">
-        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20um%20or%C3%A7amento%20personalizado%20para%20Sites%20Responsivos." target="_blank" class="btn btn-whatsapp">Falar no WhatsApp</a>
+        <a href="https://wa.me/5512987076691?text=Ol%C3%A1%2C%20vim%20pelo%20site%20LRM%20TECNO%20e%20gostaria%20de%20um%20or%C3%A7amento%20personalizado%20para%20Sites%20Modernos." target="_blank" class="btn btn-whatsapp">Falar no WhatsApp</a>
         <a href="contato.html" class="btn btn-outline" style="margin-left:0.75rem">Enviar E-mail</a>
       </div>
     </div>
@@ -152,6 +208,10 @@
 </a>
 
 <script>
+function switchSubTab(slug){
+  document.querySelectorAll('.sub-tab').forEach(function(t){t.classList.toggle('active',t.dataset.sub===slug)});
+  document.querySelectorAll('[data-sub-packages]').forEach(function(p){p.style.display=p.dataset.subPackages===slug?'':'none'});
+}
 (function(){
   var els = document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right');
   if (els.length) {

@@ -88,10 +88,17 @@ const services = [
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&auto=format&fit=crop',
     packages: [],
     subCategories: [
-      { slug: 'site', label: 'Site', packages: [
-        { name: 'Site Simples', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Site de página única responsivo com performance e SEO.', features: ['Mobile-first', 'Performance otimizada', 'SEO base', 'Hospedagem 1 ano'], popular: false },
-        { name: 'Site Premium', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Site completo com múltiplas páginas, blog e animações.', features: ['Responsivo', 'Blog integrado', 'Animações suaves', 'Hospedagem 1 ano'], popular: true },
-        { name: 'Site Automatizado', price: 'R$ 2.497', period: '', tag: 'Projeto', desc: 'Site premium com CRM, automação de disparo e dashboard.', features: ['CRM integrado', 'Email automático', 'Dashboard admin', 'Suporte 6 meses'], popular: false }
+      { slug: 'pagina-estatica', label: 'Página Estática', packages: [
+        { name: 'Landing Page', price: 'R$ 397', period: '', tag: 'Avulso', desc: 'Página única de alta conversão, responsiva e otimizada.', features: ['Design focado em conversão', 'Responsiva', 'SEO base', 'Hospedagem 1 ano'], popular: false },
+        { name: 'Página Única Premium', price: 'R$ 797', period: '', tag: 'Avulso', desc: 'Landing page com animações, formulário inteligente e analytics.', features: ['Animações premium', 'Formulário inteligente', 'Analytics integrado', 'Hospedagem 1 ano'], popular: true },
+      ]},
+      { slug: 'pagina-responsiva', label: 'Página Responsiva', packages: [
+        { name: 'Site Básico', price: 'R$ 1.197', period: '', tag: 'Avulso', desc: 'Site responsivo com múltiplas seções e navegação fluida.', features: ['Multi-seções', 'Navegação fluida', 'SEO completo', 'Hospedagem 1 ano'], popular: false },
+        { name: 'Site Premium', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Site completo com blog, galeria, formulários e painel.', features: ['Blog integrado', 'Galeria de imagens', 'Formulários', 'Painel simples'], popular: true },
+      ]},
+      { slug: 'portal-automatizado', label: 'Portal + Painel', packages: [
+        { name: 'Portal Automatizado', price: 'R$ 2.497', period: '', tag: 'Projeto', desc: 'Site com área do cliente, notificações e dashboard.', features: ['Área do cliente', 'Notificações', 'Dashboard gerencial', 'Suporte 6 meses'], popular: false },
+        { name: 'Portal Completo', price: 'R$ 3.997', period: '', tag: 'Projeto', desc: 'Portal institucional + CRM + automação de disparos.', features: ['CRM integrado', 'Automação de email', 'Múltiplos dashboards', 'Suporte 12 meses'], popular: true },
       ]}
     ]
   },
