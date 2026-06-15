@@ -51,7 +51,13 @@ const services = [
     tag: 'Interfaces premium',
     desc: 'Experiências visuais modernas, responsivas e pensadas para transmitir confiança no primeiro clique.',
     bullets: ['Direção visual', 'Landing pages', 'UI responsiva', 'Copy de conversão'],
-    price: 'Sob análise'
+    price: 'Sob análise',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&auto=format&fit=crop',
+    packages: [
+      { name: 'Landing Page', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Página única com design premium e formulário de captura.', features: ['Design exclusivo', 'Responsivo', 'Formulário integrado', 'Animação sutil'], popular: false },
+      { name: 'Site Completo', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Site institucional com identidade visual, blog e contato.', features: ['Identidade visual', 'Múltiplas páginas', 'Blog integrado', 'SEO base'], popular: true },
+      { name: 'Portal Sob Medida', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Design system + múltiplos módulos com painel.', features: ['Sistema de design', 'Dashboards', 'Copy profissional', 'Hospedagem'], popular: false }
+    ]
   },
   {
     slug: 'sites-responsivos',
@@ -60,7 +66,13 @@ const services = [
     tag: 'Presença digital',
     desc: 'Sites institucionais rápidos, elegantes e preparados para celular, desktop e publicação profissional.',
     bullets: ['Mobile-first', 'Performance', 'SEO base', 'Hospedagem orientada'],
-    price: 'A partir do briefing'
+    price: 'A partir do briefing',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&auto=format&fit=crop',
+    packages: [
+      { name: 'Landpage', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Landing page responsiva com performance e SEO.', features: ['Mobile-first', 'Performance otimizada', 'SEO base', 'Hospedagem 1 ano'], popular: false },
+      { name: 'Site Institucional', price: 'R$ 2.997', period: '', tag: 'Avulso', desc: 'Site completo com blog, galeria e formulários.', features: ['Responsivo', 'Blog integrado', 'Galeria de imagens', 'Suporte 3 meses'], popular: true },
+      { name: 'Portal + CMS', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Portal completo com sistema de gerenciamento próprio.', features: ['CMS personalizado', 'Painel admin', 'Múltiplos idiomas', 'Treinamento'], popular: false }
+    ]
   },
   {
     slug: 'sistemas',
@@ -69,7 +81,13 @@ const services = [
     tag: 'Operação sob medida',
     desc: 'Painéis, fluxos, cadastros, automações e ferramentas internas feitas para o processo real da empresa.',
     bullets: ['Dashboards', 'Cadastros', 'Controle interno', 'Relatórios'],
-    price: 'Projeto personalizado'
+    price: 'Projeto personalizado',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&auto=format&fit=crop',
+    packages: [
+      { name: 'Módulo Único', price: 'R$ 3.497', period: '', tag: 'Avulso', desc: 'Módulo específico para automatizar um processo.', features: ['Cadastro inteligente', 'Relatórios básicos', 'Exportação dados', 'Suporte 30 dias'], popular: false },
+      { name: 'Sistema Completo', price: 'R$ 7.497', period: '', tag: 'Avulso', desc: 'Sistema com múltiplos módulos e painel admin.', features: ['Múltiplos módulos', 'Dashboard gerencial', 'Controle de acesso', 'Suporte 6 meses'], popular: true },
+      { name: 'Plataforma', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Plataforma integrada com API e app.', features: ['API REST', 'App mobile', 'Escalável', 'Treinamento equipe'], popular: false }
+    ]
   },
   {
     slug: 'crm',
@@ -78,7 +96,13 @@ const services = [
     tag: 'Vendas e atendimento',
     desc: 'Gestão de leads, funil comercial, follow-up, integração com WhatsApp e rotina de vendas mais previsível.',
     bullets: ['Leads', 'Funil', 'Comissões', 'Automações'],
-    price: 'Plano consultivo'
+    price: 'Plano consultivo',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop',
+    packages: [
+      { name: 'CRM Básico', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Gestão de leads e funil comercial simplificado.', features: ['Captura de leads', 'Funil visual', 'Etiquetas', 'Integração WhatsApp'], popular: false },
+      { name: 'CRM Profissional', price: 'R$ 4.997', period: '', tag: 'Avulso', desc: 'CRM completo com automação e comissões.', features: ['Automação de follow-up', 'Comissões', 'Relatórios', 'API para integração'], popular: true },
+      { name: 'CRM Enterprise', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'CRM + automação + painel exclusivo.', features: ['Módulo financeiro', 'BI integrado', 'App mobile', 'Suporte prioritário'], popular: false }
+    ]
   },
   {
     slug: 'manutencao',
@@ -87,7 +111,13 @@ const services = [
     tag: 'Suporte técnico',
     desc: 'Diagnóstico, limpeza, formatação, upgrade e otimização para manter equipamentos funcionando bem.',
     bullets: ['Desktop', 'Notebook', 'Upgrade', 'Otimização'],
-    price: 'Conforme diagnóstico'
+    price: 'Conforme diagnóstico',
+    image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=900&auto=format&fit=crop',
+    packages: [
+      { name: 'Limpeza', price: 'R$ 99', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para aumentar a vida útil.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
+      { name: 'Limpeza + Formatação', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com instalação de SO e drivers.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
+      { name: 'Plano Mensal', price: 'R$ 69', period: '/mês', tag: 'Mensal', desc: 'Manutenção preventiva mensal com suporte remoto ilimitado.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+    ]
   },
   {
     slug: 'consultoria',
@@ -96,7 +126,13 @@ const services = [
     tag: 'Decisão técnica',
     desc: 'Planejamento de ferramentas, estrutura, processos digitais e decisões técnicas para reduzir desperdício.',
     bullets: ['Diagnóstico', 'Roadmap', 'Infraestrutura', 'Custos'],
-    price: 'Por escopo'
+    price: 'Por escopo',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop',
+    packages: [
+      { name: 'Diagnóstico', price: 'R$ 497', period: '', tag: 'Avulso', desc: 'Diagnóstico técnico completo com relatório e recomendações.', features: ['Análise infraestrutura', 'Mapeamento processos', 'Relatório executivo', 'Recomendações'], popular: false },
+      { name: 'Projeto', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Projeto de TI com roadmap, orçamento e cronograma.', features: ['Roadmap técnico', 'Orçamento detalhado', 'Cronograma', 'Apresentação'], popular: true },
+      { name: 'Acompanhamento', price: 'R$ 2.497', period: '', tag: 'Mensal', desc: 'Consultoria mensal para acompanhamento e ajustes.', features: ['Suporte mensal', 'Ajustes processos', 'Relatórios periódicos', 'Disponibilidade'], popular: false }
+    ]
   }
 ];
 
@@ -431,32 +467,58 @@ function ServicesPage({ go }) {
 function ServiceDetail({ slug, go }) {
   const service = services.find((s) => s.slug === slug) || services[0];
   const Icon = service.icon;
-  const tiers = ['Essencial', 'Premium', 'Enterprise'];
   return (
     <Page>
-      <PageHero label={service.tag} title={service.title} text={service.desc}>
-        <div className="hero-actions page-actions">
-          <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento <ArrowRight size={18} /></MagneticButton>
-          <MagneticButton className="outline" href="https://wa.me/5512987076691" target="_blank">WhatsApp</MagneticButton>
+      <section className="detail-hero">
+        <div className="detail-hero-bg" style={{ backgroundImage: `url(${service.image})` }} />
+        <div className="detail-hero-overlay" />
+        <div className="detail-hero-content">
+          <Reveal>
+            <button className="detail-back" onClick={() => go('/servicos')}>&larr; Voltar para Serviços</button>
+            <span className="eyebrow" style={{ color: 'rgba(255,255,255,.5)' }}>{service.tag}</span>
+            <h1>{service.title}</h1>
+            <p>{service.desc}</p>
+          </Reveal>
         </div>
-      </PageHero>
-      <section className="section detail-layout">
-        <Reveal className="detail-panel">
+      </section>
+      <section className="section">
+        <Reveal className="detail-panel-compact">
           <div className="service-icon large"><Icon size={32} /></div>
-          <h2>O que está incluso</h2>
-          <p>{service.desc}</p>
           <div className="chips">{service.bullets.map((b) => <span key={b}>{b}</span>)}</div>
         </Reveal>
-        <div className="pricing-grid">
-          {tiers.map((tier, i) => (
-            <Reveal key={tier} delay={i * 0.08} className={i === 1 ? 'price-card featured' : 'price-card'}>
-              <span>{tier}</span>
-              <h3>{service.title}</h3>
-              <strong>{i === 0 ? 'Entrada' : i === 1 ? 'Recomendado' : 'Sob medida'}</strong>
-              <p>{i === 0 ? 'Escopo enxuto para começar.' : i === 1 ? 'Entrega completa com refinamento visual e técnico.' : 'Projeto integrado para operação maior.'}</p>
-              <button onClick={() => go('/login')}>Pedir análise</button>
+      </section>
+      <section className="section section-pricing">
+        <Reveal className="section-head" style={{ marginBottom: '1rem' }}>
+          <h2>Preços</h2>
+          <p>Valores de referência — cada orçamento é personalizado conforme o escopo.</p>
+        </Reveal>
+        <div className="pricing-grid packages-grid">
+          {service.packages.map((pkg, i) => (
+            <Reveal key={pkg.name} delay={i * 0.08} className={pkg.popular ? 'price-card featured' : 'price-card'}>
+              {pkg.popular && <div className="popular-badge">Mais popular</div>}
+              <span className="pkg-tier">{pkg.tag}</span>
+              <h3>{pkg.name}</h3>
+              <div className="pkg-price">
+                <strong>{pkg.price}</strong>
+                {pkg.period && <small>{pkg.period}</small>}
+              </div>
+              <p>{pkg.desc}</p>
+              <ul className="pkg-features">
+                {pkg.features.map((f) => <li key={f}><Check size={14} /> {f}</li>)}
+              </ul>
+              <a href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de solicitar ' + service.title + ' - ' + pkg.name + '.')}`} target="_blank" className="btn-whatsapp-pkg">
+                <MessageCircle size={16} /> Solicitar via WhatsApp
+              </a>
             </Reveal>
           ))}
+        </div>
+        <div className="center-block" style={{ marginTop: '2rem' }}>
+          <Reveal>
+            <div className="hero-actions center">
+              <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento no portal <ArrowRight size={18} /></MagneticButton>
+              <MagneticButton className="outline" href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de saber mais sobre ' + service.title + '.')}`} target="_blank">Falar no WhatsApp</MagneticButton>
+            </div>
+          </Reveal>
         </div>
       </section>
     </Page>
