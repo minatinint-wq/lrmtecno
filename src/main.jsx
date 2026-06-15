@@ -86,10 +86,23 @@ const services = [
     bullets: ['Mobile-first', 'Performance', 'SEO base', 'Hospedagem orientada'],
     price: 'A partir do briefing',
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&auto=format&fit=crop',
-    packages: [
-      { name: 'Landpage', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Landing page responsiva com performance e SEO.', features: ['Mobile-first', 'Performance otimizada', 'SEO base', 'Hospedagem 1 ano'], popular: false },
-      { name: 'Site Institucional', price: 'R$ 2.997', period: '', tag: 'Avulso', desc: 'Site completo com blog, galeria e formulários.', features: ['Responsivo', 'Blog integrado', 'Galeria de imagens', 'Suporte 3 meses'], popular: true },
-      { name: 'Portal + CMS', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Portal completo com sistema de gerenciamento próprio.', features: ['CMS personalizado', 'Painel admin', 'Múltiplos idiomas', 'Treinamento'], popular: false }
+    packages: [],
+    subCategories: [
+      { slug: 'landing-page', label: 'Landing Page', packages: [
+        { name: 'Landing Page Simples', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Página única responsiva com performance e SEO.', features: ['Mobile-first', 'Performance otimizada', 'SEO base', 'Hospedagem 1 ano'], popular: false },
+        { name: 'Landing Page Premium', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Landing page com animações, formulário e integração.', features: ['Design premium', 'Animações suaves', 'Formulário integrado', 'Hospedagem 1 ano'], popular: true },
+        { name: 'Landing + Automação', price: 'R$ 1.997', period: '', tag: 'Projeto', desc: 'Landing page com CRM e automação de disparo.', features: ['CRM integrado', 'Email automático', 'Métricas', 'Suporte 3 meses'], popular: false }
+      ]},
+      { slug: 'institucional', label: 'Site Institucional', packages: [
+        { name: 'Site Institucional Básico', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Site institucional com 5 páginas e formulário.', features: ['5 páginas', 'Responsivo', 'Formulário de contato', 'Hospedagem 1 ano'], popular: false },
+        { name: 'Site Institucional Completo', price: 'R$ 2.997', period: '', tag: 'Avulso', desc: 'Site completo com blog, galeria e integrações.', features: ['Responsivo', 'Blog integrado', 'Galeria de imagens', 'Suporte 3 meses'], popular: true },
+        { name: 'Site Institucional Premium', price: 'R$ 4.997', period: '', tag: 'Projeto', desc: 'Site completo + dashboard administrativo + SEO avançado.', features: ['Dashboard admin', 'SEO avançado', 'Blog + galeria', 'Suporte 6 meses'], popular: false }
+      ]},
+      { slug: 'portal-cms', label: 'Portal + CMS', packages: [
+        { name: 'CMS Simples', price: 'R$ 4.997', period: '', tag: 'Avulso', desc: 'Portal com gerenciador de conteúdo próprio.', features: ['CMS personalizado', 'Painel admin', 'Blog + páginas', 'Treinamento'], popular: false },
+        { name: 'Portal Completo', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Portal completo com múltiplos módulos e usuários.', features: ['CMS personalizado', 'Múltiplos idiomas', 'Níveis de usuário', 'Suporte 6 meses'], popular: true },
+        { name: 'Portal + Aplicativo', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Portal + aplicativo mobile integrado ao CMS.', features: ['Portal completo', 'App mobile', 'API integrada', 'Treinamento equipe'], popular: false }
+      ]}
     ]
   },
   {
