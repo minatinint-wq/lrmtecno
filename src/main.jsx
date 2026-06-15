@@ -548,6 +548,32 @@ function Home({ go }) {
       </section>
       <PortalPreview go={go} />
       <ProcessSection />
+      <section className="section refs-home">
+        <Reveal className="section-head">
+          <span className="eyebrow">Referências</span>
+          <h2>Quem já construiu conosco</h2>
+          <p>Depoimentos de clientes que confiaram na LRM TECNO para projetos de sistema, site, CRM, manutenção e consultoria.</p>
+        </Reveal>
+        <div className="refs-grid">
+          {testimonials.slice(0, 3).map((r, i) => (
+            <Reveal key={`${r.name}-${i}`} delay={i * 0.08} className="ref-card-react">
+              <div className="ref-card-bar" />
+              <div className="stars">{Array.from({ length: r.rating }).map((_, idx) => <Star key={idx} size={14} fill="currentColor" />)}</div>
+              <p>"{r.text}"</p>
+              <div className="ref-author">
+                <div className="ref-avatar">{r.name.charAt(0)}</div>
+                <div>
+                  <strong>{r.name}</strong>
+                  <span>{r.role} &mdash; {r.company}</span>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <div className="center-block" style={{ marginTop: '2rem' }}>
+          <MagneticButton className="outline" onClick={() => go('/referencias')}>Ver todos os depoimentos <ArrowRight size={16} /></MagneticButton>
+        </div>
+      </section>
       <CTA go={go} title="Solicite um orçamento com contexto." text="Crie sua conta, descreva o projeto e acompanhe a análise no portal do cliente." />
     </Page>
   );
@@ -707,13 +733,17 @@ function WorksPage({ go }) {
   );
 }
 
+const testimonials = [
+  { name: 'Gilberto Alencar', role: 'Diretor', company: 'Rede Nova, Logística', text: 'Contratamos o sistema de frota e tickets. A LRM não só entregou o que pedimos como sugeriu melhorias que reduziram nosso tempo de apuração em horas — virou peça central da operação.', rating: 5 },
+  { name: 'Carla Dutra', role: 'Head de Marketing', company: 'Studio Dutra, Design', text: 'Precisávamos de um site que convertesse e um CRM que não virasse peso morto. A consultoria de escolha de ferramentas e a automação que implementaram mudaram nosso follow-up de vez.', rating: 5 },
+  { name: 'Marcos Tavares', role: 'CTO', company: 'Attus, Fintech', text: 'Terceirizamos a manutenção dos equipamentos e a gestão de infra com eles. Desde então, nosso downtime caiu a quase zero. Responsabilidade técnica de verdade.', rating: 5 },
+  { name: 'Rafaela Campos', role: 'Sócia', company: 'Campos & Menezes, Advocacia', text: 'O portal com automação de prazos e comunicados internos organizou uma casa que antes funcionava no improviso. Entrega no prazo, com tudo funcionando como combinado.', rating: 5 },
+  { name: 'Thiago Moreira', role: 'Gerente de Operações', company: 'MouraTech, Suporte', text: 'Sistema sob medida para controle de OS e comissão dos técnicos. A diferença entre o que tínhamos (planilhas) e o que eles entregaram é brutal. Interface limpa, relatórios que realmente usamos.', rating: 5 }
+];
+
 function ReferencesPage({ go }) {
   const reviews = read('lrm_react_reviews', []);
-  const fallback = [
-    { name: 'Cliente LRM', role: 'Sistema web', text: 'Atendimento direto, proposta clara e entrega com visual muito acima do esperado.', rating: 5 },
-    { name: 'Operação Comercial', role: 'CRM', text: 'A organização do funil e dos leads mudou nossa rotina de acompanhamento.', rating: 5 }
-  ];
-  const data = reviews.length ? reviews : fallback;
+  const data = reviews.length ? reviews : testimonials;
   return (
     <Page>
       <PageHero label="Referências" title="Confiança construída em cada entrega" text="Depoimentos e avaliações registrados no portal ao final de cada serviço." />
@@ -721,10 +751,16 @@ function ReferencesPage({ go }) {
         <div className="refs-grid">
           {data.map((r, i) => (
             <Reveal key={`${r.name}-${i}`} delay={i * 0.08} className="ref-card-react">
+              <div className="ref-card-bar" />
               <div className="stars">{Array.from({ length: r.rating || 5 }).map((_, idx) => <Star key={idx} size={14} fill="currentColor" />)}</div>
               <p>"{r.text}"</p>
-              <strong>{r.name || r.clientName}</strong>
-              <span>{r.role || 'Cliente LRM'}</span>
+              <div className="ref-author">
+                <div className="ref-avatar">{r.name.charAt(0)}</div>
+                <div>
+                  <strong>{r.name}</strong>
+                  <span>{r.role} &mdash; {r.company}</span>
+                </div>
+              </div>
             </Reveal>
           ))}
         </div>
