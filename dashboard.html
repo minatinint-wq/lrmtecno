@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="mpigymn4-ChatGPT-Image-23-de-mai.-de-2026_-11_53_52.png">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https:; font-src 'self' data:;">
+<title>Minha Conta — LRM TECNO</title>
+<link rel="stylesheet" href="style.css">
+<script src="security.js"></script>
+<style>
+.dash-page{min-height:100vh;padding-top:var(--nav-h);padding-bottom:3rem;background:var(--bg)}
+.dash-header{background:linear-gradient(135deg,#07101d,#0b1727);color:#fff;padding:2.25rem 0;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:1.5rem}
+.dash-header .container{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem}
+.profile-row{display:flex;gap:1rem;align-items:center}
+.profile-avatar{width:56px;height:56px;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.35rem;flex-shrink:0}
+.profile-info strong{display:block;font-size:1.15rem;color:#fff}
+.profile-info span{font-size:0.9rem;color:rgba(255,255,255,0.62)}
+.dash-header .sub{color:rgba(255,255,255,0.62);font-size:0.9375rem;margin-top:0.25rem}
+.perfil-actions{display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:flex-end}
+.perfil-actions .btn-outline{color:#fff;border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.04)}
+.perfil-actions .btn-outline:hover{border-color:#67e8f9;color:#fff}
+.btn-sair{color:#fecaca;border:1px solid rgba(248,113,113,0.28);padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer;background:transparent;font-family:inherit;transition:all 0.2s}
+.btn-sair:hover{background:rgba(248,113,113,0.08)}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem}
+.metric-card strong{display:block;font-size:1.65rem;font-family:var(--font-display);color:var(--fg);line-height:1}
+.metric-card span{display:block;margin-top:0.35rem;font-size:0.84rem;color:var(--muted)}
+.dash-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,0.75fr);gap:1.25rem;margin-bottom:1.25rem}
+.dash-grid.secondary{grid-template-columns:1fr 1fr}
+.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.35rem;box-shadow:var(--shadow-sm)}
+.dash-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.dash-card h3{font-size:1.05rem;margin-bottom:0.25rem}
+.dash-card-head p{font-size:0.875rem;margin:0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.form-group{margin-bottom:0.85rem}
+.form-group label{display:block;font-size:0.82rem;font-weight:750;margin-bottom:0.35rem;color:var(--fg)}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:0.75rem 0.85rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:0.92rem;color:var(--fg);background:var(--bg)}
+.form-group textarea{resize:vertical;min-height:96px}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px oklch(58% 0.18 255 / 0.1)}
+.form-actions{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:0.35rem}
+.form-actions button,.new-ticket-form button{padding:0.68rem 1rem;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:800;cursor:pointer;font-family:inherit;font-size:0.875rem}
+.form-actions button:hover,.new-ticket-form button:hover{opacity:0.92}
+.quote-list,.service-list,.ticket-list{display:flex;flex-direction:column}
+.quote-item,.service-item,.ticket-item{padding:1rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.quote-item:last-child,.service-item:last-child,.ticket-item:last-child{border-bottom:none;padding-bottom:0}
+.quote-info,.service-info{flex:1;min-width:0}
+.quote-info strong,.service-info strong,.ticket-subject{display:block;font-size:0.95rem;margin-bottom:0.2rem;color:var(--fg)}
+.quote-info .meta,.service-info .meta,.ticket-meta{font-size:0.8125rem;color:var(--muted)}
+.quote-details,.ticket-message{font-size:0.875rem;color:var(--fg);margin-top:0.45rem}
+.quote-reply,.ticket-reply{font-size:0.875rem;margin-top:0.6rem;padding:0.65rem 0.75rem;background:var(--bg);border-radius:var(--radius);border-left:3px solid var(--accent)}
+.service-price{font-weight:800;font-size:1rem;color:var(--accent);white-space:nowrap}
+.status-badge{display:inline-flex;align-items:center;justify-content:center;min-height:24px;padding:0.15rem 0.55rem;border-radius:4px;font-size:0.6875rem;font-weight:800;text-transform:uppercase;white-space:nowrap}
+.status-completed,.status-approved{background:oklch(56% 0.12 170 / 0.12);color:oklch(40% 0.1 160)}
+.status-in_progress,.status-reviewed,.status-proposed{background:oklch(58% 0.18 255 / 0.1);color:var(--accent)}
+.status-pending,.status-new{background:oklch(72% 0.14 80 / 0.16);color:oklch(45% 0.12 70)}
+.status-open{background:oklch(58% 0.18 255 / 0.1);color:var(--accent)}
+.status-closed,.status-archived{background:oklch(60% 0.02 250 / 0.12);color:var(--muted)}
+.empty-state{text-align:center;padding:2rem 0;color:var(--muted);font-size:0.9375rem}
+.new-ticket-form{margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.48);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;width:100%;max-width:500px;max-height:86vh;overflow-y:auto;box-shadow:var(--shadow-lg)}
+.modal h3{font-size:1.125rem;margin-bottom:1rem}
+.modal-actions{display:flex;gap:0.75rem;margin-top:1.25rem;justify-content:flex-end}
+.modal-actions button{padding:0.625rem 1.1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:750;cursor:pointer;border:none;font-family:inherit}
+.btn-cancel{background:var(--border);color:var(--fg)}
+@media(max-width:900px){.dash-header .container{align-items:flex-start;flex-direction:column}.perfil-actions{justify-content:flex-start}.metric-grid{grid-template-columns:repeat(2,1fr)}.dash-grid,.dash-grid.secondary{grid-template-columns:1fr}}@media(max-width:520px){.dash-header{padding:1.5rem 0}.dash-card{padding:1rem}.metric-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.quote-item,.service-item,.ticket-item{flex-direction:column}.profile-row{align-items:flex-start}.perfil-actions .btn-outline,.btn-sair{width:100%;text-align:center}.modal{padding:1.25rem}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">LRM<span class="nav-logo-dot"></span>TECNO</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="servicos.html">Serviços</a></li>
+      <li><a href="trabalhos.html">Trabalhos</a></li>
+      <li><a href="referencias.html">Referências</a></li>
+      <li><a href="parceiras.html">Parceiras</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="dashboard.html" class="page-active" id="navAccount">Minha Conta</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main class="dash-page">
+  <div class="dash-header">
+    <div class="container">
+      <div>
+        <div class="profile-row">
+          <div class="profile-avatar" id="avatar">L</div>
+          <div class="profile-info">
+            <strong id="dashName">Carregando...</strong>
+            <span id="dashEmail">carregando...</span>
+            <p class="sub">Portal para orçamentos, tickets, serviços e avaliações.</p>
+          </div>
+        </div>
+      </div>
+      <div class="perfil-actions">
+        <a href="#quoteRequestCard" class="btn-outline" style="padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:700;text-decoration:none;display:inline-block">Solicitar orçamento</a>
+        <a href="contato.html" class="btn-outline" style="padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:700;text-decoration:none;display:inline-block">Falar conosco</a>
+        <button onclick="handleLogout()" class="btn-sair">Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="metric-grid">
+      <div class="metric-card"><strong id="metricQuotes">0</strong><span>orçamentos</span></div>
+      <div class="metric-card"><strong id="metricServices">0</strong><span>serviços</span></div>
+      <div class="metric-card"><strong id="metricTickets">0</strong><span>tickets</span></div>
+      <div class="metric-card"><strong id="metricOpen">0</strong><span>em aberto</span></div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-card" id="quoteRequestCard">
+        <div class="dash-card-head">
+          <div>
+            <h3>Solicitar orçamento</h3>
+            <p>Descreva o projeto para a LRM analisar e responder pelo próprio portal.</p>
+          </div>
+        </div>
+        <div class="quote-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="quoteType">Tipo de solução</label>
+              <select id="quoteType">
+                <option value="Site premium">Site premium</option>
+                <option value="Sistema personalizado">Sistema personalizado</option>
+                <option value="CRM e automação">CRM e automação</option>
+                <option value="Suporte de TI">Suporte de TI</option>
+                <option value="Consultoria">Consultoria</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quoteBudget">Investimento previsto</label>
+              <select id="quoteBudget">
+                <option value="A definir">A definir</option>
+                <option value="Até R$ 1.000">Até R$ 1.000</option>
+                <option value="R$ 1.000 a R$ 3.000">R$ 1.000 a R$ 3.000</option>
+                <option value="R$ 3.000 a R$ 7.000">R$ 3.000 a R$ 7.000</option>
+                <option value="Acima de R$ 7.000">Acima de R$ 7.000</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="quoteProject">Nome do projeto</label>
+              <input type="text" id="quoteProject" placeholder="Ex: Site institucional da empresa" maxlength="160">
+            </div>
+            <div class="form-group">
+              <label for="quoteTimeline">Prazo desejado</label>
+              <select id="quoteTimeline">
+                <option value="Sem urgência">Sem urgência</option>
+                <option value="Até 7 dias">Até 7 dias</option>
+                <option value="Até 15 dias">Até 15 dias</option>
+                <option value="Até 30 dias">Até 30 dias</option>
+                <option value="Mais de 30 dias">Mais de 30 dias</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="quoteDetails">Detalhes do orçamento</label>
+            <textarea id="quoteDetails" placeholder="Conte o que precisa, objetivo do projeto, páginas/funcionalidades, público e referências." maxlength="2400"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" onclick="submitQuoteRequest()">Enviar solicitação</button>
+          </div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div>
+            <h3>Meus orçamentos</h3>
+            <p>Acompanhe análise, proposta e resposta da LRM.</p>
+          </div>
+        </div>
+        <div id="quotesList" class="quote-list"><div class="empty-state">Carregando...</div></div>
+      </div>
+    </div>
+
+    <div class="dash-grid secondary">
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div>
+            <h3>Histórico de serviços</h3>
+            <p>Serviços registrados pelo admin após aprovação ou entrega.</p>
+          </div>
+        </div>
+        <div id="servicesList" class="service-list"><div class="empty-state">Carregando...</div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div>
+            <h3>Meus tickets</h3>
+            <p>Abra dúvidas, solicitações rápidas ou suporte pós-entrega.</p>
+          </div>
+        </div>
+        <div id="ticketsList" class="ticket-list"><div class="empty-state">Carregando...</div></div>
+        <div class="new-ticket-form">
+          <h4 style="font-size:0.9375rem;margin:0 0 0.75rem">Abrir novo ticket</h4>
+          <div class="form-group">
+            <label for="ticketSubject">Assunto</label>
+            <input type="text" id="ticketSubject" placeholder="Ex: Ajuste em uma página" maxlength="200" required>
+          </div>
+          <div class="form-group">
+            <label for="ticketMessage">Mensagem</label>
+            <textarea id="ticketMessage" placeholder="Descreva seu problema ou dúvida..." maxlength="2000" required></textarea>
+          </div>
+          <button onclick="openTicket()">Enviar ticket</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="reviewModal">
+  <div class="modal" style="max-width:460px">
+    <h3>Avaliar Serviço</h3>
+    <p style="font-size:0.875rem;color:var(--muted);margin-bottom:0.5rem" id="reviewServiceName">—</p>
+    <div style="margin:1rem 0;text-align:center">
+      <p style="font-size:0.875rem;color:var(--muted);margin-bottom:0.5rem">Sua avaliação</p>
+      <div id="starSelector" style="display:flex;gap:4px;justify-content:center">
+        <span class="star-btn" data-val="1" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
+        <span class="star-btn" data-val="2" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
+        <span class="star-btn" data-val="3" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
+        <span class="star-btn" data-val="4" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
+        <span class="star-btn" data-val="5" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Seu depoimento</label>
+      <textarea id="reviewText" rows="4" placeholder="Conte sua experiência com o serviço..." maxlength="1000"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeReviewModal()">Cancelar</button>
+      <button id="submitReviewBtn" style="background:var(--accent);color:#fff" onclick="submitReview()">Enviar Avaliação</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentUser = null;
+let currentReviewServiceId = null;
+let currentRating = 0;
+
+function init(){
+  currentUser = requireAuth();
+  if(!currentUser) return;
+  renderProfile(currentUser);
+  loadQuotes();
+  loadServices();
+  loadTickets();
+  renderMetrics();
+  setupStarSelector();
+}
+
+function renderProfile(user){
+  document.getElementById('dashName').textContent = user.name;
+  document.getElementById('dashEmail').textContent = user.email;
+  document.getElementById('avatar').textContent = user.name.charAt(0).toUpperCase();
+}
+
+function statusLabel(status){
+  const labels = {
+    new: 'Novo',
+    reviewed: 'Em análise',
+    proposed: 'Proposta',
+    approved: 'Aprovado',
+    archived: 'Arquivado',
+    open: 'Aberto',
+    closed: 'Fechado',
+    completed: 'Concluído',
+    in_progress: 'Em andamento',
+    pending: 'Pendente'
+  };
+  return labels[status] || status || 'Novo';
+}
+
+function statusClass(status){
+  return String(status || 'new').replace(/[^a-z0-9_-]/gi,'');
+}
+
+function getQuotes(){
+  if(!currentUser || !validateUserId(currentUser.id)) return [];
+  try {
+    const all = JSON.parse(localStorage.getItem('lrm_quotes') || '[]');
+    return all.filter(q => q.userId === currentUser.id).sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+  } catch { return []; }
+}
+
+function loadQuotes(){
+  const quotes = getQuotes();
+  const list = document.getElementById('quotesList');
+  if(!list) return;
+  if(quotes.length===0){
+    list.innerHTML = '<div class="empty-state">Nenhum orçamento solicitado ainda</div>';
+    return;
+  }
+  list.innerHTML = quotes.map(q => {
+    const reply = q.adminReply ? '<div class="quote-reply"><strong>Resposta da LRM:</strong><br>'+esc(q.adminReply)+'</div>' : '';
+    const price = q.proposedPrice ? '<div class="quote-reply"><strong>Valor proposto:</strong> R$ '+Number(q.proposedPrice).toFixed(2).replace('.',',')+'</div>' : '';
+    return `
+      <div class="quote-item">
+        <div class="quote-info">
+          <strong>${esc(q.project || q.type || 'Orçamento')}</strong>
+          <div class="meta">${esc(q.type || 'Solução')} · ${esc(q.budget || 'A definir')} · ${q.created_at ? new Date(q.created_at).toLocaleDateString('pt-BR') : ''}</div>
+          <div class="quote-details">${esc(q.details || '')}</div>
+          ${price}
+          ${reply}
+        </div>
+        <span class="status-badge status-${statusClass(q.status)}">${statusLabel(q.status)}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function submitQuoteRequest(){
+  const type = sanitizeInput(document.getElementById('quoteType').value);
+  const project = sanitizeInput(document.getElementById('quoteProject').value);
+  const budget = sanitizeInput(document.getElementById('quoteBudget').value);
+  const timeline = sanitizeInput(document.getElementById('quoteTimeline').value);
+  const details = sanitizeInput(document.getElementById('quoteDetails').value);
+  if(!project || project.length < 3){alert('Informe um nome de projeto com pelo menos 3 caracteres');return;}
+  if(!details || details.length < 20){alert('Descreva o orçamento com pelo menos 20 caracteres');return;}
+  if(!currentUser) return;
+
+  try {
+    const all = JSON.parse(localStorage.getItem('lrm_quotes') || '[]');
+    const qid = parseInt(localStorage.getItem('lrm_nextId') || '1');
+    localStorage.setItem('lrm_nextId', String(qid+1));
+    all.push({
+      id: qid,
+      userId: currentUser.id,
+      clientName: currentUser.name,
+      clientEmail: currentUser.email,
+      clientPhone: currentUser.phone || '',
+      type: type,
+      project: project,
+      budget: budget,
+      timeline: timeline,
+      details: details,
+      status: 'new',
+      proposedPrice: '',
+      adminReply: '',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+    localStorage.setItem('lrm_quotes', JSON.stringify(all));
+  } catch(e){ alert('Erro ao salvar orçamento'); return; }
+
+  document.getElementById('quoteProject').value = '';
+  document.getElementById('quoteDetails').value = '';
+  document.getElementById('quoteBudget').value = 'A definir';
+  document.getElementById('quoteTimeline').value = 'Sem urgência';
+  loadQuotes();
+  renderMetrics();
+  alert('Solicitação enviada. A LRM vai analisar e responder por aqui.');
+}
+
+function renderMetrics(){
+  const quotes = getQuotes();
+  const services = getServices();
+  const tickets = getTickets();
+  const openCount = quotes.filter(q => !['approved','archived'].includes(q.status)).length + tickets.filter(t => t.status === 'open').length;
+  const mq=document.getElementById('metricQuotes'), ms=document.getElementById('metricServices'), mt=document.getElementById('metricTickets'), mo=document.getElementById('metricOpen');
+  if(mq)mq.textContent=quotes.length;
+  if(ms)ms.textContent=services.length;
+  if(mt)mt.textContent=tickets.length;
+  if(mo)mo.textContent=openCount;
+}
+
+function getServices(){
+  if(!currentUser || !validateUserId(currentUser.id)) return [];
+  try {
+    return JSON.parse(localStorage.getItem('lrm_services_'+currentUser.id) || '[]');
+  } catch { return []; }
+}
+
+function loadServices(){
+  const svc = getServices();
+  const list = document.getElementById('servicesList');
+  if(svc.length===0){
+    list.innerHTML = '<div class="empty-state">Nenhum serviço prestado ainda</div>';
+    return;
+  }
+  list.innerHTML = svc.map(s => {
+    const reviewed = window.hasReviewedService ? window.hasReviewedService(currentUser.id, s.id) : false;
+    let reviewBtn = '';
+    if(s.status==='completed' && !reviewed){
+      reviewBtn = '<button class="review-btn" onclick="openReview('+s.id+',\''+esc(s.service_name)+'\')" style="margin-top:0.5rem;font-size:0.75rem;padding:0.25rem 0.75rem;border:1px solid var(--accent);border-radius:4px;color:var(--accent);background:transparent;cursor:pointer;font-family:inherit;font-weight:600">Avaliar</button>';
+    } else if(s.status==='completed' && reviewed){
+      reviewBtn = '<span style="display:block;margin-top:0.375rem;font-size:0.75rem;color:var(--muted)">Avaliado</span>';
+    }
+    return `
+      <div class="service-item">
+        <div class="service-info">
+          <strong>${esc(s.service_name || 'Serviço')}</strong>
+          <div class="meta">${esc(s.description||'')}${s.created_at ? ' · '+new Date(s.created_at).toLocaleDateString('pt-BR') : ''}</div>
+          ${reviewBtn}
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="service-price">R$ ${Number(s.price).toFixed(2).replace('.',',')}</div>
+          <span class="status-badge status-${statusClass(s.status)}">${statusLabel(s.status)}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function getTickets(){
+  if(!currentUser || !validateUserId(currentUser.id)) return [];
+  try {
+    const all = JSON.parse(localStorage.getItem('lrm_tickets') || '[]');
+    return all.filter(t => t.userId === currentUser.id);
+  } catch { return []; }
+}
+
+function loadTickets(){
+  const tix = getTickets();
+  const list = document.getElementById('ticketsList');
+  if(tix.length===0){
+    list.innerHTML = '<div class="empty-state">Nenhum ticket aberto</div>';
+    return;
+  }
+  list.innerHTML = tix.map(t => `
+    <div class="ticket-item">
+      <div style="flex:1">
+        <div class="ticket-subject">${esc(t.subject || 'Ticket')}</div>
+        <div class="ticket-meta">${new Date(t.created_at).toLocaleDateString('pt-BR')} · <span class="status-badge status-${statusClass(t.status)}">${statusLabel(t.status)}</span></div>
+        <div class="ticket-message">${esc(t.message || '')}</div>
+        ${t.reply ? '<div class="ticket-reply"><strong>Resposta:</strong> '+esc(t.reply)+'</div>' : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openTicket(){
+  const subject = sanitizeInput(document.getElementById('ticketSubject').value);
+  const message = sanitizeInput(document.getElementById('ticketMessage').value);
+  if(!subject || subject.length < 3){alert('Assunto deve ter pelo menos 3 caracteres');return;}
+  if(!message || message.length < 10){alert('Mensagem deve ter pelo menos 10 caracteres');return;}
+  if(!currentUser) return;
+
+  try {
+    const all = JSON.parse(localStorage.getItem('lrm_tickets') || '[]');
+    const tid = parseInt(localStorage.getItem('lrm_nextId') || '1');
+    localStorage.setItem('lrm_nextId', String(tid+1));
+    all.push({
+      id: tid,
+      userId: currentUser.id,
+      subject: subject,
+      message: message,
+      reply: '',
+      status: 'open',
+      created_at: new Date().toISOString()
+    });
+    localStorage.setItem('lrm_tickets', JSON.stringify(all));
+  } catch(e){ alert('Erro ao salvar ticket'); return; }
+
+  document.getElementById('ticketSubject').value = '';
+  document.getElementById('ticketMessage').value = '';
+  loadTickets();
+  renderMetrics();
+}
+
+function handleLogout(){
+  clearSession();
+  window.location.href = 'index.html';
+}
+
+function setupStarSelector(){
+  document.querySelectorAll('.star-btn').forEach(function(el){
+    el.addEventListener('click', function(){
+      currentRating = parseInt(this.dataset.val);
+      document.querySelectorAll('.star-btn').forEach(function(s,i){
+        s.style.color = i < currentRating ? '#f59e0b' : 'var(--border)';
+      });
+    });
+    el.addEventListener('mouseenter', function(){
+      var val = parseInt(this.dataset.val);
+      document.querySelectorAll('.star-btn').forEach(function(s,i){
+        s.style.color = i < val ? '#fbbf24' : 'var(--border)';
+      });
+    });
+    el.addEventListener('mouseleave', function(){
+      document.querySelectorAll('.star-btn').forEach(function(s,i){
+        s.style.color = i < currentRating ? '#f59e0b' : 'var(--border)';
+      });
+    });
+  });
+}
+
+function openReview(serviceId, serviceName){
+  currentReviewServiceId = serviceId;
+  currentRating = 0;
+  document.getElementById('reviewServiceName').textContent = serviceName;
+  document.getElementById('reviewText').value = '';
+  document.querySelectorAll('.star-btn').forEach(function(s){s.style.color = 'var(--border)';});
+  document.getElementById('reviewModal').classList.add('show');
+}
+
+function closeReviewModal(){
+  document.getElementById('reviewModal').classList.remove('show');
+  currentReviewServiceId = null;
+  currentRating = 0;
+}
+
+function submitReview(){
+  if(!currentUser || !currentReviewServiceId){alert('Erro: usuário não identificado.');return;}
+  if(currentRating < 1){alert('Selecione de 1 a 5 estrelas.');return;}
+  var text = sanitizeInput(document.getElementById('reviewText').value);
+  if(!text || text.trim().length < 10){alert('Escreva um depoimento de pelo menos 10 caracteres.');return;}
+  if(window.hasReviewedService && window.hasReviewedService(currentUser.id, currentReviewServiceId)){
+    alert('Você já avaliou este serviço.');
+    closeReviewModal();
+    loadServices();
+    return;
+  }
+  var ok = window.submitReview(currentUser.id, currentUser.name, currentReviewServiceId, currentRating, text);
+  if(ok){
+    alert('Avaliação enviada com sucesso! Obrigado pelo feedback.');
+    closeReviewModal();
+    loadServices();
+  } else {
+    alert('Erro ao enviar avaliação. Tente novamente.');
+  }
+}
+
+init();
+</script>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="sidebar-drawer" id="sidebarDrawer">
+  <div class="sidebar-head">
+    <a href="index.html" class="nav-logo">LRM<span class="nav-logo-dot"></span>TECNO</a>
+    <button class="sidebar-close" aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="sidebar-body">
+    <a href="index.html" class="sidebar-link">Home</a>
+    <a href="servicos.html" class="sidebar-link">Serviços</a>
+    <a href="trabalhos.html" class="sidebar-link">Trabalhos</a>
+    <a href="referencias.html" class="sidebar-link">Referências</a>
+    <a href="parceiras.html" class="sidebar-link">Parceiras</a>
+    <a href="contato.html" class="sidebar-link">Contato</a>
+    <a href="dashboard.html" class="sidebar-link active">Minha Conta</a>
+    <a href="#" id="sidebarLogout" class="sidebar-link" style="color:oklch(50% 0.18 25)">Sair</a>
+  </div>
+  <div class="sidebar-foot">
+    <button class="theme-toggle" id="sidebarThemeToggle" aria-label="Alternar tema">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sun-icon"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="moon-icon" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <span class="sidebar-foot-text">LRM TECNO</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var tt=document.getElementById('themeToggle');
+  if(tt){
+    var s=tt.querySelector('.sun-icon'),m=tt.querySelector('.moon-icon');
+    var sv=localStorage.getItem('lrm-theme');
+    if(sv==='dark'){document.documentElement.classList.add('dark');if(s)s.style.display='none';if(m)m.style.display='block';}
+    tt.addEventListener('click',function(){
+      var h=document.documentElement;h.classList.toggle('dark');var d=h.classList.contains('dark');
+      localStorage.setItem('lrm-theme',d?'dark':'light');
+      if(s)s.style.display=d?'none':'block';if(m)m.style.display=d?'block':'none';
+      var stt=document.getElementById('sidebarThemeToggle');
+      if(stt){var ss=stt.querySelector('.sun-icon'),sm=stt.querySelector('.moon-icon');if(ss)ss.style.display=d?'none':'block';if(sm)sm.style.display=d?'block':'none';}
+    });
+  }
+  var ov=document.getElementById('sidebarOverlay'),dr=document.getElementById('sidebarDrawer');
+  if(ov&&dr){
+    function op(){ov.classList.add('open');dr.classList.add('open');document.body.style.overflow='hidden';}
+    function cl(){ov.classList.remove('open');dr.classList.remove('open');document.body.style.overflow='';}
+    document.querySelectorAll('.menu-toggle').forEach(function(b){b.addEventListener('click',op);});
+    ov.addEventListener('click',cl);
+    document.querySelectorAll('.sidebar-close').forEach(function(b){b.addEventListener('click',cl);});
+    document.querySelectorAll('.sidebar-link').forEach(function(b){b.addEventListener('click',cl);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')cl();});
+    window.addEventListener('resize',function(){if(window.innerWidth>768)cl();});
+    var stt=document.getElementById('sidebarThemeToggle');
+    if(stt){
+      var ss=stt.querySelector('.sun-icon'),sm=stt.querySelector('.moon-icon');
+      var sv=localStorage.getItem('lrm-theme');
+      if(sv==='dark'&&ss)ss.style.display='none';if(sv==='dark'&&sm)sm.style.display='block';
+      stt.addEventListener('click',function(){
+        var h=document.documentElement;h.classList.toggle('dark');var d=h.classList.contains('dark');
+        localStorage.setItem('lrm-theme',d?'dark':'light');
+        if(ss)ss.style.display=d?'none':'block';if(sm)sm.style.display=d?'block':'none';
+        if(tt){var ns=tt.querySelector('.sun-icon'),nm=tt.querySelector('.moon-icon');if(ns)ns.style.display=d?'none':'block';if(nm)nm.style.display=d?'block':'none';}
+      });
+    }
+  }
+  var lo=document.getElementById('sidebarLogout');
+  if(lo&&typeof handleLogout==='function')lo.addEventListener('click',function(e){e.preventDefault();handleLogout();});
+})();
+</script>
+
+</body>
+</html>
