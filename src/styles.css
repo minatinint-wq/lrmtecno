@@ -4,7 +4,7 @@
   --bg:oklch(7% 0.012 260);
   --surface:oklch(13% 0.018 260);
   --ink:oklch(90% 0.008 90);
-  --muted:oklch(58% 0.02 260);
+  --muted:oklch(70% 0.04 260);
   --line:oklch(20% 0.025 260);
   --accent:oklch(72% 0.16 260);
   --accent2:oklch(58% 0.12 290);
@@ -79,7 +79,7 @@ h1,h2,h3,p{margin-top:0}
 .hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
 .hero-actions.center{justify-content:center}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.9rem;padding:.75rem 1.15rem;border-radius:var(--radius);border:1px solid var(--line);color:var(--ink);background:transparent;transition:all .35s var(--ease)}
-.btn.outline{border:1px solid var(--line);background:transparent;color:var(--muted)}.btn.outline:hover{border-color:var(--accent);color:var(--ink)}
+.btn.outline{border:1px solid var(--line);background:color-mix(in srgb var(--surface) 50%,transparent);color:var(--ink)}.btn.outline:hover{border-color:var(--accent)}
 .btn.whatsapp{background:#1a8f45;border-color:#1a8f45;color:#fff}.btn.whatsapp:hover{background:#137a3a}
 .btn.full{width:100%}
 .hero-dashboard{position:absolute;z-index:2;right:clamp(1rem,4vw,4rem);bottom:5rem;width:min(420px,40vw);background:color-mix(in srgb var(--surface) 70%,transparent);border:1px solid color-mix(in srgb var(--line) 50%,transparent);border-radius:8px;backdrop-filter:blur(20px);box-shadow:0 30px 80px -12px #000;overflow:hidden}
@@ -130,7 +130,7 @@ h1,h2,h3,p{margin-top:0}
 
 .detail-hero{position:relative;overflow:hidden;padding:9rem clamp(1.5rem,6vw,5rem) 6rem;min-height:480px;display:flex;align-items:flex-end;border-bottom:1px solid var(--line)}
 .detail-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center}
-.detail-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb var(--bg) 40%,transparent) 0%,color-mix(in srgb var(--bg) 95%,#000) 80%)}
+.detail-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb var(--bg) 30%,#000) 0%,color-mix(in srgb var(--bg) 98%,#000) 70%)}
 .detail-hero-content{position:relative;z-index:1;max-width:860px;color:var(--ink)}
 .detail-hero-content h1{font-family:var(--font-display);font-size:clamp(2.8rem,8vw,6rem);line-height:.86;font-weight:500;margin-bottom:.8rem;letter-spacing:-.01em}
 .detail-hero-content p{color:var(--muted);font-weight:300;max-width:620px;line-height:1.7}

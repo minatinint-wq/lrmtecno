@@ -543,7 +543,7 @@ function Home({ go }) {
           <p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p>
         </Reveal>
         <div className="service-grid">
-          {services.slice(0, 4).map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.08} go={go} />)}
+          {services.map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.08} go={go} />)}
         </div>
       </section>
       <PortalPreview go={go} />
@@ -622,7 +622,7 @@ function ServiceDetail({ slug, go }) {
         <div className="detail-hero-content">
           <Reveal>
             <button className="detail-back" onClick={() => go('/servicos')}>&larr; Voltar</button>
-            <span className="eyebrow" style={{ opacity: 0.5 }}>{service.tag}</span>
+            <span className="eyebrow">{service.tag}</span>
             <h1>{service.title}</h1>
             <p>{service.desc}</p>
           </Reveal>
