@@ -236,6 +236,29 @@ function read(key, fallback) {
   }
 }
 
+function getReviews() {
+  try {
+    return JSON.parse(localStorage.getItem('lrm_reviews') || '[]').sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  } catch { return []; }
+}
+
+function submitReview(userId, userName, serviceId, rating, text) {
+  if (!userId || !rating || rating < 1 || rating > 5 || !text || text.trim().length < 10) return false;
+  try {
+    const reviews = JSON.parse(localStorage.getItem('lrm_reviews') || '[]');
+    if (reviews.some(r => r.userId === userId && r.serviceId === serviceId)) return false;
+    reviews.push({ userId, clientName: userName.split(' ')[0], serviceId, rating: Math.round(rating), text: text.trim(), createdAt: new Date().toISOString() });
+    localStorage.setItem('lrm_reviews', JSON.stringify(reviews));
+    return true;
+  } catch { return false; }
+}
+
+function hasReviewedService(userId, serviceId) {
+  try {
+    return JSON.parse(localStorage.getItem('lrm_reviews') || '[]').some(r => r.userId === userId && r.serviceId === serviceId);
+  } catch { return false; }
+}
+
 function write(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
@@ -742,8 +765,8 @@ const testimonials = [
 ];
 
 function ReferencesPage({ go }) {
-  const reviews = read('lrm_react_reviews', []);
-  const data = reviews.length ? reviews : testimonials;
+  const reviews = getReviews();
+  const data = reviews.length ? reviews.map(r => ({ name: r.clientName, role: '', company: '', text: r.text, rating: r.rating })) : testimonials;
   return (
     <Page>
       <PageHero label="Referências" title="Confiança construída em cada entrega" text="Depoimentos e avaliações registrados no portal ao final de cada serviço." />
@@ -945,7 +968,11 @@ function DashboardPage({ user, go, setUser }) {
   if (!user) return <RequireLogin go={go} />;
   const [quotes, setQuotes] = useState(read('lrm_react_quotes', []).filter((q) => q.userId === user.id));
   const [tickets, setTickets] = useState(read('lrm_react_tickets', []).filter((t) => t.userId === user.id));
-  const [servicesList] = useState(read(`lrm_react_services_${user.id}`, []));
+  const [servicesList, setServicesList] = useState(read(`lrm_react_services_${user.id}`, []));
+  const [reviewing, setReviewing] = useState(null);
+  const [reviewStar, setReviewStar] = useState(0);
+  const [reviewText, setReviewText] = useState('');
+  const [reviewHover, setReviewHover] = useState(0);
   const [quote, setQuote] = useState({ type: 'Site premium', project: '', budget: 'A definir', timeline: 'Até 30 dias', details: '' });
   const [ticket, setTicket] = useState({ subject: '', message: '' });
 
@@ -996,7 +1023,30 @@ function DashboardPage({ user, go, setUser }) {
           </form>
         </Reveal>
         <ListPanel title="Meus orçamentos" items={quotes} type="quote" />
-        <ListPanel title="Serviços" items={servicesList} type="service" />
+        <Reveal className="panel">
+          <h2>Serviços</h2>
+          <div className="list">
+            {!servicesList.length && <div className="empty">Nada por aqui ainda.</div>}
+            {servicesList.map((s) => {
+              const reviewed = hasReviewedService(user.id, s.id);
+              return (
+                <div className="list-row" key={s.id}>
+                  <div>
+                    <strong>{s.service_name}</strong>
+                    <p>{s.description || ''}</p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    {s.status === 'completed' && !reviewed && (
+                      <button className="btn-mini" onClick={() => setReviewing(s)}>Avaliar</button>
+                    )}
+                    {s.status === 'completed' && reviewed && <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>Avaliado</span>}
+                    <span className={`status ${s.status || 'new'}`}>{statusLabel(s.status)}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
         <Reveal className="panel">
           <h2>Tickets</h2>
           <ListItems items={tickets} type="ticket" />
@@ -1007,6 +1057,51 @@ function DashboardPage({ user, go, setUser }) {
           </form>
         </Reveal>
       </section>
+      <AnimatePresence>
+        {reviewing && (
+          <motion.div className="review-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div className="review-modal" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}>
+              <h3>Avaliar Serviço</h3>
+              <p className="review-service-name">{reviewing.service_name}</p>
+              <div className="review-stars">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    className={`review-star${(reviewHover || reviewStar) >= star ? ' active' : ''}`}
+                    onClick={() => setReviewStar(star)}
+                    onMouseEnter={() => setReviewHover(star)}
+                    onMouseLeave={() => setReviewHover(0)}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+              <textarea
+                className="review-textarea"
+                placeholder="Conte sua experiência com o serviço..."
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                rows={4}
+              />
+              <div className="review-actions">
+                <button className="btn-cancel-review" onClick={() => { setReviewing(null); setReviewStar(0); setReviewText(''); }}>Cancelar</button>
+                <button className="btn-submit-review" onClick={() => {
+                  if (reviewStar < 1) return;
+                  if (reviewText.trim().length < 10) return;
+                  const ok = submitReview(user.id, user.name, reviewing.id, reviewStar, reviewText);
+                  if (ok) {
+                    const updated = servicesList.map(s => s.id === reviewing.id ? { ...s, _reviewed: true } : s);
+                    setServicesList(updated);
+                    setReviewing(null);
+                    setReviewStar(0);
+                    setReviewText('');
+                  }
+                }}>Enviar Avaliação</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Page>
   );
 }
@@ -1086,13 +1181,82 @@ function AdminPage({ user, go, setUser }) {
         <Metric label="Orçamentos" value={quotes.length} />
         <Metric label="Tickets abertos" value={tickets.filter((t) => t.status === 'open').length} />
         <div className="admin-tabs">
-          {['quotes', 'clients', 'tickets'].map((t) => <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>{t === 'quotes' ? 'Orçamentos' : t === 'clients' ? 'Clientes' : 'Tickets'}</button>)}
+          {['quotes', 'clients', 'services', 'tickets'].map((t) => <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>{t === 'quotes' ? 'Orçamentos' : t === 'clients' ? 'Clientes' : t === 'services' ? 'Serviços' : 'Tickets'}</button>)}
         </div>
         {tab === 'quotes' && <AdminQuotes quotes={quotes} saveQuote={saveQuote} />}
         {tab === 'clients' && <AdminClients users={users} />}
+        {tab === 'services' && <AdminServices users={users} />}
         {tab === 'tickets' && <AdminTickets tickets={tickets} replyTicket={replyTicket} />}
       </section>
     </Page>
+  );
+}
+
+function AdminServices({ users }) {
+  const [clientId, setClientId] = useState(null);
+  const [services, setServices] = useState([]);
+  const [form, setForm] = useState({ service_name: '', description: '', price: '', status: 'pending' });
+  const selectClient = (id) => {
+    setClientId(id);
+    setServices(read(`lrm_react_services_${id}`, []));
+  };
+  const addService = () => {
+    if (!form.service_name || !clientId) return;
+    const svc = read(`lrm_react_services_${clientId}`, []);
+    svc.push({ ...form, id: Date.now(), price: Number(form.price) || 0, created_at: new Date().toISOString() });
+    write(`lrm_react_services_${clientId}`, svc);
+    setServices(svc);
+    setForm({ service_name: '', description: '', price: '', status: 'pending' });
+  };
+  const updateStatus = (serviceId, status) => {
+    const svc = services.map(s => s.id === serviceId ? { ...s, status } : s);
+    write(`lrm_react_services_${clientId}`, svc);
+    setServices(svc);
+  };
+  const removeService = (serviceId) => {
+    const svc = services.filter(s => s.id !== serviceId);
+    write(`lrm_react_services_${clientId}`, svc);
+    setServices(svc);
+  };
+  return (
+    <Reveal className="panel admin-panel">
+      <h2>Gerenciar Serviços por Cliente</h2>
+      <select className="admin-select" value={clientId || ''} onChange={(e) => selectClient(Number(e.target.value))}>
+        <option value="">Selecione um cliente</option>
+        {users.map((u) => <option key={u.id} value={u.id}>{u.name} — {u.email}</option>)}
+      </select>
+      {clientId && (
+        <div className="admin-services-section" style={{ marginTop: '1rem' }}>
+          <div className="admin-add-service" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1rem' }}>
+            <input className="admin-input" placeholder="Nome do serviço" value={form.service_name} onChange={(e) => setForm({ ...form, service_name: e.target.value })} />
+            <input className="admin-input" placeholder="Descrição" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+            <input className="admin-input" type="number" placeholder="Valor R$" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
+            <select className="admin-select" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
+              <option value="pending">Pendente</option>
+              <option value="in_progress">Em andamento</option>
+              <option value="completed">Concluído</option>
+            </select>
+            <button className="admin-btn" onClick={addService} style={{ gridColumn: '1/-1' }}>Adicionar serviço</button>
+          </div>
+          {!services.length ? <div className="empty">Nenhum serviço registrado.</div> : services.map((s) => (
+            <div className="admin-row" key={s.id}>
+              <div>
+                <strong>{s.service_name}</strong>
+                <p>{s.description || ''} {s.price ? `· R$ ${Number(s.price).toFixed(2).replace('.', ',')}` : ''}</p>
+              </div>
+              <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+                <select className="admin-select small" value={s.status} onChange={(e) => updateStatus(s.id, e.target.value)}>
+                  <option value="pending">Pendente</option>
+                  <option value="in_progress">Em andamento</option>
+                  <option value="completed">Concluído</option>
+                </select>
+                <button className="admin-btn danger" onClick={() => removeService(s.id)}>Remover</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </Reveal>
   );
 }
 
