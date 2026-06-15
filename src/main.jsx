@@ -56,24 +56,24 @@ const services = [
     packages: [],
     subCategories: [
       { slug: 'direcao-visual', label: 'Direção visual', packages: [
-        { name: 'Logotipo + Paleta', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Logotipo, paleta de cores e tipografia para sua marca.', features: ['Logotipo vetorizado', 'Paleta de cores', 'Tipografia definida', 'Arquivos entregues'], popular: false },
-        { name: 'Identidade Completa', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Identidade visual completa com manual e aplicações.', features: ['Logotipo + variações', 'Manual de marca', 'Cartão/papelaria', 'Aplicações digitais'], popular: true },
-        { name: 'Brand System', price: 'R$ 2.497', period: '', tag: 'Projeto', desc: 'Sistema de marca com guidelines e assets para equipe.', features: ['Guidelines completas', 'Componentes de marca', 'Assets para dev', 'Workshop presencial'], popular: false }
+        { name: 'Logotipo + Paleta', price: 'R$ 397', period: '', tag: 'Avulso', desc: 'Logotipo, paleta de cores e tipografia para sua marca.', features: ['Logotipo vetorizado', 'Paleta de cores', 'Tipografia definida', 'Arquivos entregues'], popular: false },
+        { name: 'Identidade Completa', price: 'R$ 897', period: '', tag: 'Avulso', desc: 'Identidade visual completa com manual e aplicações.', features: ['Logotipo + variações', 'Manual de marca', 'Cartão/papelaria', 'Aplicações digitais'], popular: true },
+        { name: 'Brand System', price: 'R$ 1.497', period: '', tag: 'Projeto', desc: 'Sistema de marca com guidelines e assets para equipe.', features: ['Guidelines completas', 'Componentes de marca', 'Assets para dev', 'Workshop presencial'], popular: false }
       ]},
       { slug: 'landing-pages', label: 'Landing pages', packages: [
-        { name: 'Landing Page Simples', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Página única responsiva com formulário de captura.', features: ['Design premium', 'Responsivo', 'Formulário integrado', 'Animação sutil'], popular: false },
-        { name: 'Landing + Automação', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Landing page com integração de CRM e disparo de email.', features: ['Design exclusivo', 'CRM integrado', 'Email automático', 'Métricas'], popular: true },
-        { name: 'Landing + Copy', price: 'R$ 2.497', period: '', tag: 'Projeto', desc: 'Landing page com copy de conversão e teste A/B.', features: ['Copy profissional', 'Teste A/B', 'SEO otimizado', 'Relatório'], popular: false }
+        { name: 'Landing Page Simples', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Página única responsiva com formulário de captura.', features: ['Design premium', 'Responsivo', 'Formulário integrado', 'Animação sutil'], popular: false },
+        { name: 'Landing + Automação', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Landing page com integração de CRM e disparo de email.', features: ['Design exclusivo', 'CRM integrado', 'Email automático', 'Métricas'], popular: true },
+        { name: 'Landing + Copy', price: 'R$ 1.497', period: '', tag: 'Projeto', desc: 'Landing page com copy de conversão e teste A/B.', features: ['Copy profissional', 'Teste A/B', 'SEO otimizado', 'Relatório'], popular: false }
       ]},
       { slug: 'ui-responsiva', label: 'UI responsiva', packages: [
-        { name: 'UI Kit (Figma)', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Kit de componentes no Figma com telas responsivas.', features: ['Sistema de componentes', 'Tipografia e paleta', 'Grid responsivo', 'Arquivo Figma'], popular: false },
-        { name: 'UI + Protótipo', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'UI responsiva completa com protótipo navegável.', features: ['Componentes reutilizáveis', 'Todas as telas', 'Protótipo linkado', 'Handoff para dev'], popular: true },
-        { name: 'Design System', price: 'R$ 2.997', period: '', tag: 'Projeto', desc: 'Sistema de design completo com documentação e código.', features: ['Design tokens', 'Componentes CSS/React', 'Documentação', 'Suporte implementação'], popular: false }
+        { name: 'UI Kit (Figma)', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Kit de componentes no Figma com telas responsivas.', features: ['Sistema de componentes', 'Tipografia e paleta', 'Grid responsivo', 'Arquivo Figma'], popular: false },
+        { name: 'UI + Protótipo', price: 'R$ 1.197', period: '', tag: 'Avulso', desc: 'UI responsiva completa com protótipo navegável.', features: ['Componentes reutilizáveis', 'Todas as telas', 'Protótipo linkado', 'Handoff para dev'], popular: true },
+        { name: 'Design System', price: 'R$ 1.997', period: '', tag: 'Projeto', desc: 'Sistema de design completo com documentação e código.', features: ['Design tokens', 'Componentes CSS/React', 'Documentação', 'Suporte implementação'], popular: false }
       ]},
       { slug: 'copy-conversao', label: 'Copy de conversão', packages: [
-        { name: 'Copy Landing', price: 'R$ 297', period: '', tag: 'Avulso', desc: 'Textos persuasivos para landing page ou anúncio.', features: ['Headline + sub', 'Benefícios', 'CTA persuasivo', '2 revisões'], popular: false },
-        { name: 'Copy Completo', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Copy para site completo, blog e redes sociais.', features: ['Todas as páginas', 'Blog posts (3)', 'Redes sociais (5)', 'SEO textual'], popular: true },
-        { name: 'Estratégia + Redação', price: 'R$ 997', period: '', tag: 'Projeto', desc: 'Estratégia de conteúdo + redação com calendário editorial.', features: ['Estratégia definida', 'Calendário mensal', 'Redação semanal', 'Relatórios'], popular: false }
+        { name: 'Copy Landing', price: 'R$ 197', period: '', tag: 'Avulso', desc: 'Textos persuasivos para landing page ou anúncio.', features: ['Headline + sub', 'Benefícios', 'CTA persuasivo', '2 revisões'], popular: false },
+        { name: 'Copy Completo', price: 'R$ 397', period: '', tag: 'Avulso', desc: 'Copy para site completo, blog e redes sociais.', features: ['Todas as páginas', 'Blog posts (3)', 'Redes sociais (5)', 'SEO textual'], popular: true },
+        { name: 'Estratégia + Redação', price: 'R$ 697', period: '', tag: 'Projeto', desc: 'Estratégia de conteúdo + redação com calendário editorial.', features: ['Estratégia definida', 'Calendário mensal', 'Redação semanal', 'Relatórios'], popular: false }
       ]}
     ]
   },
@@ -89,17 +89,17 @@ const services = [
     packages: [],
     subCategories: [
       { slug: 'landing-page', label: 'Landing Page', packages: [
-        { name: 'Landing Page Simples', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Página única responsiva com performance e SEO.', features: ['Mobile-first', 'Performance otimizada', 'SEO base', 'Hospedagem 1 ano'], popular: false },
-        { name: 'Landing Page Premium', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Landing page com animações, formulário e integração.', features: ['Design premium', 'Animações suaves', 'Formulário integrado', 'Hospedagem 1 ano'], popular: true },
-        { name: 'Landing + Automação', price: 'R$ 1.997', period: '', tag: 'Projeto', desc: 'Landing page com CRM e automação de disparo.', features: ['CRM integrado', 'Email automático', 'Métricas', 'Suporte 3 meses'], popular: false }
+        { name: 'Landing Page Simples', price: 'R$ 597', period: '', tag: 'Avulso', desc: 'Página única responsiva com performance e SEO.', features: ['Mobile-first', 'Performance otimizada', 'SEO base', 'Hospedagem 1 ano'], popular: false },
+        { name: 'Landing Page Premium', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Landing page com animações, formulário e integração.', features: ['Design premium', 'Animações suaves', 'Formulário integrado', 'Hospedagem 1 ano'], popular: true },
+        { name: 'Landing + Automação', price: 'R$ 1.497', period: '', tag: 'Projeto', desc: 'Landing page com CRM e automação de disparo.', features: ['CRM integrado', 'Email automático', 'Métricas', 'Suporte 3 meses'], popular: false }
       ]},
       { slug: 'institucional', label: 'Site Institucional', packages: [
-        { name: 'Site Institucional Básico', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Site institucional com 5 páginas e formulário.', features: ['5 páginas', 'Responsivo', 'Formulário de contato', 'Hospedagem 1 ano'], popular: false },
-        { name: 'Site Institucional Completo', price: 'R$ 2.997', period: '', tag: 'Avulso', desc: 'Site completo com blog, galeria e integrações.', features: ['Responsivo', 'Blog integrado', 'Galeria de imagens', 'Suporte 3 meses'], popular: true },
-        { name: 'Site Institucional Premium', price: 'R$ 4.997', period: '', tag: 'Projeto', desc: 'Site completo + dashboard administrativo + SEO avançado.', features: ['Dashboard admin', 'SEO avançado', 'Blog + galeria', 'Suporte 6 meses'], popular: false }
+        { name: 'Site Institucional Básico', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Site institucional com 5 páginas e formulário.', features: ['5 páginas', 'Responsivo', 'Formulário de contato', 'Hospedagem 1 ano'], popular: false },
+        { name: 'Site Institucional Completo', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Site completo com blog, galeria e integrações.', features: ['Responsivo', 'Blog integrado', 'Galeria de imagens', 'Suporte 3 meses'], popular: true },
+        { name: 'Site Institucional Premium', price: 'R$ 3.997', period: '', tag: 'Projeto', desc: 'Site completo + dashboard administrativo + SEO avançado.', features: ['Dashboard admin', 'SEO avançado', 'Blog + galeria', 'Suporte 6 meses'], popular: false }
       ]},
       { slug: 'portal-cms', label: 'Portal + CMS', packages: [
-        { name: 'CMS Simples', price: 'R$ 4.997', period: '', tag: 'Avulso', desc: 'Portal com gerenciador de conteúdo próprio.', features: ['CMS personalizado', 'Painel admin', 'Blog + páginas', 'Treinamento'], popular: false },
+        { name: 'CMS Simples', price: 'R$ 3.997', period: '', tag: 'Avulso', desc: 'Portal com gerenciador de conteúdo próprio.', features: ['CMS personalizado', 'Painel admin', 'Blog + páginas', 'Treinamento'], popular: false },
         { name: 'Portal Completo', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Portal completo com múltiplos módulos e usuários.', features: ['CMS personalizado', 'Múltiplos idiomas', 'Níveis de usuário', 'Suporte 6 meses'], popular: true },
         { name: 'Portal + Aplicativo', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Portal + aplicativo mobile integrado ao CMS.', features: ['Portal completo', 'App mobile', 'API integrada', 'Treinamento equipe'], popular: false }
       ]}
@@ -115,8 +115,8 @@ const services = [
     price: 'Projeto personalizado',
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&auto=format&fit=crop',
     packages: [
-      { name: 'Módulo Único', price: 'R$ 3.497', period: '', tag: 'Avulso', desc: 'Módulo específico para automatizar um processo.', features: ['Cadastro inteligente', 'Relatórios básicos', 'Exportação dados', 'Suporte 30 dias'], popular: false },
-      { name: 'Sistema Completo', price: 'R$ 7.497', period: '', tag: 'Avulso', desc: 'Sistema com múltiplos módulos e painel admin.', features: ['Múltiplos módulos', 'Dashboard gerencial', 'Controle de acesso', 'Suporte 6 meses'], popular: true },
+        { name: 'Módulo Único', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Módulo específico para automatizar um processo.', features: ['Cadastro inteligente', 'Relatórios básicos', 'Exportação dados', 'Suporte 30 dias'], popular: false },
+      { name: 'Sistema Completo', price: 'R$ 4.997', period: '', tag: 'Avulso', desc: 'Sistema com múltiplos módulos e painel admin.', features: ['Múltiplos módulos', 'Dashboard gerencial', 'Controle de acesso', 'Suporte 6 meses'], popular: true },
       { name: 'Plataforma', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Plataforma integrada com API e app.', features: ['API REST', 'App mobile', 'Escalável', 'Treinamento equipe'], popular: false }
     ]
   },
@@ -130,8 +130,8 @@ const services = [
     price: 'Plano consultivo',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop',
     packages: [
-      { name: 'CRM Básico', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Gestão de leads e funil comercial simplificado.', features: ['Captura de leads', 'Funil visual', 'Etiquetas', 'Integração WhatsApp'], popular: false },
-      { name: 'CRM Profissional', price: 'R$ 4.997', period: '', tag: 'Avulso', desc: 'CRM completo com automação e comissões.', features: ['Automação de follow-up', 'Comissões', 'Relatórios', 'API para integração'], popular: true },
+        { name: 'CRM Básico', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Gestão de leads e funil comercial simplificado.', features: ['Captura de leads', 'Funil visual', 'Etiquetas', 'Integração WhatsApp'], popular: false },
+        { name: 'CRM Profissional', price: 'R$ 2.997', period: '', tag: 'Avulso', desc: 'CRM completo com automação e comissões.', features: ['Automação de follow-up', 'Comissões', 'Relatórios', 'API para integração'], popular: true },
       { name: 'CRM Enterprise', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'CRM + automação + painel exclusivo.', features: ['Módulo financeiro', 'BI integrado', 'App mobile', 'Suporte prioritário'], popular: false }
     ]
   },
@@ -145,30 +145,30 @@ const services = [
     price: 'Conforme diagnóstico',
     image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=900&auto=format&fit=crop',
     packages: [
-      { name: 'Limpeza', price: 'R$ 99', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para desktop.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
-      { name: 'Limpeza + Formatação', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers atualizados.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
-      { name: 'Plano Mensal', price: 'R$ 69', period: '/mês', tag: 'Mensal', desc: 'Manutenção preventiva mensal com suporte remoto ilimitado.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+      { name: 'Limpeza', price: 'R$ 79', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para desktop.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
+      { name: 'Limpeza + Formatação', price: 'R$ 119', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers atualizados.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
+      { name: 'Plano Mensal', price: 'R$ 49', period: '/mês', tag: 'Mensal', desc: 'Manutenção preventiva mensal com suporte remoto ilimitado.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
     ],
     subCategories: [
       { slug: 'desktop', label: 'Desktop', packages: [
-        { name: 'Limpeza', price: 'R$ 99', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para desktop.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
-        { name: 'Limpeza + Formatação', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers atualizados.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
-        { name: 'Plano Mensal', price: 'R$ 69', period: '/mês', tag: 'Mensal', desc: 'Manutenção preventiva mensal com suporte remoto ilimitado.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+        { name: 'Limpeza', price: 'R$ 79', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para desktop.', features: ['Limpeza interna', 'Troca pasta térmica', 'Limpeza conectores', 'Teste temperatura'], popular: false },
+        { name: 'Limpeza + Formatação', price: 'R$ 119', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers atualizados.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
+        { name: 'Plano Mensal', price: 'R$ 49', period: '/mês', tag: 'Mensal', desc: 'Manutenção preventiva mensal com suporte remoto ilimitado.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
       ]},
       { slug: 'notebook', label: 'Notebook', packages: [
-        { name: 'Limpeza', price: 'R$ 149', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para notebook.', features: ['Desmontagem parcial', 'Limpeza interna', 'Troca pasta térmica', 'Teste temperatura'], popular: false },
-        { name: 'Limpeza + Formatação', price: 'R$ 199', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
-        { name: 'Plano Mensal', price: 'R$ 89', period: '/mês', tag: 'Mensal', desc: 'Manutenção mensal com suporte prioritário.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+        { name: 'Limpeza', price: 'R$ 119', period: '', tag: 'Avulso', desc: 'Limpeza preventiva completa para notebook.', features: ['Desmontagem parcial', 'Limpeza interna', 'Troca pasta térmica', 'Teste temperatura'], popular: false },
+        { name: 'Limpeza + Formatação', price: 'R$ 169', period: '', tag: 'Avulso', desc: 'Limpeza + formatação com SO e drivers.', features: ['Limpeza completa', 'Formatação + SO', 'Drivers atualizados', 'Backup de arquivos'], popular: true },
+        { name: 'Plano Mensal', price: 'R$ 69', period: '/mês', tag: 'Mensal', desc: 'Manutenção mensal com suporte prioritário.', features: ['Limpeza mensal', 'Verificação hardware', 'Suporte remoto', 'Desconto avulsos'], popular: false }
       ]},
       { slug: 'upgrade', label: 'Upgrade', packages: [
-        { name: 'Memória RAM', price: 'R$ 129', period: '+ peça', tag: 'Mão de obra', desc: 'Instalação de memória RAM com teste de compatibilidade.', features: ['Instalação RAM', 'Teste compatibilidade', 'Teste estabilidade', 'Otimização BIOS'], popular: false },
-        { name: 'SSD + Clonagem', price: 'R$ 169', period: '+ peça', tag: 'Mão de obra', desc: 'Instalação de SSD com clonagem de disco.', features: ['Clonagem disco', 'Instalação SSD', 'Ativação TRIM', 'Teste velocidade'], popular: true },
+        { name: 'Memória RAM', price: 'R$ 79', period: '+ peça', tag: 'Mão de obra', desc: 'Instalação de memória RAM com teste de compatibilidade.', features: ['Instalação RAM', 'Teste compatibilidade', 'Teste estabilidade', 'Otimização BIOS'], popular: false },
+        { name: 'SSD + Clonagem', price: 'R$ 99', period: '+ peça', tag: 'Mão de obra', desc: 'Instalação de SSD com clonagem de disco.', features: ['Clonagem disco', 'Instalação SSD', 'Ativação TRIM', 'Teste velocidade'], popular: true },
         { name: 'Geral (CPU/GPU)', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Upgrade completo de hardware sob consulta.', features: ['Análise compatibilidade', 'Instalação completa', 'Teste desempenho', 'Otimização sistema'], popular: false }
       ]},
       { slug: 'otimizacao', label: 'Otimização', packages: [
-        { name: 'Otimização de SO', price: 'R$ 79', period: '', tag: 'Avulso', desc: 'Limpeza de disco, inicialização e serviços.', features: ['Limpeza disco', 'Desfragmentação', 'Startup otimizada', 'Remoção malware'], popular: false },
-        { name: 'Pacote Completo', price: 'R$ 129', period: '', tag: 'Avulso', desc: 'Otimização completa + diagnóstico de hardware.', features: ['Otimização SO', 'Diagnóstico HW', 'Configuração SSD', 'Atualização drivers'], popular: true },
-        { name: 'Plano Trimestral', price: 'R$ 49', period: '/mês', tag: 'Trimestral', desc: 'Otimização trimestral com suporte remoto.', features: ['Otimização trimestral', 'Monitoramento', 'Suporte remoto', 'Desconto avulsos'], popular: false }
+        { name: 'Otimização de SO', price: 'R$ 59', period: '', tag: 'Avulso', desc: 'Limpeza de disco, inicialização e serviços.', features: ['Limpeza disco', 'Desfragmentação', 'Startup otimizada', 'Remoção malware'], popular: false },
+        { name: 'Pacote Completo', price: 'R$ 99', period: '', tag: 'Avulso', desc: 'Otimização completa + diagnóstico de hardware.', features: ['Otimização SO', 'Diagnóstico HW', 'Configuração SSD', 'Atualização drivers'], popular: true },
+        { name: 'Plano Trimestral', price: 'R$ 39', period: '/mês', tag: 'Trimestral', desc: 'Otimização trimestral com suporte remoto.', features: ['Otimização trimestral', 'Monitoramento', 'Suporte remoto', 'Desconto avulsos'], popular: false }
       ]}
     ]
   },
@@ -184,24 +184,24 @@ const services = [
     packages: [],
     subCategories: [
       { slug: 'diagnostico', label: 'Diagnóstico', packages: [
-        { name: 'Consultoria Básica', price: 'R$ 1.499', period: '', tag: 'Avulso', desc: 'Diagnóstico rápido e recomendações estratégicas para melhorar a infraestrutura de TI.', features: ['Diagnóstico inicial', 'Relatório de recomendações', 'Mapeamento de processos', 'Sugestão de ferramentas', '1 reunião de alinhamento'], popular: false },
-        { name: 'Diagnóstico Avançado', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Análise aprofundada com plano de ação detalhado.', features: ['Auditoria completa', 'Mapeamento de riscos', 'Plano de ação', 'Apresentação executiva'], popular: true },
-        { name: 'Diagnóstico + Roadmap', price: 'R$ 3.497', period: '', tag: 'Avulso', desc: 'Diagnóstico completo com roadmap técnico de 12 meses.', features: ['Diagnóstico total', 'Roadmap mensal', 'Orçamento projetado', 'Suporte 30 dias'], popular: false }
+        { name: 'Consultoria Básica', price: 'R$ 997', period: '', tag: 'Avulso', desc: 'Diagnóstico rápido e recomendações estratégicas para melhorar a infraestrutura de TI.', features: ['Diagnóstico inicial', 'Relatório de recomendações', 'Mapeamento de processos', 'Sugestão de ferramentas', '1 reunião de alinhamento'], popular: false },
+        { name: 'Diagnóstico Avançado', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Análise aprofundada com plano de ação detalhado.', features: ['Auditoria completa', 'Mapeamento de riscos', 'Plano de ação', 'Apresentação executiva'], popular: true },
+        { name: 'Diagnóstico + Roadmap', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Diagnóstico completo com roadmap técnico de 12 meses.', features: ['Diagnóstico total', 'Roadmap mensal', 'Orçamento projetado', 'Suporte 30 dias'], popular: false }
       ]},
       { slug: 'projetos', label: 'Projetos', packages: [
-        { name: 'Projeto Simples', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Projeto de TI com escopo definido e cronograma.', features: ['Escopo detalhado', 'Cronograma', 'Orçamento', 'Apresentação'], popular: false },
-        { name: 'Projeto Completo', price: 'R$ 3.499', period: '', tag: 'Avulso', desc: 'Implantação completa com ferramentas e treinamento.', features: ['Implantação ferramentas', 'Treinamento equipe', 'Documentação', 'Suporte 2 meses'], popular: true },
-        { name: 'Transformação Digital', price: 'R$ 5.997', period: '', tag: 'Projeto', desc: 'Projeto de transformação digital com automação e cultura data-driven.', features: ['Automação processos', 'Data-driven', 'Integrações', 'Gestão de mudança'], popular: false }
+        { name: 'Projeto Simples', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Projeto de TI com escopo definido e cronograma.', features: ['Escopo detalhado', 'Cronograma', 'Orçamento', 'Apresentação'], popular: false },
+        { name: 'Projeto Completo', price: 'R$ 2.497', period: '', tag: 'Avulso', desc: 'Implantação completa com ferramentas e treinamento.', features: ['Implantação ferramentas', 'Treinamento equipe', 'Documentação', 'Suporte 2 meses'], popular: true },
+        { name: 'Transformação Digital', price: 'R$ 3.997', period: '', tag: 'Projeto', desc: 'Projeto de transformação digital com automação e cultura data-driven.', features: ['Automação processos', 'Data-driven', 'Integrações', 'Gestão de mudança'], popular: false }
       ]},
       { slug: 'infraestrutura', label: 'Infraestrutura', packages: [
-        { name: 'Consultoria Infra', price: 'R$ 4.999', period: '', tag: 'Avulso', desc: 'Planejamento completo de infraestrutura de TI.', features: ['Diagnóstico infra', 'Cloud', 'Segurança', 'Governança'], popular: false },
+        { name: 'Consultoria Infra', price: 'R$ 2.997', period: '', tag: 'Avulso', desc: 'Planejamento completo de infraestrutura de TI.', features: ['Diagnóstico infra', 'Cloud', 'Segurança', 'Governança'], popular: false },
         { name: 'Migração Cloud', price: 'Sob análise', period: '', tag: 'Projeto', desc: 'Migração de servidores on-premise para cloud (AWS, Google, Azure).', features: ['Análise ambiente', 'Plano migração', 'Execução', 'Suporte pós-migração'], popular: true },
-        { name: 'Infra Gerenciada', price: 'R$ 1.997', period: '/mês', tag: 'Mensal', desc: 'Gerenciamento contínuo de infraestrutura de TI.', features: ['Monitoramento 24/7', 'Backups', 'Suporte N1/N2', 'Relatórios mensais'], popular: false }
+        { name: 'Infra Gerenciada', price: 'R$ 1.497', period: '/mês', tag: 'Mensal', desc: 'Gerenciamento contínuo de infraestrutura de TI.', features: ['Monitoramento 24/7', 'Backups', 'Suporte N1/N2', 'Relatórios mensais'], popular: false }
       ]},
       { slug: 'seguranca', label: 'Segurança', packages: [
-        { name: 'Auditoria Segurança', price: 'R$ 1.997', period: '', tag: 'Avulso', desc: 'Auditoria de segurança da informação e adequação LGPD.', features: ['Análise vulnerabilidades', 'LGPD', 'Políticas', 'Relatório'], popular: false },
-        { name: 'Adequação LGPD', price: 'R$ 2.997', period: '', tag: 'Projeto', desc: 'Projeto completo de adequação à LGPD.', features: ['Mapeamento dados', 'Políticas privacidade', 'Processos LGPD', 'Treinamento equipe'], popular: true },
-        { name: 'Segurança Contínua', price: 'R$ 1.497', period: '/mês', tag: 'Mensal', desc: 'Monitoramento e gestão contínua de segurança.', features: ['Monitoramento', 'Patch management', 'Resposta incidentes', 'Relatórios'], popular: false }
+        { name: 'Auditoria Segurança', price: 'R$ 1.497', period: '', tag: 'Avulso', desc: 'Auditoria de segurança da informação e adequação LGPD.', features: ['Análise vulnerabilidades', 'LGPD', 'Políticas', 'Relatório'], popular: false },
+        { name: 'Adequação LGPD', price: 'R$ 1.997', period: '', tag: 'Projeto', desc: 'Projeto completo de adequação à LGPD.', features: ['Mapeamento dados', 'Políticas privacidade', 'Processos LGPD', 'Treinamento equipe'], popular: true },
+        { name: 'Segurança Contínua', price: 'R$ 997', period: '/mês', tag: 'Mensal', desc: 'Monitoramento e gestão contínua de segurança.', features: ['Monitoramento', 'Patch management', 'Resposta incidentes', 'Relatórios'], popular: false }
       ]}
     ]
   }
@@ -875,7 +875,7 @@ function DashboardPage({ user, go, setUser }) {
           <h2>Solicitar orçamento</h2>
           <form onSubmit={submitQuote} className="grid-form">
             <Input label="Tipo" value={quote.type} onChange={(v) => setQuote({ ...quote, type: v })} options={services.map((s) => s.title)} />
-            <Input label="Investimento" value={quote.budget} onChange={(v) => setQuote({ ...quote, budget: v })} options={['A definir', 'Até R$ 1.000', 'R$ 1.000 a R$ 3.000', 'R$ 3.000 a R$ 7.000', 'Acima de R$ 7.000']} />
+            <Input label="Investimento" value={quote.budget} onChange={(v) => setQuote({ ...quote, budget: v })} options={['A definir', 'Até R$ 500', 'R$ 500 a R$ 1.500', 'R$ 1.500 a R$ 4.000', 'Acima de R$ 4.000']} />
             <Input label="Projeto" value={quote.project} onChange={(v) => setQuote({ ...quote, project: v })} />
             <Input label="Prazo" value={quote.timeline} onChange={(v) => setQuote({ ...quote, timeline: v })} options={['Até 7 dias', 'Até 15 dias', 'Até 30 dias', 'Sem urgência']} />
             <Input label="Detalhes" value={quote.details} onChange={(v) => setQuote({ ...quote, details: v })} textarea />
