@@ -1065,11 +1065,12 @@ function DashboardPage({ user, go, setUser }) {
     <Page>
       <PortalHeader user={user} logout={logout} title="Portal do Cliente" />
       <section className="portal-dashboard">
+        <div className="dash-tech-overlay" />
         <Metric label="Orçamentos" value={quotes.length} />
         <Metric label="Serviços" value={servicesList.length} />
         <Metric label="Tickets" value={tickets.length} />
         <Metric label="Em aberto" value={quotes.filter((q) => q.status !== 'approved').length + tickets.filter((t) => t.status === 'open').length} />
-        <Reveal className="panel quote-panel">
+        <div className="panel quote-panel">
           <h2>Solicitar orçamento</h2>
           <form onSubmit={submitQuote} className="grid-form">
             <Input label="Tipo" value={quote.type} onChange={(v) => setQuote({ ...quote, type: v })} options={services.map((s) => s.title)} />
@@ -1077,14 +1078,34 @@ function DashboardPage({ user, go, setUser }) {
             <Input label="Projeto" value={quote.project} onChange={(v) => setQuote({ ...quote, project: v })} />
             <Input label="Prazo" value={quote.timeline} onChange={(v) => setQuote({ ...quote, timeline: v })} options={['Até 7 dias', 'Até 15 dias', 'Até 30 dias', 'Sem urgência']} />
             <Input label="Detalhes" value={quote.details} onChange={(v) => setQuote({ ...quote, details: v })} textarea />
-            <MagneticButton className="primary full">Enviar solicitação</MagneticButton>
+            <MagneticButton className="primary full">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              Enviar solicitação
+            </MagneticButton>
           </form>
-        </Reveal>
-        <ListPanel title="Meus orçamentos" items={quotes} type="quote" />
-        <Reveal className="panel">
+        </div>
+        <div className="panel">
+          <h2>Meus orçamentos</h2>
+          <div className="list">
+            {!quotes.length && <div className="empty">Nenhum orçamento solicitado ainda</div>}
+            {quotes.map((q) => (
+              <div className="list-row" key={q.id}>
+                <div>
+                  <strong>{q.project || q.type || 'Orçamento'}</strong>
+                  <p>{q.type} · {q.budget} · {q.createdAt ? new Date(q.createdAt).toLocaleDateString('pt-BR') : ''}</p>
+                  {q.details && <p style={{ fontSize: '0.8125rem', color: 'var(--ink)', margin: '0.15rem 0' }}>{q.details}</p>}
+                  {(q.price) && <em>Valor proposto: R$ {Number(q.price).toLocaleString('pt-BR',{minimumFractionDigits:2})}</em>}
+                  {q.reply && <em>Resposta da LRM: {q.reply}</em>}
+                </div>
+                <span className={`status ${q.status || 'new'}`}>{statusLabel(q.status)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="panel">
           <h2>Serviços</h2>
           <div className="list">
-            {!servicesList.length && <div className="empty">Nada por aqui ainda.</div>}
+            {!servicesList.length && <div className="empty">Nenhum serviço prestado ainda</div>}
             {servicesList.map((s) => {
               const reviewed = hasReviewedService(user.id, s.id);
               return (
@@ -1093,27 +1114,42 @@ function DashboardPage({ user, go, setUser }) {
                     <strong>{s.service_name}</strong>
                     <p>{s.description || ''}</p>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
                     {s.status === 'completed' && !reviewed && (
                       <button className="btn-mini" onClick={() => setReviewing(s)}>Avaliar</button>
                     )}
-                    {s.status === 'completed' && reviewed && <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>Avaliado</span>}
+                    {s.status === 'completed' && reviewed && <span style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>Avaliado</span>}
                     <span className={`status ${s.status || 'new'}`}>{statusLabel(s.status)}</span>
                   </div>
                 </div>
               );
             })}
           </div>
-        </Reveal>
-        <Reveal className="panel">
+        </div>
+        <div className="panel">
           <h2>Tickets</h2>
-          <ListItems items={tickets} type="ticket" />
-          <form onSubmit={submitTicket} className="ticket-form">
+          <div className="list">
+            {!tickets.length && <div className="empty">Nenhum ticket aberto</div>}
+            {tickets.map((t) => (
+              <div className="list-row" key={t.id}>
+                <div>
+                  <strong>{t.subject}</strong>
+                  <p>{new Date(t.createdAt).toLocaleDateString('pt-BR')} · <span className={`status ${t.status || 'new'}`}>{statusLabel(t.status)}</span></p>
+                  {t.message && <p style={{ fontSize: '0.8125rem', color: 'var(--ink)', margin: '0.15rem 0' }}>{t.message}</p>}
+                  {t.reply && <em>{t.reply}</em>}
+                </div>
+              </div>
+            ))}
+          </div>
+          <form onSubmit={submitTicket} style={{ borderTop: '1px solid var(--line)', marginTop: '1rem', paddingTop: '1rem' }}>
             <Input label="Assunto" value={ticket.subject} onChange={(v) => setTicket({ ...ticket, subject: v })} />
             <Input label="Mensagem" value={ticket.message} onChange={(v) => setTicket({ ...ticket, message: v })} textarea />
-            <MagneticButton className="primary full">Abrir ticket</MagneticButton>
+            <MagneticButton className="primary full">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14"/></svg>
+              Abrir ticket
+            </MagneticButton>
           </form>
-        </Reveal>
+        </div>
       </section>
       <AnimatePresence>
         {reviewing && (
@@ -1180,28 +1216,6 @@ function PortalHeader({ user, logout, title }) {
 
 function Metric({ label, value }) {
   return <Reveal className="metric"><strong>{value}</strong><span>{label}</span></Reveal>;
-}
-
-function ListPanel({ title, items, type }) {
-  return <Reveal className="panel"><h2>{title}</h2><ListItems items={items} type={type} /></Reveal>;
-}
-
-function ListItems({ items, type }) {
-  if (!items.length) return <div className="empty">Nada por aqui ainda.</div>;
-  return (
-    <div className="list">
-      {items.map((item) => (
-        <div className="list-row" key={item.id}>
-          <div>
-            <strong>{item.project || item.subject || item.service_name || item.type || 'Registro'}</strong>
-            <p>{item.details || item.message || item.description || item.type}</p>
-            {(item.reply || item.adminReply) && <em>{item.reply || item.adminReply}</em>}
-          </div>
-          <span className={`status ${item.status || 'new'}`}>{statusLabel(item.status)}</span>
-        </div>
-      ))}
-    </div>
-  );
 }
 
 function statusLabel(status) {

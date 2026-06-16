@@ -9,63 +9,90 @@
 <link rel="stylesheet" href="style.css">
 <script src="security.js"></script>
 <style>
-.dash-page{min-height:100vh;padding-top:var(--nav-h);padding-bottom:3rem;background:var(--bg)}
-.dash-header{background:linear-gradient(135deg,#07101d,#0b1727);color:#fff;padding:2.25rem 0;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:1.5rem}
-.dash-header .container{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem}
-.profile-row{display:flex;gap:1rem;align-items:center}
-.profile-avatar{width:56px;height:56px;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.35rem;flex-shrink:0}
-.profile-info strong{display:block;font-size:1.15rem;color:#fff}
-.profile-info span{font-size:0.9rem;color:rgba(255,255,255,0.62)}
-.dash-header .sub{color:rgba(255,255,255,0.62);font-size:0.9375rem;margin-top:0.25rem}
+.dash-page{min-height:100vh;padding-top:var(--nav-h);padding-bottom:4rem;background:var(--bg);position:relative}
+.dash-tech-bg{position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);
+  background-size:48px 48px}
+.dark .dash-tech-bg{background-image:linear-gradient(rgba(96,165,250,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.05) 1px,transparent 1px)}
+.dash-header{position:relative;z-index:1;background:linear-gradient(135deg,#06101e,#0b1a2e,#06101e);color:#fff;padding:2.5rem 0 2rem;border-bottom:1px solid rgba(255,255,255,0.06);overflow:hidden}
+.dash-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 20% 40%,rgba(59,130,246,0.08),transparent 70%),radial-gradient(ellipse 50% 60% at 80% 60%,rgba(129,140,248,0.06),transparent 70%);pointer-events:none}
+.dash-header .container{position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem}
+.profile-row{display:flex;gap:1.25rem;align-items:center}
+.profile-avatar{width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.4rem;flex-shrink:0;box-shadow:0 0 0 2px rgba(255,255,255,0.08),0 4px 20px rgba(59,130,246,0.2)}
+.profile-info strong{display:block;font-size:1.2rem;color:#fff;font-weight:600;letter-spacing:-0.01em}
+.profile-info span{font-size:0.875rem;color:rgba(255,255,255,0.5)}
+.dash-header .sub{color:rgba(255,255,255,0.45);font-size:0.875rem;margin-top:0.2rem;font-weight:400}
 .perfil-actions{display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:flex-end}
-.perfil-actions .btn-outline{color:#fff;border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.04)}
-.perfil-actions .btn-outline:hover{border-color:#67e8f9;color:#fff}
-.btn-sair{color:#fecaca;border:1px solid rgba(248,113,113,0.28);padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer;background:transparent;font-family:inherit;transition:all 0.2s}
-.btn-sair:hover{background:rgba(248,113,113,0.08)}
-.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
-.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem}
-.metric-card strong{display:block;font-size:1.65rem;font-family:var(--font-display);color:var(--fg);line-height:1}
-.metric-card span{display:block;margin-top:0.35rem;font-size:0.84rem;color:var(--muted)}
-.dash-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,0.75fr);gap:1.25rem;margin-bottom:1.25rem}
-.dash-grid.secondary{grid-template-columns:1fr 1fr}
-.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.35rem;box-shadow:var(--shadow-sm)}
-.dash-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem}
-.dash-card h3{font-size:1.05rem;margin-bottom:0.25rem}
-.dash-card-head p{font-size:0.875rem;margin:0}
+.btn-outline-dash{display:inline-flex;align-items:center;gap:0.375rem;padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.8125rem;font-weight:600;text-decoration:none;color:rgba(255,255,255,0.8);border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);transition:all 0.2s;cursor:pointer;font-family:inherit}
+.btn-outline-dash:hover{border-color:rgba(255,255,255,0.25);color:#fff;background:rgba(255,255,255,0.08)}
+.btn-sair{display:inline-flex;align-items:center;gap:0.375rem;padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.8125rem;font-weight:600;text-decoration:none;cursor:pointer;font-family:inherit;color:#fca5a5;border:1px solid rgba(248,113,113,0.2);background:transparent;transition:all 0.2s}
+.btn-sair:hover{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.35)}
+.dash-body{position:relative;z-index:1;padding-top:2rem}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-bottom:2rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;position:relative;overflow:hidden;transition:border-color 0.25s}
+.stat-card:hover{border-color:color-mix(in oklch,var(--accent) 30%,var(--border))}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity 0.3s}
+.stat-card:hover::after{opacity:1}
+.stat-value{font-size:1.75rem;font-weight:700;font-family:var(--font-display);color:var(--fg);line-height:1;letter-spacing:-0.02em}
+.stat-label{font-size:0.8125rem;color:var(--muted);margin-top:0.3rem;display:flex;align-items:center;gap:0.375rem}
+.stat-icon{width:18px;height:18px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;opacity:0.5;flex-shrink:0}
+.dash-cols{display:grid;grid-template-columns:1.15fr 0.85fr;gap:1.25rem;margin-bottom:1.25rem}
+.dash-cols.secondary{grid-template-columns:1fr 1fr}
+.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem;box-shadow:none;transition:border-color 0.25s}
+.dash-card:hover{border-color:color-mix(in oklch,var(--accent) 20%,var(--border))}
+.dash-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem}
+.dash-card h3{font-size:1.05rem;margin-bottom:0.15rem;font-weight:600;letter-spacing:-0.01em}
+.dash-card-head p{font-size:0.8125rem;margin:0;color:var(--muted)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
-.form-group{margin-bottom:0.85rem}
-.form-group label{display:block;font-size:0.82rem;font-weight:750;margin-bottom:0.35rem;color:var(--fg)}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:0.75rem 0.85rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:0.92rem;color:var(--fg);background:var(--bg)}
-.form-group textarea{resize:vertical;min-height:96px}
+.form-group{position:relative;margin-bottom:0.85rem}
+.form-group label{display:block;font-size:0.75rem;font-weight:600;margin-bottom:0.35rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:0.7rem 0.85rem;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.9rem;color:var(--fg);background:var(--bg);transition:border-color 0.2s,box-shadow 0.2s}
 .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px oklch(58% 0.18 255 / 0.1)}
-.form-actions{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:0.35rem}
-.form-actions button,.new-ticket-form button{padding:0.68rem 1rem;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:800;cursor:pointer;font-family:inherit;font-size:0.875rem}
-.form-actions button:hover,.new-ticket-form button:hover{opacity:0.92}
-.quote-list,.service-list,.ticket-list{display:flex;flex-direction:column}
-.quote-item,.service-item,.ticket-item{padding:1rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
-.quote-item:last-child,.service-item:last-child,.ticket-item:last-child{border-bottom:none;padding-bottom:0}
-.quote-info,.service-info{flex:1;min-width:0}
-.quote-info strong,.service-info strong,.ticket-subject{display:block;font-size:0.95rem;margin-bottom:0.2rem;color:var(--fg)}
-.quote-info .meta,.service-info .meta,.ticket-meta{font-size:0.8125rem;color:var(--muted)}
-.quote-details,.ticket-message{font-size:0.875rem;color:var(--fg);margin-top:0.45rem}
-.quote-reply,.ticket-reply{font-size:0.875rem;margin-top:0.6rem;padding:0.65rem 0.75rem;background:var(--bg);border-radius:var(--radius);border-left:3px solid var(--accent)}
-.service-price{font-weight:800;font-size:1rem;color:var(--accent);white-space:nowrap}
-.status-badge{display:inline-flex;align-items:center;justify-content:center;min-height:24px;padding:0.15rem 0.55rem;border-radius:4px;font-size:0.6875rem;font-weight:800;text-transform:uppercase;white-space:nowrap}
-.status-completed,.status-approved{background:oklch(56% 0.12 170 / 0.12);color:oklch(40% 0.1 160)}
-.status-in_progress,.status-reviewed,.status-proposed{background:oklch(58% 0.18 255 / 0.1);color:var(--accent)}
-.status-pending,.status-new{background:oklch(72% 0.14 80 / 0.16);color:oklch(45% 0.12 70)}
-.status-open{background:oklch(58% 0.18 255 / 0.1);color:var(--accent)}
-.status-closed,.status-archived{background:oklch(60% 0.02 250 / 0.12);color:var(--muted)}
-.empty-state{text-align:center;padding:2rem 0;color:var(--muted);font-size:0.9375rem}
-.new-ticket-form{margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem}
-.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.48);align-items:center;justify-content:center;padding:1rem}
+.form-group textarea{resize:vertical;min-height:88px}
+.form-actions{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:0.5rem}
+.btn-primary{display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.15rem;border:none;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:600;cursor:pointer;font-family:inherit;font-size:0.8125rem;transition:all 0.2s;letter-spacing:0.01em}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(59,130,246,0.2)}
+.btn-secondary{display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.15rem;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);font-weight:500;cursor:pointer;font-family:inherit;font-size:0.8125rem;transition:all 0.2s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--fg)}
+.list-scroll{max-height:320px;overflow-y:auto;margin:-0.25rem 0}.list-scroll::-webkit-scrollbar{width:4px}.list-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.item{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:0.85rem 0;border-bottom:1px solid var(--border);transition:background 0.2s}
+.item:last-child{border-bottom:none}
+.item:hover{background:color-mix(in oklch,var(--accent) 3%,transparent);margin:0 -0.5rem;padding:0.85rem 0.5rem;border-radius:6px}
+.item-info{flex:1;min-width:0}
+.item-info strong{display:block;font-size:0.9rem;margin-bottom:0.15rem;color:var(--fg);font-weight:600}
+.item-info .meta{font-size:0.75rem;color:var(--muted);display:flex;gap:0.5rem;flex-wrap:wrap}
+.item-details{font-size:0.85rem;color:var(--fg);margin-top:0.35rem;line-height:1.5}
+.item-reply{margin-top:0.5rem;padding:0.65rem 0.75rem;background:color-mix(in oklch,var(--accent) 5%,var(--bg));border-radius:6px;border-left:2.5px solid var(--accent);font-size:0.825rem}
+.item-reply strong{color:var(--accent);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em}
+.item-price{font-weight:700;font-size:0.95rem;color:var(--accent);white-space:nowrap;font-family:var(--font-display)}
+.status-badge{display:inline-flex;align-items:center;justify-content:center;height:22px;padding:0 0.5rem;border-radius:4px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap}
+.status-new{background:color-mix(in oklch,#f59e0b 12%,transparent);color:#d97706}
+.status-open{background:color-mix(in oklch,#3b82f6 12%,transparent);color:#2563eb}
+.status-reviewed,.status-proposed{background:color-mix(in oklch,#8b5cf6 12%,transparent);color:#7c3aed}
+.status-approved,.status-completed{background:color-mix(in oklch,#22c55e 12%,transparent);color:#16a34a}
+.status-closed,.status-archived{background:color-mix(in oklch,#6b7280 10%,transparent);color:#6b7280}
+.status-in_progress{background:color-mix(in oklch,#3b82f6 12%,transparent);color:#2563eb}
+.status-pending{background:color-mix(in oklch,#f59e0b 12%,transparent);color:#d97706}
+.dark .status-new{background:color-mix(in oklch,#fbbf24 15%,transparent);color:#fbbf24}
+.dark .status-open{background:color-mix(in oklch,#60a5fa 15%,transparent);color:#60a5fa}
+.dark .status-reviewed,.dark .status-proposed{background:color-mix(in oklch,#a78bfa 15%,transparent);color:#a78bfa}
+.dark .status-approved,.dark .status-completed{background:color-mix(in oklch,#4ade80 15%,transparent);color:#4ade80}
+.dark .status-closed,.dark .status-archived{background:color-mix(in oklch,#9ca3af 12%,transparent);color:#9ca3af}
+.dark .status-in_progress{background:color-mix(in oklch,#60a5fa 15%,transparent);color:#60a5fa}
+.dark .status-pending{background:color-mix(in oklch,#fbbf24 15%,transparent);color:#fbbf24}
+.empty-state{text-align:center;padding:2rem 0;color:var(--muted);font-size:0.875rem}
+.new-ticket-section{border-top:1px solid var(--border);padding-top:1.25rem;margin-top:0.5rem}
+.new-ticket-section h4{font-size:0.9rem;margin:0 0 0.75rem;font-weight:600}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.show{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;width:100%;max-width:500px;max-height:86vh;overflow-y:auto;box-shadow:var(--shadow-lg)}
-.modal h3{font-size:1.125rem;margin-bottom:1rem}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem;width:100%;max-width:460px;max-height:86vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.15)}
+.modal h3{font-size:1.1rem;margin-bottom:0.25rem}
 .modal-actions{display:flex;gap:0.75rem;margin-top:1.25rem;justify-content:flex-end}
-.modal-actions button{padding:0.625rem 1.1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:750;cursor:pointer;border:none;font-family:inherit}
+.modal-actions button{padding:0.6rem 1.1rem;border-radius:8px;font-size:0.875rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all 0.2s}
 .btn-cancel{background:var(--border);color:var(--fg)}
-@media(max-width:900px){.dash-header .container{align-items:flex-start;flex-direction:column}.perfil-actions{justify-content:flex-start}.metric-grid{grid-template-columns:repeat(2,1fr)}.dash-grid,.dash-grid.secondary{grid-template-columns:1fr}}@media(max-width:520px){.dash-header{padding:1.5rem 0}.dash-card{padding:1rem}.metric-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.quote-item,.service-item,.ticket-item{flex-direction:column}.profile-row{align-items:flex-start}.perfil-actions .btn-outline,.btn-sair{width:100%;text-align:center}.modal{padding:1.25rem}}
+.btn-cancel:hover{opacity:0.85}
+@media(max-width:900px){.dash-header .container{align-items:flex-start;flex-direction:column}.perfil-actions{justify-content:flex-start}.stat-grid{grid-template-columns:repeat(2,1fr)}.dash-cols,.dash-cols.secondary{grid-template-columns:1fr}}
+@media(max-width:520px){.dash-header{padding:1.5rem 0}.dash-card{padding:1.15rem}.stat-grid{grid-template-columns:1fr}.stat-card{padding:1rem}.stat-value{font-size:1.4rem}.form-row{grid-template-columns:1fr}.item{flex-direction:column;align-items:stretch}.perfil-actions .btn-outline-dash,.btn-sair{width:100%;text-align:center}.modal{padding:1.25rem}.profile-row{gap:0.85rem}.profile-avatar{width:48px;height:48px;font-size:1.1rem}}
 </style>
 </head>
 <body>
@@ -87,6 +114,7 @@
 </nav>
 
 <main class="dash-page">
+  <div class="dash-tech-bg"></div>
   <div class="dash-header">
     <div class="container">
       <div>
@@ -95,32 +123,41 @@
           <div class="profile-info">
             <strong id="dashName">Carregando...</strong>
             <span id="dashEmail">carregando...</span>
-            <p class="sub">Portal para orçamentos, tickets, serviços e avaliações.</p>
+            <p class="sub">Portal do cliente — orçamentos, tickets, serviços e avaliações.</p>
           </div>
         </div>
       </div>
       <div class="perfil-actions">
-        <a href="#quoteRequestCard" class="btn-outline" style="padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:700;text-decoration:none;display:inline-block">Solicitar orçamento</a>
-        <a href="contato.html" class="btn-outline" style="padding:0.5rem 1rem;border-radius:var(--radius);font-size:0.875rem;font-weight:700;text-decoration:none;display:inline-block">Falar conosco</a>
-        <button onclick="handleLogout()" class="btn-sair">Sair</button>
+        <a href="#quoteRequestCard" class="btn-outline-dash">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Solicitar orçamento
+        </a>
+        <a href="contato.html" class="btn-outline-dash">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Falar conosco
+        </a>
+        <button onclick="handleLogout()" class="btn-sair">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Sair
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <div class="metric-grid">
-      <div class="metric-card"><strong id="metricQuotes">0</strong><span>orçamentos</span></div>
-      <div class="metric-card"><strong id="metricServices">0</strong><span>serviços</span></div>
-      <div class="metric-card"><strong id="metricTickets">0</strong><span>tickets</span></div>
-      <div class="metric-card"><strong id="metricOpen">0</strong><span>em aberto</span></div>
+  <div class="container dash-body">
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-value" id="metricQuotes">0</div><div class="stat-label"><span class="stat-icon">📋</span> Orçamentos</div></div>
+      <div class="stat-card"><div class="stat-value" id="metricServices">0</div><div class="stat-label"><span class="stat-icon">⚙️</span> Serviços</div></div>
+      <div class="stat-card"><div class="stat-value" id="metricTickets">0</div><div class="stat-label"><span class="stat-icon">🎫</span> Tickets</div></div>
+      <div class="stat-card"><div class="stat-value" id="metricOpen">0</div><div class="stat-label"><span class="stat-icon">🔄</span> Em aberto</div></div>
     </div>
 
-    <div class="dash-grid">
+    <div class="dash-cols">
       <div class="dash-card" id="quoteRequestCard">
         <div class="dash-card-head">
           <div>
             <h3>Solicitar orçamento</h3>
-            <p>Descreva o projeto para a LRM analisar e responder pelo próprio portal.</p>
+            <p>Descreva o projeto — a LRM analisa e responde pelo portal.</p>
           </div>
         </div>
         <div class="quote-form">
@@ -164,10 +201,13 @@
           </div>
           <div class="form-group">
             <label for="quoteDetails">Detalhes do orçamento</label>
-            <textarea id="quoteDetails" placeholder="Conte o que precisa, objetivo do projeto, páginas/funcionalidades, público e referências." maxlength="2400"></textarea>
+            <textarea id="quoteDetails" placeholder="Objetivo do projeto, páginas ou funcionalidades necessárias, público-alvo e referências visuais." maxlength="2400"></textarea>
           </div>
           <div class="form-actions">
-            <button type="button" onclick="submitQuoteRequest()">Enviar solicitação</button>
+            <button type="button" class="btn-primary" onclick="submitQuoteRequest()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              Enviar solicitação
+            </button>
           </div>
         </div>
       </div>
@@ -175,33 +215,33 @@
         <div class="dash-card-head">
           <div>
             <h3>Meus orçamentos</h3>
-            <p>Acompanhe análise, proposta e resposta da LRM.</p>
+            <p>Acompanhe análise e proposta da LRM.</p>
           </div>
         </div>
-        <div id="quotesList" class="quote-list"><div class="empty-state">Carregando...</div></div>
+        <div class="list-scroll" id="quotesList"><div class="empty-state">Carregando...</div></div>
       </div>
     </div>
 
-    <div class="dash-grid secondary">
+    <div class="dash-cols secondary">
       <div class="dash-card">
         <div class="dash-card-head">
           <div>
             <h3>Histórico de serviços</h3>
-            <p>Serviços registrados pelo admin após aprovação ou entrega.</p>
+            <p>Serviços registrados após aprovação ou entrega.</p>
           </div>
         </div>
-        <div id="servicesList" class="service-list"><div class="empty-state">Carregando...</div></div>
+        <div class="list-scroll" id="servicesList"><div class="empty-state">Carregando...</div></div>
       </div>
       <div class="dash-card">
         <div class="dash-card-head">
           <div>
             <h3>Meus tickets</h3>
-            <p>Abra dúvidas, solicitações rápidas ou suporte pós-entrega.</p>
+            <p>Suporte pós-entrega e solicitações rápidas.</p>
           </div>
         </div>
-        <div id="ticketsList" class="ticket-list"><div class="empty-state">Carregando...</div></div>
-        <div class="new-ticket-form">
-          <h4 style="font-size:0.9375rem;margin:0 0 0.75rem">Abrir novo ticket</h4>
+        <div class="list-scroll" id="ticketsList"><div class="empty-state">Carregando...</div></div>
+        <div class="new-ticket-section">
+          <h4>Abrir novo ticket</h4>
           <div class="form-group">
             <label for="ticketSubject">Assunto</label>
             <input type="text" id="ticketSubject" placeholder="Ex: Ajuste em uma página" maxlength="200" required>
@@ -210,7 +250,10 @@
             <label for="ticketMessage">Mensagem</label>
             <textarea id="ticketMessage" placeholder="Descreva seu problema ou dúvida..." maxlength="2000" required></textarea>
           </div>
-          <button onclick="openTicket()">Enviar ticket</button>
+          <button class="btn-primary" onclick="openTicket()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Enviar ticket
+          </button>
         </div>
       </div>
     </div>
@@ -218,17 +261,17 @@
 </main>
 
 <div class="modal-overlay" id="reviewModal">
-  <div class="modal" style="max-width:460px">
+  <div class="modal">
     <h3>Avaliar Serviço</h3>
-    <p style="font-size:0.875rem;color:var(--muted);margin-bottom:0.5rem" id="reviewServiceName">—</p>
-    <div style="margin:1rem 0;text-align:center">
-      <p style="font-size:0.875rem;color:var(--muted);margin-bottom:0.5rem">Sua avaliação</p>
-      <div id="starSelector" style="display:flex;gap:4px;justify-content:center">
-        <span class="star-btn" data-val="1" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
-        <span class="star-btn" data-val="2" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
-        <span class="star-btn" data-val="3" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
-        <span class="star-btn" data-val="4" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
-        <span class="star-btn" data-val="5" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.2s">★</span>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem" id="reviewServiceName">—</p>
+    <div style="margin:1.25rem 0;text-align:center">
+      <p style="font-size:0.8125rem;color:var(--muted);margin-bottom:0.5rem">Sua avaliação</p>
+      <div id="starSelector" style="display:flex;gap:6px;justify-content:center">
+        <span class="star-btn" data-val="1" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.15s">★</span>
+        <span class="star-btn" data-val="2" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.15s">★</span>
+        <span class="star-btn" data-val="3" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.15s">★</span>
+        <span class="star-btn" data-val="4" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.15s">★</span>
+        <span class="star-btn" data-val="5" style="cursor:pointer;font-size:2rem;line-height:1;color:var(--border);transition:color 0.15s">★</span>
       </div>
     </div>
     <div class="form-group">
@@ -237,7 +280,7 @@
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeReviewModal()">Cancelar</button>
-      <button id="submitReviewBtn" style="background:var(--accent);color:#fff" onclick="submitReview()">Enviar Avaliação</button>
+      <button class="btn-primary" onclick="submitReview()">Enviar Avaliação</button>
     </div>
   </div>
 </div>
@@ -266,16 +309,8 @@ function renderProfile(user){
 
 function statusLabel(status){
   const labels = {
-    new: 'Novo',
-    reviewed: 'Em análise',
-    proposed: 'Proposta',
-    approved: 'Aprovado',
-    archived: 'Arquivado',
-    open: 'Aberto',
-    closed: 'Fechado',
-    completed: 'Concluído',
-    in_progress: 'Em andamento',
-    pending: 'Pendente'
+    new: 'Novo', reviewed: 'Em análise', proposed: 'Proposta', approved: 'Aprovado', archived: 'Arquivado',
+    open: 'Aberto', closed: 'Fechado', completed: 'Concluído', in_progress: 'Em andamento', pending: 'Pendente'
   };
   return labels[status] || status || 'Novo';
 }
@@ -301,16 +336,15 @@ function loadQuotes(){
     return;
   }
   list.innerHTML = quotes.map(q => {
-    const reply = q.adminReply ? '<div class="quote-reply"><strong>Resposta da LRM:</strong><br>'+esc(q.adminReply)+'</div>' : '';
-    const price = q.proposedPrice ? '<div class="quote-reply"><strong>Valor proposto:</strong> R$ '+Number(q.proposedPrice).toFixed(2).replace('.',',')+'</div>' : '';
+    const reply = q.adminReply ? '<div class="item-reply"><strong>Resposta da LRM:</strong><br>'+esc(q.adminReply)+'</div>' : '';
+    const price = q.proposedPrice ? '<div class="item-reply"><strong>Valor proposto:</strong> R$ '+Number(q.proposedPrice).toFixed(2).replace('.',',')+'</div>' : '';
     return `
-      <div class="quote-item">
-        <div class="quote-info">
+      <div class="item">
+        <div class="item-info">
           <strong>${esc(q.project || q.type || 'Orçamento')}</strong>
-          <div class="meta">${esc(q.type || 'Solução')} · ${esc(q.budget || 'A definir')} · ${q.created_at ? new Date(q.created_at).toLocaleDateString('pt-BR') : ''}</div>
-          <div class="quote-details">${esc(q.details || '')}</div>
-          ${price}
-          ${reply}
+          <div class="meta">${esc(q.type || '')} · ${esc(q.budget || '')} · ${q.created_at ? new Date(q.created_at).toLocaleDateString('pt-BR') : ''}</div>
+          <div class="item-details">${esc(q.details || '')}</div>
+          ${price}${reply}
         </div>
         <span class="status-badge status-${statusClass(q.status)}">${statusLabel(q.status)}</span>
       </div>
@@ -333,21 +367,10 @@ function submitQuoteRequest(){
     const qid = parseInt(localStorage.getItem('lrm_nextId') || '1');
     localStorage.setItem('lrm_nextId', String(qid+1));
     all.push({
-      id: qid,
-      userId: currentUser.id,
-      clientName: currentUser.name,
-      clientEmail: currentUser.email,
-      clientPhone: currentUser.phone || '',
-      type: type,
-      project: project,
-      budget: budget,
-      timeline: timeline,
-      details: details,
-      status: 'new',
-      proposedPrice: '',
-      adminReply: '',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      id: qid, userId: currentUser.id, clientName: currentUser.name, clientEmail: currentUser.email,
+      clientPhone: currentUser.phone || '', type, project, budget, timeline, details,
+      status: 'new', proposedPrice: '', adminReply: '',
+      created_at: new Date().toISOString(), updated_at: new Date().toISOString()
     });
     localStorage.setItem('lrm_quotes', JSON.stringify(all));
   } catch(e){ alert('Erro ao salvar orçamento'); return; }
@@ -358,7 +381,6 @@ function submitQuoteRequest(){
   document.getElementById('quoteTimeline').value = 'Sem urgência';
   loadQuotes();
   renderMetrics();
-  alert('Solicitação enviada. A LRM vai analisar e responder por aqui.');
 }
 
 function renderMetrics(){
@@ -391,19 +413,19 @@ function loadServices(){
     const reviewed = window.hasReviewedService ? window.hasReviewedService(currentUser.id, s.id) : false;
     let reviewBtn = '';
     if(s.status==='completed' && !reviewed){
-      reviewBtn = '<button class="review-btn" onclick="openReview('+s.id+',\''+esc(s.service_name)+'\')" style="margin-top:0.5rem;font-size:0.75rem;padding:0.25rem 0.75rem;border:1px solid var(--accent);border-radius:4px;color:var(--accent);background:transparent;cursor:pointer;font-family:inherit;font-weight:600">Avaliar</button>';
+      reviewBtn = '<button class="btn-secondary" onclick="openReview('+s.id+',\''+esc(s.service_name)+'\')" style="margin-top:0.5rem;font-size:0.75rem;padding:0.3rem 0.75rem">Avaliar</button>';
     } else if(s.status==='completed' && reviewed){
-      reviewBtn = '<span style="display:block;margin-top:0.375rem;font-size:0.75rem;color:var(--muted)">Avaliado</span>';
+      reviewBtn = '<span style="display:block;margin-top:0.375rem;font-size:0.75rem;color:var(--muted)">✓ Avaliado</span>';
     }
     return `
-      <div class="service-item">
-        <div class="service-info">
+      <div class="item">
+        <div class="item-info">
           <strong>${esc(s.service_name || 'Serviço')}</strong>
           <div class="meta">${esc(s.description||'')}${s.created_at ? ' · '+new Date(s.created_at).toLocaleDateString('pt-BR') : ''}</div>
           ${reviewBtn}
         </div>
         <div style="text-align:right;flex-shrink:0">
-          <div class="service-price">R$ ${Number(s.price).toFixed(2).replace('.',',')}</div>
+          <div class="item-price">R$ ${Number(s.price).toFixed(2).replace('.',',')}</div>
           <span class="status-badge status-${statusClass(s.status)}">${statusLabel(s.status)}</span>
         </div>
       </div>
@@ -427,12 +449,12 @@ function loadTickets(){
     return;
   }
   list.innerHTML = tix.map(t => `
-    <div class="ticket-item">
-      <div style="flex:1">
-        <div class="ticket-subject">${esc(t.subject || 'Ticket')}</div>
-        <div class="ticket-meta">${new Date(t.created_at).toLocaleDateString('pt-BR')} · <span class="status-badge status-${statusClass(t.status)}">${statusLabel(t.status)}</span></div>
-        <div class="ticket-message">${esc(t.message || '')}</div>
-        ${t.reply ? '<div class="ticket-reply"><strong>Resposta:</strong> '+esc(t.reply)+'</div>' : ''}
+    <div class="item">
+      <div class="item-info">
+        <strong>${esc(t.subject || 'Ticket')}</strong>
+        <div class="meta">${new Date(t.created_at).toLocaleDateString('pt-BR')} · <span class="status-badge status-${statusClass(t.status)}">${statusLabel(t.status)}</span></div>
+        <div class="item-details">${esc(t.message || '')}</div>
+        ${t.reply ? '<div class="item-reply"><strong>Resposta:</strong> '+esc(t.reply)+'</div>' : ''}
       </div>
     </div>
   `).join('');
@@ -449,15 +471,7 @@ function openTicket(){
     const all = JSON.parse(localStorage.getItem('lrm_tickets') || '[]');
     const tid = parseInt(localStorage.getItem('lrm_nextId') || '1');
     localStorage.setItem('lrm_nextId', String(tid+1));
-    all.push({
-      id: tid,
-      userId: currentUser.id,
-      subject: subject,
-      message: message,
-      reply: '',
-      status: 'open',
-      created_at: new Date().toISOString()
-    });
+    all.push({ id: tid, userId: currentUser.id, subject, message, reply: '', status: 'open', created_at: new Date().toISOString() });
     localStorage.setItem('lrm_tickets', JSON.stringify(all));
   } catch(e){ alert('Erro ao salvar ticket'); return; }
 
