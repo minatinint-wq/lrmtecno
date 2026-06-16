@@ -626,23 +626,112 @@ nav .container{
 .ref-role{font-size:0.8125rem;color:var(--muted)}
 
 .parceiras-grid{
-  display:flex;flex-wrap:wrap;gap:2rem;
-  justify-content:center;align-items:center;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1.5rem;
 }
 .parceira-card{
-  width:260px;min-height:200px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-xl);
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.25rem;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.4s var(--ease-out);
+}
+.parceira-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  opacity:0;
+  transition:opacity 0.4s var(--ease-out);
+  pointer-events:none;
+}
+.parceira-card:hover::before{opacity:1}
+.parceira-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-4px);
+  box-shadow:0 8px 32px oklch(58% 0.18 255 / 0.12);
+}
+.parceira-card-inner{
+  display:flex;
+  align-items:flex-start;
+  gap:1.25rem;
+}
+.parceira-logo-wrap{
+  width:72px;height:72px;flex-shrink:0;
+  border-radius:var(--radius-lg);
+  background:var(--bg);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  padding:0.75rem;
+  transition:border-color 0.3s var(--ease-out);
+}
+.parceira-card:hover .parceira-logo-wrap{border-color:var(--accent)}
+.parceira-logo-wrap img{max-height:100%;width:100%;object-fit:contain}
+.parceira-card h3{font-size:1.125rem;font-weight:600;margin-bottom:0.25rem}
+.parceira-card .parceira-tag{
+  display:inline-flex;align-items:center;gap:0.375rem;
+  font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;
+  color:var(--accent);
+  margin-bottom:0.5rem;
+}
+.parceira-card .parceira-tag svg{width:14px;height:14px}
+.parceira-card p{font-size:0.875rem;color:var(--muted);line-height:1.6}
+.parceira-card .parceira-site{
+  display:inline-flex;align-items:center;gap:0.375rem;
+  font-size:0.8125rem;font-weight:500;
+  color:var(--accent);
+  margin-top:auto;
+  transition:gap 0.3s var(--ease-out);
+}
+.parceira-card .parceira-site:hover{gap:0.625rem}
+.parceira-tier-badge{
+  display:inline-block;
+  padding:0.25rem 0.75rem;
+  border-radius:100px;
+  font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+  background:oklch(58% 0.18 255 / 0.1);
+  color:var(--accent);
+  border:1px solid oklch(58% 0.18 255 / 0.2);
+  margin-top:0.25rem;
+}
+.dark .parceira-tier-badge{
+  background:oklch(68% 0.2 255 / 0.1);
+  border-color:oklch(68% 0.2 255 / 0.2);
+}
+.parceira-tier-badge.gold{background:oklch(72% 0.14 82 / 0.12);border-color:oklch(72% 0.14 82 / 0.25);color:oklch(72% 0.14 82)}
+
+.benefits-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.5rem;
+}
+.benefit-card{
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius-lg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:1rem;
   padding:2rem;
-  transition:all 0.3s var(--ease-out);
+  display:flex;
+  flex-direction:column;
+  gap:0.75rem;
+  transition:border-color 0.3s var(--ease-out);
 }
-.parceira-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px);border-color:var(--accent)}
-.parceira-card img{max-height:60px;width:auto;object-fit:contain}
-.parceira-name{font-family:var(--font-display);font-weight:700;font-size:1.125rem;color:var(--fg)}
-.parceira-sub{font-size:0.8125rem;color:var(--muted)}
+.benefit-card:hover{border-color:var(--accent)}
+.benefit-card .benefit-icon{
+  width:48px;height:48px;
+  border-radius:var(--radius);
+  background:oklch(58% 0.18 255 / 0.08);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.benefit-card .benefit-icon svg{width:22px;height:22px;color:var(--accent);stroke-width:1.5}
+.benefit-card h4{font-size:1rem;font-weight:600}
+.benefit-card p{font-size:0.8125rem;color:var(--muted);line-height:1.6}
+.dark .benefit-card .benefit-icon{background:oklch(68% 0.2 255 / 0.1)}
 
 #contato{background:var(--surface);border-top:1px solid var(--border)}
 .contato-grid{
@@ -1089,8 +1178,9 @@ footer .container{
   .reveal-left{opacity:1;transform:none}
   .reveal-right{opacity:1;transform:none}
   .trust-items{gap:1.5rem}
-  .parceiras-grid{gap:1.25rem}
-  .parceira-card{width:100%;max-width:300px}
+  .parceiras-grid{grid-template-columns:1fr;gap:1.25rem}
+  .parceira-card-inner{flex-direction:column;align-items:center;text-align:center}
+  .parceira-logo-wrap{width:64px;height:64px}
 }
 
 @media(max-width:768px){

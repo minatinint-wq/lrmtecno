@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity } from 'framer-motion';
 import {
   ArrowRight,
+  ArrowUpRight,
   BadgeCheck,
   BarChart3,
   BriefcaseBusiness,
@@ -11,15 +12,18 @@ import {
   ChevronRight,
   Code2,
   Cpu,
+  DollarSign,
   ExternalLink,
   Globe2,
   Headphones,
   LayoutDashboard,
+  Layers,
   Lock,
   LogOut,
   Mail,
   Menu,
   MessageCircle,
+  Monitor,
   MonitorCog,
   Moon,
   PanelTop,
@@ -215,8 +219,9 @@ const workItems = [
 ];
 
 const partners = [
-  { name: 'Primeira Chave', sub: 'Parceira estratégica', image: ASSETS.primeiraChave },
-  { name: 'LRM Labs', sub: 'Produto e automação', image: ASSETS.partnerIcon }
+  { name: 'Leadio', sub: 'Sistema próprio', tier: 'system', desc: 'Plataforma de gestão de leads e funil de vendas desenvolvida internamente pela LRM TECNO.', image: ASSETS.leadio, site: 'https://leadio.base44.app/' },
+  { name: 'Primeira Chave', sub: 'Parceira estratégica', tier: 'gold', desc: 'Consultoria em regularização de imóveis e financiamento habitacional. Parceria em sistemas de gestão documental.', image: ASSETS.primeiraChave, site: '#' },
+  { name: 'LRM Labs', sub: 'Produto e automação', tier: 'system', desc: 'Laboratório interno de produtos, automações e ferramentas de suporte à operação digital.', image: ASSETS.partnerIcon, site: '#' }
 ];
 
 const defaultAdmin = {
@@ -856,19 +861,59 @@ function ReferencesPage({ go }) {
 function PartnersPage({ go }) {
   return (
     <Page>
-      <PageHero label="Parceiras" title="Ecossistema para construir soluções melhores" text="Parceiros e produtos conectados à operação digital da LRM TECNO." />
+      <PageHero label="Parceiras" title="Rede de parceiros" text="Empresas e profissionais que integram nosso ecossistema de tecnologia e inovação." />
       <section className="section">
+        <div style={{ marginBottom: '3rem', maxWidth: 600 }}>
+          <span className="eyebrow">Rede</span>
+          <h2>Parceiros ativos</h2>
+          <p style={{ fontSize: '0.9375rem' }}>Cada parceiro abaixo mantém relação direta com a LRM — como cliente integrado, co-criação ou fornecedor estratégico.</p>
+        </div>
         <div className="partners-grid">
           {partners.map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.08} className="partner-card">
-              <img src={p.image} alt={p.name} />
-              <h3>{p.name}</h3>
-              <span>{p.sub}</span>
+            <Reveal key={p.name} delay={i * 0.08} className="partner-card-react">
+              <div className={'partner-tier ' + (p.tier === 'gold' ? 'gold' : '')}>{p.sub}</div>
+              <div className="partner-card-react-inner">
+                <div className="partner-logo-wrap">
+                  <img src={p.image} alt={p.name} />
+                </div>
+                <div>
+                  <h3>{p.name}</h3>
+                  <p>{p.desc}</p>
+                  {p.site && p.site !== '#' && (
+                    <a href={p.site} target="_blank" rel="noopener noreferrer" className="partner-site">
+                      <span>{p.site.replace(/https?:\/\//, '').replace(/\/$/, '')}</span>
+                      <ArrowUpRight size={14} />
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div className="partner-card-bg" />
             </Reveal>
           ))}
         </div>
-        <CTA go={go} title="Quer construir com a LRM?" text="Solicite orçamento e descreva o projeto no portal." compact />
       </section>
+      <section className="section" style={{ background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div style={{ marginBottom: '3rem', maxWidth: 600 }}>
+          <span className="eyebrow">Vantagens</span>
+          <h2>Por que ser parceiro</h2>
+          <p>Modelos de parceria desenhados para gerar resultado real para ambos os lados.</p>
+        </div>
+        <div className="benefits-grid">
+          {[
+            { icon: <Layers size={22} />, title: 'Indicação com comissão', desc: 'Indicou, fechou. Comissão transparente sobre projetos fechados via parceria.' },
+            { icon: <Monitor size={22} />, title: 'Co-branding em projetos', desc: 'Seu nome aparece nas entregas. Crédito público nos sites e sistemas desenvolvidos em parceria.' },
+            { icon: <Zap size={22} />, title: 'Prefixo técnico prioritário', desc: 'Acesso a orçamentos internos, prazos reduzidos e suporte técnico prioritário.' },
+            { icon: <DollarSign size={22} />, title: 'Modelo ganha-ganha', desc: 'Estrutura de repasse clara. Cada parte sabe exatamente quanto ganha em cada projeto.' }
+          ].map((b, i) => (
+            <Reveal key={b.title} delay={i * 0.06} className="benefit-card-react">
+              <div className="benefit-icon-react">{b.icon}</div>
+              <h4>{b.title}</h4>
+              <p>{b.desc}</p>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+      <CTA go={go} title="Vamos construir juntos?" text="Se sua empresa atua com tecnologia, consultoria ou infraestrutura, podemos ter uma conversa rápida e objetiva." />
     </Page>
   );
 }
