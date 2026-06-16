@@ -550,6 +550,66 @@ function HeroScene({ go }) {
   );
 }
 
+function ServiceCarousel({ go }) {
+  const [idx, setIdx] = useState(0);
+  const [dir, setDir] = useState(0);
+  const len = services.length;
+  const prev = () => { setDir(-1); setIdx((idx + len - 1) % len); };
+  const next = () => { setDir(1); setIdx((idx + 1) % len); };
+  useEffect(() => {
+    const t = setInterval(next, 6000);
+    return () => clearInterval(t);
+  }, [idx]);
+  return (
+    <div className="carousel-wrap">
+      <button className="carousel-arrow prev" onClick={prev} aria-label="Anterior">&larr;</button>
+      <div className="carousel-track">
+        <AnimatePresence mode="wait" custom={dir}>
+          {(() => {
+            const s = services[idx];
+            const Icon = s.icon;
+            return (
+              <motion.article
+                key={s.slug}
+                custom={dir}
+                variants={{
+                  enter: (d) => ({ opacity: 0, x: d > 0 ? 100 : -100, filter: 'blur(6px)' }),
+                  center: { opacity: 1, x: 0, filter: 'blur(0px)' },
+                  exit: (d) => ({ opacity: 0, x: d > 0 ? -100 : 100, filter: 'blur(6px)' })
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="carousel-card"
+              >
+                <div className="carousel-card-top">
+                  <div className="service-icon"><Icon size={20} /></div>
+                  <span>{s.tag}</span>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+                <div className="carousel-bullets">
+                  {s.bullets.map((b) => <span key={b}>{b}</span>)}
+                </div>
+                <button className="carousel-cta" onClick={() => go(`/servicos/${s.slug}`)}>
+                  Ver pacotes e preços <ChevronRight size={15} />
+                </button>
+              </motion.article>
+            );
+          })()}
+        </AnimatePresence>
+      </div>
+      <button className="carousel-arrow next" onClick={next} aria-label="Próximo">&rarr;</button>
+      <div className="carousel-dots">
+        {services.map((_, i) => (
+          <button key={i} className={`carousel-dot${i === idx ? ' active' : ''}`} onClick={() => { setDir(i > idx ? 1 : -1); setIdx(i); }} aria-label={`Serviço ${i + 1}`} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Home({ go }) {
   return (
     <Page>
@@ -559,15 +619,13 @@ function Home({ go }) {
           <span key={item}><BadgeCheck size={15} /> {item}</span>
         ))}
       </section>
-      <section className="section">
+      <section className="section carousel-section">
         <Reveal className="section-head">
           <span className="eyebrow">Especialidades</span>
           <h2>Engenharia digital para operações que exigem excelência</h2>
           <p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p>
         </Reveal>
-        <div className="service-grid">
-          {services.map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.08} go={go} />)}
-        </div>
+        <ServiceCarousel go={go} />
       </section>
       <PortalPreview go={go} />
       <ProcessSection />
