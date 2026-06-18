@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useHeroAnimation, useSectionReveal, useCardReveal, WordReveal, AnimatedMetric } from './animation.jsx';
+import { WordReveal, AnimatedMetric } from './animation.jsx';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -322,32 +320,19 @@ const revealVariants = {
   visible: (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] } })
 };
 
-function RefsSection({ children, className = '' }) {
-  const ref = useRef(null);
-  useSectionReveal(ref);
-  return <div ref={ref} className={`section-reveal ${className}`}>{children}</div>;
-}
-
 function Reveal({ children, delay = 0, className = '', as = 'div' }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(el,
-        { y: 32, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, delay, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
-        }
-      );
-    }, el);
-    return () => ctx.revert();
-  }, [delay]);
-  const Component = as === 'section' ? 'section' : as === 'article' ? 'article' : as === 'div' ? 'div' : motion[as] || motion.div;
-  if (typeof Component === 'string') {
-    return <Component ref={ref} className={className}>{children}</Component>;
-  }
-  return <Component ref={ref} className={className}>{children}</Component>;
+  const MotionTag = as === 'section' ? motion.section : as === 'article' ? motion.article : motion.div;
+  return (
+    <MotionTag
+      className={className}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </MotionTag>
+  );
 }
 
 function MagneticButton({ children, className = '', onClick, href, target }) {
@@ -525,43 +510,63 @@ function Shell({ children, route, go, user, setUser }) {
 }
 
 function HeroScene({ go }) {
-  const heroRef = useRef(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 700], [0, 100]);
   const scale = useTransform(scrollY, [0, 700], [1, 1.12]);
-  useHeroAnimation(heroRef);
   return (
-    <section ref={heroRef} className="home-hero hero-gsap">
-      <div className="hero-shield" data-hero="shield" />
-      <motion.div className="hero-video-wrap" style={{ y, scale }} data-hero="video">
+    <section className="home-hero hero-gsap">
+      <div className="hero-shield" />
+      <motion.div className="hero-video-wrap" style={{ y, scale }}>
         <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline preload="metadata" />
       </motion.div>
-      <div className="orb orb-a" data-hero="orb" />
-      <div className="orb orb-b" data-hero="orb" />
+      <div className="orb orb-a" />
+      <div className="orb orb-b" />
       <div className="hero-content">
-        <div className="eyebrow" data-hero="eyebrow">
-          Tecnologia premium para empresas
-        </div>
-        <h1 data-hero="title">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="eyebrow">Tecnologia premium para empresas</div>
+        </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 60, filter: 'blur(12px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
           LRM TECNO
-        </h1>
-        <p data-hero="desc">
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
           Projetamos, construímos e sustentamos a camada digital que coloca sua operação em outro patamar — sites, sistemas, CRM, automações e suporte técnico com padrão enterprise.
-        </p>
-        <div className="hero-actions" data-hero="actions">
+        </motion.p>
+        <motion.div
+          className="hero-actions"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        >
           <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento <ArrowRight size={18} /></MagneticButton>
           <MagneticButton className="outline" onClick={() => go('/servicos')}>Nossas soluções</MagneticButton>
           <MagneticButton className="whatsapp" href="https://wa.me/5512987076691" target="_blank"><MessageCircle size={18} /> WhatsApp</MagneticButton>
-        </div>
+        </motion.div>
       </div>
-      <div className="hero-dashboard" data-hero="dashboard">
+      <motion.div
+        className="hero-dashboard"
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.1, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="dash-top"><span /><span /><span /><strong>portal.lrmtecno</strong></div>
         <div className="hero-metrics">
           <div><strong>24h</strong><span>triagem</span></div>
           <div><strong>CRM</strong><span>funil comercial</span></div>
           <div><strong>Premium</strong><span>entrega</span></div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -716,13 +721,11 @@ function ServiceCard({ service, delay = 0, go }) {
 }
 
 function ServicesPage({ go }) {
-  const gridRef = useRef(null);
-  useCardReveal(gridRef);
   return (
     <Page>
       <PageHero label="Serviços" title="Soluções com padrão enterprise para empresas que não aceitam médio" text="Seis frentes de tecnologia — da identidade visual à consultoria de TI. Cada uma com escopo, prazo e investimento transparentes." />
       <section className="section">
-        <div ref={gridRef} className="service-grid all">
+        <div className="service-grid all">
           {services.map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.07} go={go} />)}
         </div>
       </section>
@@ -738,15 +741,12 @@ function ServiceDetail({ slug, go }) {
   const [activeSub, setActiveSub] = useState(hasSub ? service.subCategories[0].slug : null);
   const activeData = hasSub ? service.subCategories.find(s => s.slug === activeSub) : null;
   const activePkgs = hasSub && activeData ? activeData.packages : service.packages;
-  const priceGridRef = useRef(null);
-  const detailBgRef = useRef(null);
   const { scrollY: detailScrollY } = useScroll();
   const bgY = useTransform(detailScrollY, [0, 600], [0, 120]);
-  useCardReveal(priceGridRef);
   return (
     <Page>
       <section className="detail-hero">
-        <motion.div ref={detailBgRef} className="detail-hero-bg" style={{ backgroundImage: `url(${service.image})`, y: bgY }} />
+        <motion.div className="detail-hero-bg" style={{ backgroundImage: `url(${service.image})`, y: bgY }} />
         <div className="detail-hero-overlay" />
         <div className="detail-hero-content">
           <Reveal>
@@ -776,7 +776,7 @@ function ServiceDetail({ slug, go }) {
           <h2>Investimento{hasSub && activeData ? ` — ${activeData.label}` : ''}</h2>
           <p>Valores de referência. Cada orçamento é ajustado ao escopo real do projeto.</p>
         </Reveal>
-        <div ref={priceGridRef} className="pricing-grid packages-grid card-grid-reveal">
+        <div className="pricing-grid packages-grid">
           {activePkgs.map((pkg, i) => (
             <div key={pkg.name} className={pkg.popular ? 'price-card featured' : 'price-card'}>
               {pkg.popular && <div className="popular-badge">Recomendado</div>}
