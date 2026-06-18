@@ -533,7 +533,7 @@ function HeroScene({ go }) {
   return (
     <section ref={heroRef} className="home-hero hero-gsap">
       <div className="hero-shield" data-hero="shield" />
-      <motion.div className="hero-video-wrap" style={{ y, scale }}>
+      <motion.div className="hero-video-wrap" style={{ y, scale }} data-hero="video">
         <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline preload="metadata" />
       </motion.div>
       <div className="orb orb-a" data-hero="orb" />
