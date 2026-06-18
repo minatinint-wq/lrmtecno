@@ -454,26 +454,29 @@ nav .container{
   border:1px solid var(--border);
   border-radius:var(--radius-lg);
   overflow:hidden;
-  transition:all 0.3s var(--ease-out);
+  transition:all 0.4s var(--ease-out);
   display:flex;flex-direction:column;
   flex:1;
+  position:relative;
 }
-.servico-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px);border-color:var(--accent)}
-.servico-card-body{padding:2rem;flex:1;display:flex;flex-direction:column}
+.servico-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-6px);border-color:var(--accent)}
+.servico-card::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg);pointer-events:none;opacity:0;transition:opacity .4s;box-shadow:0 0 40px -12px color-mix(in srgb var(--accent) 20%,transparent)}
+.servico-card:hover::after{opacity:1}
+.servico-card-body{padding:1.75rem 2rem 2rem;flex:1;display:flex;flex-direction:column}
 .servico-card-body .btn{margin-top:auto;align-self:flex-start}
-.servico-card-body p{font-size:0.9375rem;margin-bottom:1.25rem;flex:1}
+.servico-card-body p{font-size:0.9375rem;margin-bottom:1.25rem;flex:1;line-height:1.65}
 .img-card-fig{
-  margin:-2rem -2rem 0 -2rem;
   position:relative;
   overflow:hidden;
   aspect-ratio:16/9;
   background:var(--border);
+  min-height:180px;
 }
 .img-card-fig img{
   width:100%;height:100%;object-fit:cover;
-  transition:transform 0.5s var(--ease-out);
+  transition:transform 0.6s var(--ease-out);
 }
-.servico-card:hover .img-card-fig img{transform:scale(1.03)}
+.servico-card:hover .img-card-fig img{transform:scale(1.06)}
 .img-card-caption{
   display:flex;align-items:center;gap:0.75rem;
   margin-bottom:0.75rem;
