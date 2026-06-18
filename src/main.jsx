@@ -325,10 +325,10 @@ function Reveal({ children, delay = 0, className = '', as = 'div' }) {
   return (
     <MotionTag
       className={className}
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 24, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, margin: '-60px' }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </MotionTag>
@@ -635,27 +635,27 @@ function Home({ go }) {
   return (
     <Page>
       <HeroScene go={go} />
-      <section className="trust-strip">
+      <Reveal as="section" className="trust-strip">
         {['Atendimento online', 'Portal do cliente', 'Orçamento estruturado', 'Suporte pós-entrega'].map((item) => (
           <span key={item}><BadgeCheck size={15} /> {item}</span>
         ))}
-      </section>
-      <section className="section carousel-section">
+      </Reveal>
+      <Reveal as="section" className="section carousel-section">
         <div className="section-head">
-          <Reveal><span className="eyebrow">Especialidades</span></Reveal>
+          <span className="eyebrow">Especialidades</span>
           <WordReveal text="Engenharia digital para operações que exigem excelência" as="h2" />
-          <Reveal><p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p></Reveal>
+          <p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p>
         </div>
         <ServiceCarousel go={go} />
-      </section>
+      </Reveal>
       
       <PortalPreview go={go} />
       <ProcessSection />
-      <section className="section refs-home">
+      <Reveal as="section" className="section refs-home">
         <div className="section-head">
-          <Reveal><span className="eyebrow">Referências</span></Reveal>
+          <span className="eyebrow">Referências</span>
           <WordReveal text="Quem já construiu conosco" as="h2" />
-          <Reveal><p>Depoimentos de clientes que confiaram na LRM TECNO para projetos de sistema, site, CRM, manutenção e consultoria.</p></Reveal>
+          <p>Depoimentos de clientes que confiaram na LRM TECNO para projetos de sistema, site, CRM, manutenção e consultoria.</p>
         </div>
         <div className="refs-grid card-grid-reveal">
           {testimonials.slice(0, 3).map((r, i) => (
@@ -676,7 +676,7 @@ function Home({ go }) {
         <div className="center-block" style={{ marginTop: '2rem' }}>
           <MagneticButton className="outline" onClick={() => go('/referencias')}>Ver todos os depoimentos <ArrowRight size={16} /></MagneticButton>
         </div>
-      </section>
+      </Reveal>
       <CTA go={go} title="Solicite um orçamento com contexto." text="Crie sua conta, descreva o projeto e acompanhe a análise no portal do cliente." />
     </Page>
   );
@@ -813,7 +813,7 @@ function WorksPage({ go }) {
   return (
     <Page>
       <PageHero label="Trabalhos" title="Projetos que combinam produto, operação e presença" text="A vitrine da LRM reúne sistemas próprios e soluções criadas para clientes." />
-      <section className="section works-section">
+      <Reveal as="section" className="section works-section">
         {workItems.map((item, i) => (
           <Reveal key={item.title} delay={i * 0.08} className="work-showcase">
             <div className="browser">
@@ -831,7 +831,7 @@ function WorksPage({ go }) {
             </div>
           </Reveal>
         ))}
-      </section>
+      </Reveal>
     </Page>
   );
 }
@@ -909,7 +909,7 @@ function PartnersPage({ go }) {
           ))}
         </div>
       </section>
-      <section className="section" style={{ background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+      <Reveal as="section" className="section" style={{ background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
         <div style={{ marginBottom: '3rem', maxWidth: 600 }}>
           <span className="eyebrow">Vantagens</span>
           <h2>Por que ser parceiro</h2>
@@ -922,14 +922,14 @@ function PartnersPage({ go }) {
             { icon: <Zap size={22} />, title: 'Prefixo técnico prioritário', desc: 'Acesso a orçamentos internos, prazos reduzidos e suporte técnico prioritário.' },
             { icon: <DollarSign size={22} />, title: 'Modelo ganha-ganha', desc: 'Estrutura de repasse clara. Cada parte sabe exatamente quanto ganha em cada projeto.' }
           ].map((b, i) => (
-            <Reveal key={b.title} delay={i * 0.06} className="benefit-card-react">
+            <div key={b.title} className="benefit-card-react">
               <div className="benefit-icon-react">{b.icon}</div>
               <h4>{b.title}</h4>
               <p>{b.desc}</p>
-            </Reveal>
+            </div>
           ))}
         </div>
-      </section>
+      </Reveal>
       <CTA go={go} title="Vamos construir juntos?" text="Se sua empresa atua com tecnologia, consultoria ou infraestrutura, podemos ter uma conversa rápida e objetiva." />
     </Page>
   );
@@ -962,48 +962,15 @@ function ContactRow({ icon: Icon, label, value, href }) {
   return href ? <a className="contact-row" href={href} target={href.startsWith('http') ? '_blank' : undefined}>{body}</a> : <div className="contact-row">{body}</div>;
 }
 
-function StorytellingSection() {
-  const steps = [
-    { icon: Cpu, title: 'Automação', desc: 'Processos que rodam sem supervisão. Redução de retrabalho, eliminação de gargalos manuais e previsibilidade operacional.' },
-    { icon: BarChart3, title: 'CRM', desc: 'Funil visual, follow-up automatizado e gestão de leads com integração direta a WhatsApp e e-mail.' },
-    { icon: Zap, title: 'IA', desc: 'Modelos treinados para classificar leads, sugerir respostas e detectar anomalias em dados operacionais.' },
-    { icon: Globe2, title: 'Integrações', desc: 'API, webhooks e conectores nativos para ERP, plataformas de pagamento e ferramentas de CRM.' }
-  ];
-  return (
-    <section className="section storytelling-simple">
-      <div className="section-head">
-        <Reveal><span className="eyebrow">Tecnologia que escala</span></Reveal>
-        <WordReveal text="Quatro pilares da operação digital" as="h2" />
-        <Reveal><p>Da automação de processos à integração de sistemas — cada camada da sua operação coberta por tecnologia proprietária.</p></Reveal>
-      </div>
-      <div className="storytelling-grid">
-        {steps.map((step, i) => {
-          const Icon = step.icon;
-          return (
-            <Reveal key={step.title} delay={i * 0.1} className="storytelling-card">
-              <div className="storytelling-icon">
-                <Icon size={28} strokeWidth={1.5} />
-                <span>0{i + 1}</span>
-              </div>
-              <h3>{step.title}</h3>
-              <p>{step.desc}</p>
-            </Reveal>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
 function PortalPreview({ go }) {
   return (
-    <section className="portal-section">
-      <Reveal className="portal-copy">
+    <Reveal as="section" className="portal-section">
+      <div className="portal-copy">
         <span className="eyebrow">Área do Cliente</span>
         <h2>Orçamento, tickets e serviços em um painel</h2>
         <p>O site deixa de ser vitrine. O cliente entra, descreve o projeto, acompanha o status e recebe a resposta do admin.</p>
         <MagneticButton className="primary" onClick={() => go('/login')}>Abrir portal <ArrowRight size={18} /></MagneticButton>
-      </Reveal>
+      </div>
       <Reveal delay={0.12} className="portal-glass">
         {['Orçamento solicitado', 'Proposta técnica', 'Ticket aberto', 'Serviço para avaliar'].map((item, i) => (
           <motion.div key={item} className={i === 0 ? 'portal-line active' : 'portal-line'} whileHover={{ x: 6 }}>
@@ -1011,7 +978,7 @@ function PortalPreview({ go }) {
           </motion.div>
         ))}
       </Reveal>
-    </section>
+    </Reveal>
   );
 }
 
