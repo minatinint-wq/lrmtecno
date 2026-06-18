@@ -708,17 +708,14 @@ function PageHero({ label, title, text, children }) {
 function ServiceCard({ service, delay = 0, go }) {
   const Icon = service.icon;
   return (
-    <Reveal delay={delay} className="service-card-img" as="article" onClick={() => go(`/servicos/${service.slug}`)}>
-      <div className="service-card-img-bg">
-        <img src={service.image} alt={service.title} loading="lazy" />
+    <Reveal delay={delay} className="service-card" as="article" onClick={() => go(`/servicos/${service.slug}`)}>
+      <div className="service-card-top">
+        <div className="service-icon"><Icon size={18} /></div>
+        <span>{service.tag}</span>
       </div>
-      <div className="service-card-img-overlay" />
-      <div className="service-card-img-content">
-        <div className="service-card-img-tag">{service.tag}</div>
-        <h3>{service.title}</h3>
-        <p>{service.desc}</p>
-        <span className="service-card-img-cta">Ver pacotes e preços <ChevronRight size={14} /></span>
-      </div>
+      <h3>{service.title}</h3>
+      <p>{service.desc}</p>
+      <button onClick={() => go(`/servicos/${service.slug}`)}>Ver pacotes e preços <ChevronRight size={15} /></button>
     </Reveal>
   );
 }
