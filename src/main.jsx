@@ -1,6 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLenis, useHeroAnimation, useSectionReveal, useParallax, useParallaxOrbs, useCardReveal, useStorytellingScroll, useImageParallax, WordReveal, AnimatedMetric } from './animation.jsx';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -319,20 +322,32 @@ const revealVariants = {
   visible: (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] } })
 };
 
+function RefsSection({ children, className = '' }) {
+  const ref = useRef(null);
+  useSectionReveal(ref);
+  return <div ref={ref} className={`section-reveal ${className}`}>{children}</div>;
+}
+
 function Reveal({ children, delay = 0, className = '', as = 'div' }) {
-  const Component = motion[as] || motion.div;
-  return (
-    <Component
-      className={className}
-      variants={revealVariants}
-      initial="hidden"
-      whileInView="visible"
-      custom={delay}
-      viewport={{ once: true, amount: 0.18 }}
-    >
-      {children}
-    </Component>
-  );
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(el,
+        { y: 32, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, delay, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+        }
+      );
+    }, el);
+    return () => ctx.revert();
+  }, [delay]);
+  const Component = as === 'section' ? 'section' : as === 'article' ? 'article' : as === 'div' ? 'div' : motion[as] || motion.div;
+  if (typeof Component === 'string') {
+    return <Component ref={ref} className={className}>{children}</Component>;
+  }
+  return <Component ref={ref} className={className}>{children}</Component>;
 }
 
 function MagneticButton({ children, className = '', onClick, href, target }) {
@@ -510,47 +525,49 @@ function Shell({ children, route, go, user, setUser }) {
 }
 
 function HeroScene({ go }) {
+  const heroRef = useRef(null);
+  const videoRef = useRef(null);
+  const videoParallaxRef = useRef(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 700], [0, 100]);
   const scale = useTransform(scrollY, [0, 700], [1, 1.12]);
+  useHeroAnimation(heroRef);
+  useParallaxOrbs(heroRef);
+  useImageParallax(videoRef);
   return (
-    <section className="home-hero">
-      <div className="hero-shield" />
-      <motion.div className="hero-video-wrap" style={{ y, scale }}>
-        <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline preload="metadata" />
+    <section ref={heroRef} className="home-hero hero-gsap">
+      <div className="hero-shield" data-hero="shield" />
+      <motion.div className="hero-video-wrap parallax-wrap" ref={videoParallaxRef} style={{ y, scale }}>
+        <div ref={videoRef}>
+          <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline preload="metadata" />
+        </div>
       </motion.div>
+      <div className="orb orb-a" data-hero="orb" />
+      <div className="orb orb-b" data-hero="orb" />
       <div className="hero-content">
-        <motion.div className="eyebrow" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <div className="eyebrow" data-hero="eyebrow">
           Tecnologia premium para empresas
-        </motion.div>
-        <motion.h1
-          initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ delay: 0.36, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        >
+        </div>
+        <h1 data-hero="title">
           LRM TECNO
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.7 }}
-        >
+        </h1>
+        <p data-hero="desc">
           Projetamos, construímos e sustentamos a camada digital que coloca sua operação em outro patamar — sites, sistemas, CRM, automações e suporte técnico com padrão enterprise.
-        </motion.p>
-        <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.64 }}>
+        </p>
+        <div className="hero-actions" data-hero="actions">
           <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar orçamento <ArrowRight size={18} /></MagneticButton>
           <MagneticButton className="outline" onClick={() => go('/servicos')}>Nossas soluções</MagneticButton>
           <MagneticButton className="whatsapp" href="https://wa.me/5512987076691" target="_blank"><MessageCircle size={18} /> WhatsApp</MagneticButton>
-        </motion.div>
+        </div>
       </div>
-      <motion.div className="hero-dashboard" initial={{ opacity: 0, y: 50, rotateX: 12 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ delay: 0.76, duration: 0.9 }}>
+      <div className="hero-dashboard" data-hero="dashboard">
         <div className="dash-top"><span /><span /><span /><strong>portal.lrmtecno</strong></div>
         <div className="hero-metrics">
           <div><strong>24h</strong><span>triagem</span></div>
           <div><strong>CRM</strong><span>funil comercial</span></div>
           <div><strong>Premium</strong><span>entrega</span></div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
@@ -625,22 +642,23 @@ function Home({ go }) {
         ))}
       </section>
       <section className="section carousel-section">
-        <Reveal className="section-head">
-          <span className="eyebrow">Especialidades</span>
-          <h2>Engenharia digital para operações que exigem excelência</h2>
-          <p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p>
-        </Reveal>
+        <div className="section-head">
+          <Reveal><span className="eyebrow">Especialidades</span></Reveal>
+          <WordReveal text="Engenharia digital para operações que exigem excelência" as="h2" />
+          <Reveal><p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p></Reveal>
+        </div>
         <ServiceCarousel go={go} />
       </section>
+      <StorytellingSection />
       <PortalPreview go={go} />
       <ProcessSection />
       <section className="section refs-home">
-        <Reveal className="section-head">
-          <span className="eyebrow">Referências</span>
-          <h2>Quem já construiu conosco</h2>
-          <p>Depoimentos de clientes que confiaram na LRM TECNO para projetos de sistema, site, CRM, manutenção e consultoria.</p>
-        </Reveal>
-        <div className="refs-grid">
+        <div className="section-head">
+          <Reveal><span className="eyebrow">Referências</span></Reveal>
+          <WordReveal text="Quem já construiu conosco" as="h2" />
+          <Reveal><p>Depoimentos de clientes que confiaram na LRM TECNO para projetos de sistema, site, CRM, manutenção e consultoria.</p></Reveal>
+        </div>
+        <div className="refs-grid card-grid-reveal">
           {testimonials.slice(0, 3).map((r, i) => (
             <Reveal key={`${r.name}-${i}`} delay={i * 0.08} className="ref-card-react">
               <div className="ref-card-bar" />
@@ -676,15 +694,13 @@ function Page({ children }) {
 function PageHero({ label, title, text, children }) {
   return (
     <section className="page-hero-react">
-      <motion.div className="orb orb-a" animate={{ y: [0, -32, 0], x: [0, 24, 0] }} transition={{ duration: 10, repeat: Infinity, ease: 'linear' }} />
-      <motion.div className="orb orb-b" animate={{ y: [0, 28, 0], x: [0, -26, 0] }} transition={{ duration: 11, repeat: Infinity, ease: 'linear' }} />
+      <div className="orb orb-a" />
+      <div className="orb orb-b" />
       <div className="page-hero-inner">
-        <Reveal>
-          <span className="eyebrow">{label}</span>
-          <h1>{title}</h1>
-          <p>{text}</p>
-          {children}
-        </Reveal>
+        <Reveal><span className="eyebrow">{label}</span></Reveal>
+        <WordReveal text={title} as="h1" />
+        <Reveal><p>{text}</p></Reveal>
+        {children}
       </div>
     </section>
   );
@@ -706,11 +722,13 @@ function ServiceCard({ service, delay = 0, go }) {
 }
 
 function ServicesPage({ go }) {
+  const gridRef = useRef(null);
+  useCardReveal(gridRef);
   return (
     <Page>
       <PageHero label="Serviços" title="Soluções com padrão enterprise para empresas que não aceitam médio" text="Seis frentes de tecnologia — da identidade visual à consultoria de TI. Cada uma com escopo, prazo e investimento transparentes." />
       <section className="section">
-        <div className="service-grid all">
+        <div ref={gridRef} className="service-grid all">
           {services.map((s, i) => <ServiceCard key={s.slug} service={s} delay={i * 0.07} go={go} />)}
         </div>
       </section>
@@ -726,10 +744,15 @@ function ServiceDetail({ slug, go }) {
   const [activeSub, setActiveSub] = useState(hasSub ? service.subCategories[0].slug : null);
   const activeData = hasSub ? service.subCategories.find(s => s.slug === activeSub) : null;
   const activePkgs = hasSub && activeData ? activeData.packages : service.packages;
+  const priceGridRef = useRef(null);
+  const detailBgRef = useRef(null);
+  const { scrollY: detailScrollY } = useScroll();
+  const bgY = useTransform(detailScrollY, [0, 600], [0, 120]);
+  useCardReveal(priceGridRef);
   return (
     <Page>
       <section className="detail-hero">
-        <div className="detail-hero-bg" style={{ backgroundImage: `url(${service.image})` }} />
+        <motion.div ref={detailBgRef} className="detail-hero-bg" style={{ backgroundImage: `url(${service.image})`, y: bgY }} />
         <div className="detail-hero-overlay" />
         <div className="detail-hero-content">
           <Reveal>
@@ -759,9 +782,9 @@ function ServiceDetail({ slug, go }) {
           <h2>Investimento{hasSub && activeData ? ` — ${activeData.label}` : ''}</h2>
           <p>Valores de referência. Cada orçamento é ajustado ao escopo real do projeto.</p>
         </Reveal>
-        <div className="pricing-grid packages-grid">
+        <div ref={priceGridRef} className="pricing-grid packages-grid card-grid-reveal">
           {activePkgs.map((pkg, i) => (
-            <Reveal key={pkg.name} delay={i * 0.08} className={pkg.popular ? 'price-card featured' : 'price-card'}>
+            <div key={pkg.name} className={pkg.popular ? 'price-card featured' : 'price-card'}>
               {pkg.popular && <div className="popular-badge">Recomendado</div>}
               <span className="pkg-tier">{pkg.tag}</span>
               <h3>{pkg.name}</h3>
@@ -776,7 +799,7 @@ function ServiceDetail({ slug, go }) {
               <a href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de solicitar ' + service.title + ' - ' + (hasSub ? activeData.label + ' - ' : '') + pkg.name + '.')}`} target="_blank" className="btn-whatsapp-pkg">
                 <MessageCircle size={15} /> Solicitar via WhatsApp
               </a>
-            </Reveal>
+            </div>
           ))}
         </div>
         <div className="center-block" style={{ marginTop: '2.5rem' }}>
@@ -945,6 +968,40 @@ function ContactRow({ icon: Icon, label, value, href }) {
   return href ? <a className="contact-row" href={href} target={href.startsWith('http') ? '_blank' : undefined}>{body}</a> : <div className="contact-row">{body}</div>;
 }
 
+function StorytellingSection() {
+  const sectionRef = useRef(null);
+  const wrapperRef = useRef(null);
+  useStorytellingScroll(sectionRef, wrapperRef);
+  const steps = [
+    { icon: Cpu, title: 'Automação', desc: 'Processos que rodam sem supervisão. Redução de retrabalho, eliminação de gargalos manuais e previsibilidade operacional — com dashboards que mostram o que realmente importa.' },
+    { icon: BarChart3, title: 'CRM', desc: 'Funil visual, follow-up automatizado e gestão de leads com integração direta a WhatsApp e e-mail. Previsibilidade comercial sem planilhas.' },
+    { icon: Zap, title: 'IA', desc: 'Modelos treinados para classificar leads, sugerir respostas e detectar anomalias em dados operacionais. Inteligência aplicada a processos reais.' },
+    { icon: Globe2, title: 'Integrações', desc: 'API, webhooks e conectores nativos para ERP, plataformas de pagamento, redes sociais e ferramentas de CRM. Sua operação unificada em um ecossistema.' }
+  ];
+  return (
+    <section ref={sectionRef} className="storytelling-section">
+      <div className="storytelling-lines">
+        <div className="storytelling-line" style={{ left: '25%' }} />
+        <div className="storytelling-line" style={{ left: '75%' }} />
+      </div>
+      <div className="storytelling-pin">
+        <div className="storytelling-track" ref={wrapperRef}>
+          {steps.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <div key={step.title} className="storytelling-panel">
+                <Icon size={56} strokeWidth={1.5} />
+                <h2>{step.title}</h2>
+                <p>{step.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PortalPreview({ go }) {
   return (
     <section className="portal-section">
@@ -1111,10 +1168,10 @@ function DashboardPage({ user, go, setUser }) {
       <PortalHeader user={user} logout={logout} title="Portal do Cliente" />
       <section className="portal-dashboard">
         <div className="dash-tech-overlay" />
-        <Metric label="Orçamentos" value={quotes.length} />
-        <Metric label="Serviços" value={servicesList.length} />
-        <Metric label="Tickets" value={tickets.length} />
-        <Metric label="Em aberto" value={quotes.filter((q) => q.status !== 'approved').length + tickets.filter((t) => t.status === 'open').length} />
+        <AnimatedMetric label="Orçamentos" value={quotes.length} />
+        <AnimatedMetric label="Serviços" value={servicesList.length} />
+        <AnimatedMetric label="Tickets" value={tickets.length} />
+        <AnimatedMetric label="Em aberto" value={quotes.filter((q) => q.status !== 'approved').length + tickets.filter((t) => t.status === 'open').length} />
         <div className="panel quote-panel">
           <h2>Solicitar orçamento</h2>
           <form onSubmit={submitQuote} className="grid-form">
@@ -1294,9 +1351,9 @@ function AdminPage({ user, go, setUser }) {
     <Page>
       <PortalHeader user={user} logout={logout} title="Painel Administrativo" />
       <section className="admin-dashboard">
-        <Metric label="Clientes" value={users.length} />
-        <Metric label="Orçamentos" value={quotes.length} />
-        <Metric label="Tickets abertos" value={tickets.filter((t) => t.status === 'open').length} />
+        <AnimatedMetric label="Clientes" value={users.length} />
+        <AnimatedMetric label="Orçamentos" value={quotes.length} />
+        <AnimatedMetric label="Tickets abertos" value={tickets.filter((t) => t.status === 'open').length} />
         <div className="admin-tabs">
           {['quotes', 'clients', 'services', 'tickets'].map((t) => <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>{t === 'quotes' ? 'Orçamentos' : t === 'clients' ? 'Clientes' : t === 'services' ? 'Serviços' : 'Tickets'}</button>)}
         </div>
@@ -1431,6 +1488,7 @@ function App() {
   const [route, go] = useRoute();
   const [user, setUser] = useState(getCurrentUser());
   const [loading, setLoading] = useState(true);
+  useLenis();
   useEffect(initStore, []);
   useEffect(() => { const t = setTimeout(() => setLoading(false), 1800); return () => clearTimeout(t); }, []);
 
