@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useLenis, useHeroAnimation, useSectionReveal, useParallax, useParallaxOrbs, useCardReveal, useStorytellingScroll, useImageParallax, WordReveal, AnimatedMetric } from './animation.jsx';
+import { useHeroAnimation, useSectionReveal, useCardReveal, WordReveal, AnimatedMetric } from './animation.jsx';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -526,21 +526,15 @@ function Shell({ children, route, go, user, setUser }) {
 
 function HeroScene({ go }) {
   const heroRef = useRef(null);
-  const videoRef = useRef(null);
-  const videoParallaxRef = useRef(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 700], [0, 100]);
   const scale = useTransform(scrollY, [0, 700], [1, 1.12]);
   useHeroAnimation(heroRef);
-  useParallaxOrbs(heroRef);
-  useImageParallax(videoRef);
   return (
     <section ref={heroRef} className="home-hero hero-gsap">
       <div className="hero-shield" data-hero="shield" />
-      <motion.div className="hero-video-wrap parallax-wrap" ref={videoParallaxRef} style={{ y, scale }}>
-        <div ref={videoRef}>
-          <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline preload="metadata" />
-        </div>
+      <motion.div className="hero-video-wrap" style={{ y, scale }}>
+        <video src={ASSETS.logoVideo} poster={ASSETS.logo} autoPlay muted loop playsInline preload="metadata" />
       </motion.div>
       <div className="orb orb-a" data-hero="orb" />
       <div className="orb orb-b" data-hero="orb" />
@@ -649,7 +643,7 @@ function Home({ go }) {
         </div>
         <ServiceCarousel go={go} />
       </section>
-      <StorytellingSection />
+      
       <PortalPreview go={go} />
       <ProcessSection />
       <section className="section refs-home">
@@ -969,34 +963,33 @@ function ContactRow({ icon: Icon, label, value, href }) {
 }
 
 function StorytellingSection() {
-  const sectionRef = useRef(null);
-  const wrapperRef = useRef(null);
-  useStorytellingScroll(sectionRef, wrapperRef);
   const steps = [
-    { icon: Cpu, title: 'Automação', desc: 'Processos que rodam sem supervisão. Redução de retrabalho, eliminação de gargalos manuais e previsibilidade operacional — com dashboards que mostram o que realmente importa.' },
-    { icon: BarChart3, title: 'CRM', desc: 'Funil visual, follow-up automatizado e gestão de leads com integração direta a WhatsApp e e-mail. Previsibilidade comercial sem planilhas.' },
-    { icon: Zap, title: 'IA', desc: 'Modelos treinados para classificar leads, sugerir respostas e detectar anomalias em dados operacionais. Inteligência aplicada a processos reais.' },
-    { icon: Globe2, title: 'Integrações', desc: 'API, webhooks e conectores nativos para ERP, plataformas de pagamento, redes sociais e ferramentas de CRM. Sua operação unificada em um ecossistema.' }
+    { icon: Cpu, title: 'Automação', desc: 'Processos que rodam sem supervisão. Redução de retrabalho, eliminação de gargalos manuais e previsibilidade operacional.' },
+    { icon: BarChart3, title: 'CRM', desc: 'Funil visual, follow-up automatizado e gestão de leads com integração direta a WhatsApp e e-mail.' },
+    { icon: Zap, title: 'IA', desc: 'Modelos treinados para classificar leads, sugerir respostas e detectar anomalias em dados operacionais.' },
+    { icon: Globe2, title: 'Integrações', desc: 'API, webhooks e conectores nativos para ERP, plataformas de pagamento e ferramentas de CRM.' }
   ];
   return (
-    <section ref={sectionRef} className="storytelling-section">
-      <div className="storytelling-lines">
-        <div className="storytelling-line" style={{ left: '25%' }} />
-        <div className="storytelling-line" style={{ left: '75%' }} />
+    <section className="section storytelling-simple">
+      <div className="section-head">
+        <Reveal><span className="eyebrow">Tecnologia que escala</span></Reveal>
+        <WordReveal text="Quatro pilares da operação digital" as="h2" />
+        <Reveal><p>Da automação de processos à integração de sistemas — cada camada da sua operação coberta por tecnologia proprietária.</p></Reveal>
       </div>
-      <div className="storytelling-pin">
-        <div className="storytelling-track" ref={wrapperRef}>
-          {steps.map((step, i) => {
-            const Icon = step.icon;
-            return (
-              <div key={step.title} className="storytelling-panel">
-                <Icon size={56} strokeWidth={1.5} />
-                <h2>{step.title}</h2>
-                <p>{step.desc}</p>
+      <div className="storytelling-grid">
+        {steps.map((step, i) => {
+          const Icon = step.icon;
+          return (
+            <Reveal key={step.title} delay={i * 0.1} className="storytelling-card">
+              <div className="storytelling-icon">
+                <Icon size={28} strokeWidth={1.5} />
+                <span>0{i + 1}</span>
               </div>
-            );
-          })}
-        </div>
+              <h3>{step.title}</h3>
+              <p>{step.desc}</p>
+            </Reveal>
+          );
+        })}
       </div>
     </section>
   );
@@ -1488,7 +1481,6 @@ function App() {
   const [route, go] = useRoute();
   const [user, setUser] = useState(getCurrentUser());
   const [loading, setLoading] = useState(true);
-  useLenis();
   useEffect(initStore, []);
   useEffect(() => { const t = setTimeout(() => setLoading(false), 1800); return () => clearTimeout(t); }, []);
 
