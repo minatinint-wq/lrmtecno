@@ -273,13 +273,13 @@ function initStore() {
   const users = read('lrm_react_users', []);
   if (!users.length) {
     write('lrm_react_users', [defaultAdmin]);
-    localStorage.setItem('lrm_react_next_id', '2');
+    if (!localStorage.getItem('lrm_nextId')) localStorage.setItem('lrm_nextId', '1');
   }
 }
 
 function nextId() {
-  const id = Number(localStorage.getItem('lrm_react_next_id') || '2');
-  localStorage.setItem('lrm_react_next_id', String(id + 1));
+  const id = Number(localStorage.getItem('lrm_nextId') || '1');
+  localStorage.setItem('lrm_nextId', String(id + 1));
   return id;
 }
 
@@ -1120,17 +1120,17 @@ function Input({ label, value, onChange, type = 'text', textarea = false, option
 function DashboardPage({ user, go, setUser }) {
   if (!user) return <RequireLogin go={go} />;
   const [quotes, setQuotes] = useState(read('lrm_react_quotes', []).filter((q) => q.userId === user.id));
-  const [tickets, setTickets] = useState(read('lrm_react_tickets', []).filter((t) => t.userId === user.id));
+  const [tickets, setTickets] = useState(read('lrm_tickets', []).filter((t) => t.userId === user.id));
   const [servicesList, setServicesList] = useState(read(`lrm_react_services_${user.id}`, []));
   const [reviewing, setReviewing] = useState(null);
   const [reviewStar, setReviewStar] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [reviewHover, setReviewHover] = useState(0);
   const [quote, setQuote] = useState({ type: 'Site premium', project: '', budget: 'A definir', timeline: 'Até 30 dias', details: '' });
-  const [ticket, setTicket] = useState({ subject: '', message: '' });
+  const [ticket, setTicket] = useState({ subject: '', message: '', category: 'suporte', priority: 'media' });
 
   const refreshQuotes = () => setQuotes(read('lrm_react_quotes', []).filter((q) => q.userId === user.id));
-  const refreshTickets = () => setTickets(read('lrm_react_tickets', []).filter((t) => t.userId === user.id));
+  const refreshTickets = () => setTickets(read('lrm_tickets', []).filter((t) => t.userId === user.id));
 
   const submitQuote = (e) => {
     e.preventDefault();
@@ -1144,8 +1144,8 @@ function DashboardPage({ user, go, setUser }) {
   const submitTicket = (e) => {
     e.preventDefault();
     if (!ticket.subject || ticket.message.length < 8) return;
-    const all = read('lrm_react_tickets', []);
-    write('lrm_react_tickets', [{ ...ticket, id: nextId(), userId: user.id, status: 'open', createdAt: new Date().toISOString(), reply: '' }, ...all]);
+    const all = read('lrm_tickets', []);
+    write('lrm_tickets', [{ ...ticket, id: nextId(), userId: user.id, status: 'open', category: ticket.category || 'suporte', priority: ticket.priority || 'media', created_at: new Date().toISOString(), reply: '' }, ...all]);
     setTicket({ subject: '', message: '' });
     refreshTickets();
   };
@@ -1222,22 +1222,54 @@ function DashboardPage({ user, go, setUser }) {
           </div>
         </div>
         <div className="panel">
-          <h2>Tickets</h2>
+          <h2>Tickets {tickets.length > 0 && <span className="count-badge">{tickets.length}</span>}</h2>
           <div className="list">
             {!tickets.length && <div className="empty">Nenhum ticket aberto</div>}
-            {tickets.map((t) => (
-              <div className="list-row" key={t.id}>
-                <div>
-                  <strong>{t.subject}</strong>
-                  <p>{new Date(t.createdAt).toLocaleDateString('pt-BR')} · <span className={`status ${t.status || 'new'}`}>{statusLabel(t.status)}</span></p>
-                  {t.message && <p style={{ fontSize: '0.8125rem', color: 'var(--ink)', margin: '0.15rem 0' }}>{t.message}</p>}
-                  {t.reply && <em>{t.reply}</em>}
+            {[...tickets].sort((a, b) => a.status === 'open' ? -1 : 1).map((t) => (
+              <div className={`list-row ticket-row ${t.status === 'open' ? 'ticket-open' : 'ticket-closed'}`} key={t.id}>
+                <div className="ticket-main">
+                  <div className="ticket-head">
+                    <strong>{t.subject}</strong>
+                    <span className={`status ${t.status || 'new'}`}>{statusLabel(t.status)}</span>
+                  </div>
+                  <div className="ticket-meta">
+                    <span>{new Date(t.created_at).toLocaleDateString('pt-BR')}</span>
+                    {t.category === 'suporte' && <span className="tag tag-suporte">Suporte</span>}
+                    {t.category === 'orcamento' && <span className="tag tag-orcamento">Orçamento</span>}
+                    {t.category === 'duvida' && <span className="tag tag-duvida">Dúvida</span>}
+                    {t.category === 'melhoria' && <span className="tag tag-melhoria">Melhoria</span>}
+                    {t.priority === 'urgente' && <span className="priority urgent">Urgente</span>}
+                    {t.priority === 'alta' && <span className="priority high">Alta</span>}
+                    {t.priority === 'media' && <span className="priority medium">Média</span>}
+                    {t.priority === 'baixa' && <span className="priority low">Baixa</span>}
+                  </div>
+                  <p className="ticket-msg">{t.message}</p>
+                  {t.reply && (
+                    <div className="ticket-reply-block">
+                      <span className="reply-label">Resposta da LRM</span>
+                      <p>{t.reply}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
           </div>
           <form onSubmit={submitTicket} style={{ borderTop: '1px solid var(--line)', marginTop: '1rem', paddingTop: '1rem' }}>
             <Input label="Assunto" value={ticket.subject} onChange={(v) => setTicket({ ...ticket, subject: v })} />
+            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+              <Input label="Categoria" value={ticket.category} onChange={(v) => setTicket({ ...ticket, category: v })} options={[
+                { value: 'suporte', label: 'Suporte técnico' },
+                { value: 'orcamento', label: 'Orçamento' },
+                { value: 'duvida', label: 'Dúvida' },
+                { value: 'melhoria', label: 'Sugestão / Melhoria' }
+              ]} />
+              <Input label="Prioridade" value={ticket.priority} onChange={(v) => setTicket({ ...ticket, priority: v })} options={[
+                { value: 'baixa', label: 'Baixa' },
+                { value: 'media', label: 'Média' },
+                { value: 'alta', label: 'Alta' },
+                { value: 'urgente', label: 'Urgente' }
+              ]} />
+            </div>
             <Input label="Mensagem" value={ticket.message} onChange={(v) => setTicket({ ...ticket, message: v })} textarea />
             <MagneticButton className="primary full">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14"/></svg>
@@ -1321,7 +1353,7 @@ function AdminPage({ user, go, setUser }) {
   if (!user || user.role !== 'admin') return <RequireLogin go={go} />;
   const [users] = useState(read('lrm_react_users', []).filter((u) => u.role === 'client'));
   const [quotes, setQuotes] = useState(read('lrm_react_quotes', []));
-  const [tickets, setTickets] = useState(read('lrm_react_tickets', []));
+  const [tickets, setTickets] = useState(read('lrm_tickets', []));
   const [tab, setTab] = useState('quotes');
 
   const saveQuote = (id, patch) => {
@@ -1330,8 +1362,8 @@ function AdminPage({ user, go, setUser }) {
     setQuotes(all);
   };
   const replyTicket = (id, reply) => {
-    const all = read('lrm_react_tickets', []).map((t) => t.id === id ? { ...t, reply, status: 'closed' } : t);
-    write('lrm_react_tickets', all);
+    const all = read('lrm_tickets', []).map((t) => t.id === id ? { ...t, reply, status: 'closed' } : t);
+    write('lrm_tickets', all);
     setTickets(all);
   };
   const logout = () => {
@@ -1465,12 +1497,42 @@ function AdminClients({ users }) {
 }
 
 function AdminTickets({ tickets, replyTicket }) {
-  return <Reveal className="panel admin-panel"><h2>Tickets</h2>{tickets.map((t) => <AdminTicketRow key={t.id} t={t} replyTicket={replyTicket} />)}</Reveal>;
+  const sorted = [...tickets].sort((a, b) => a.status === 'open' ? -1 : 1);
+  return <Reveal className="panel admin-panel"><h2>Tickets {tickets.filter(t => t.status === 'open').length > 0 && <span className="count-badge open">{tickets.filter(t => t.status === 'open').length} abertos</span>}</h2>{sorted.map((t) => <AdminTicketRow key={t.id} t={t} replyTicket={replyTicket} />)}</Reveal>;
 }
 
 function AdminTicketRow({ t, replyTicket }) {
   const [reply, setReply] = useState(t.reply || '');
-  return <div className="admin-row"><div><strong>{t.subject}</strong><p>{t.message}</p></div><div className="admin-form"><textarea value={reply} onChange={(e) => setReply(e.target.value)} /><button onClick={() => replyTicket(t.id, reply)}>Responder e fechar</button></div></div>;
+  const isOpen = t.status === 'open';
+  return (
+    <div className={`admin-row ${isOpen ? 'ticket-open-row' : ''}`}>
+      <div className="ticket-main">
+        <div className="ticket-head">
+          <strong>{t.subject}</strong>
+          <span className={`status ${t.status}`}>{isOpen ? 'Aberto' : 'Fechado'}</span>
+        </div>
+        <div className="ticket-meta">
+          <span>{new Date(t.created_at).toLocaleDateString('pt-BR')}</span>
+          {t.category === 'suporte' && <span className="tag tag-suporte">Suporte</span>}
+          {t.category === 'orcamento' && <span className="tag tag-orcamento">Orçamento</span>}
+          {t.category === 'duvida' && <span className="tag tag-duvida">Dúvida</span>}
+          {t.category === 'melhoria' && <span className="tag tag-melhoria">Melhoria</span>}
+          {t.priority === 'urgente' && <span className="priority urgent">Urgente</span>}
+          {t.priority === 'alta' && <span className="priority high">Alta</span>}
+          {t.priority === 'media' && <span className="priority medium">Média</span>}
+          {t.priority === 'baixa' && <span className="priority low">Baixa</span>}
+        </div>
+        <p className="ticket-msg">{t.message}</p>
+        {t.reply && <div className="ticket-reply-block"><span className="reply-label">Resposta enviada</span><p>{t.reply}</p></div>}
+      </div>
+      {isOpen && (
+        <div className="admin-form">
+          <textarea value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Digite a resposta..." />
+          <button onClick={() => replyTicket(t.id, reply)}>Responder e fechar</button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function RequireLogin({ go }) {

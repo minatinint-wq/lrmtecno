@@ -1660,4 +1660,7 @@ nav.scrolled{
   .terminal{font-size:0.6875rem;line-height:1.5}
 }
 
+/* ---- Ticket / Chamado styles ---- */
+.meta-tag{display:inline-block;font-size:0.65rem;padding:0.1rem 0.45rem;border-radius:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;vertical-align:middle;background:color-mix(in srgb var(--accent) 12%,transparent);color:var(--accent)}.meta-prio{display:inline-block;font-size:0.65rem;padding:0.1rem 0.45rem;border-radius:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;vertical-align:middle}.prio-urgente{background:color-mix(in srgb oklch(50% 0.2 25) 12%,transparent);color:oklch(50% 0.2 25)}.prio-alta{background:color-mix(in srgb oklch(55% 0.18 50) 12%,transparent);color:oklch(55% 0.18 50)}.prio-media{background:color-mix(in srgb oklch(50% 0.12 95) 12%,transparent);color:oklch(50% 0.12 95)}.prio-baixa{background:color-mix(in srgb oklch(50% 0.04 240) 10%,transparent);color:oklch(50% 0.04 240)}.ticket-open{background:color-mix(in srgb var(--accent) 3%,transparent);border-radius:var(--radius)}.ticket-open-row{border-left:3px solid var(--accent);padding-left:0.75rem}
+
 

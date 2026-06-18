@@ -246,6 +246,26 @@
             <label for="ticketSubject">Assunto</label>
             <input type="text" id="ticketSubject" placeholder="Ex: Ajuste em uma página" maxlength="200" required>
           </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem">
+            <div class="form-group" style="margin-bottom:0">
+              <label for="ticketCategory">Categoria</label>
+              <select id="ticketCategory" style="width:100%;padding:0.625rem 0.75rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:0.875rem;background:var(--bg);color:var(--fg)">
+                <option value="suporte">Suporte técnico</option>
+                <option value="orcamento">Orçamento</option>
+                <option value="duvida">Dúvida</option>
+                <option value="melhoria">Sugestão / Melhoria</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label for="ticketPriority">Prioridade</label>
+              <select id="ticketPriority" style="width:100%;padding:0.625rem 0.75rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:0.875rem;background:var(--bg);color:var(--fg)">
+                <option value="baixa">Baixa</option>
+                <option value="media" selected>Média</option>
+                <option value="alta">Alta</option>
+                <option value="urgente">Urgente</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group">
             <label for="ticketMessage">Mensagem</label>
             <textarea id="ticketMessage" placeholder="Descreva seu problema ou dúvida..." maxlength="2000" required></textarea>
@@ -448,21 +468,32 @@ function loadTickets(){
     list.innerHTML = '<div class="empty-state">Nenhum ticket aberto</div>';
     return;
   }
-  list.innerHTML = tix.map(t => `
-    <div class="item">
+  tix.sort((a,b) => a.status==='open'?-1:1);
+  list.innerHTML = tix.map(t => {
+    const catLabel = {suporte:'Suporte',orcamento:'Orçamento',duvida:'Dúvida',melhoria:'Melhoria'}[t.category]||'';
+    const prioLabel = t.priority||'';
+    const prioIcon = prioLabel==='urgente'?'!!':prioLabel==='alta'?'↑':prioLabel==='baixa'?'↓':'–';
+    return `
+    <div class="item ${t.status==='open'?'ticket-open':'ticket-closed'}">
       <div class="item-info">
         <strong>${esc(t.subject || 'Ticket')}</strong>
-        <div class="meta">${new Date(t.created_at).toLocaleDateString('pt-BR')} · <span class="status-badge status-${statusClass(t.status)}">${statusLabel(t.status)}</span></div>
+        <div class="meta">
+          ${new Date(t.created_at).toLocaleDateString('pt-BR')} ·
+          <span class="status-badge status-${statusClass(t.status)}">${statusLabel(t.status)}</span>
+          ${catLabel ? '<span class="meta-tag">'+catLabel+'</span>' : ''}
+          ${prioLabel ? '<span class="meta-prio prio-'+prioLabel+'">'+prioIcon+' '+prioLabel.charAt(0).toUpperCase()+prioLabel.slice(1)+'</span>' : ''}
+        </div>
         <div class="item-details">${esc(t.message || '')}</div>
-        ${t.reply ? '<div class="item-reply"><strong>Resposta:</strong> '+esc(t.reply)+'</div>' : ''}
+        ${t.reply ? '<div class="item-reply"><strong>Resposta LRM:</strong> '+esc(t.reply)+'</div>' : ''}
       </div>
-    </div>
-  `).join('');
+    </div>`}).join('');
 }
 
 function openTicket(){
   const subject = sanitizeInput(document.getElementById('ticketSubject').value);
   const message = sanitizeInput(document.getElementById('ticketMessage').value);
+  const category = document.getElementById('ticketCategory').value;
+  const priority = document.getElementById('ticketPriority').value;
   if(!subject || subject.length < 3){alert('Assunto deve ter pelo menos 3 caracteres');return;}
   if(!message || message.length < 10){alert('Mensagem deve ter pelo menos 10 caracteres');return;}
   if(!currentUser) return;
@@ -471,12 +502,14 @@ function openTicket(){
     const all = JSON.parse(localStorage.getItem('lrm_tickets') || '[]');
     const tid = parseInt(localStorage.getItem('lrm_nextId') || '1');
     localStorage.setItem('lrm_nextId', String(tid+1));
-    all.push({ id: tid, userId: currentUser.id, subject, message, reply: '', status: 'open', created_at: new Date().toISOString() });
+    all.push({ id: tid, userId: currentUser.id, subject, message, category, priority, reply: '', status: 'open', created_at: new Date().toISOString() });
     localStorage.setItem('lrm_tickets', JSON.stringify(all));
   } catch(e){ alert('Erro ao salvar ticket'); return; }
 
   document.getElementById('ticketSubject').value = '';
   document.getElementById('ticketMessage').value = '';
+  document.getElementById('ticketCategory').value = 'suporte';
+  document.getElementById('ticketPriority').value = 'media';
   loadTickets();
   renderMetrics();
 }

@@ -322,20 +322,28 @@ function loadTickets(){
   const users = getUsers();
   const el = document.getElementById('ticketsList');
   if(all.length===0){el.innerHTML='<p style="color:var(--muted)">Nenhum ticket</p>';return;}
+  all.sort((a,b) => a.status==='open'?-1:1);
   el.innerHTML = all.map(t => {
     const client = users.find(u=>u.id===t.userId)||{name:'?',email:'?'};
-    const statusClass = t.status==='open'?'status-open':'status-closed';
-    const statusLabel = t.status==='open'?'Aberto':'Fechado';
+    const isOpen = t.status==='open';
+    const catLabel = {suporte:'Suporte',orcamento:'Orçamento',duvida:'Dúvida',melhoria:'Melhoria'}[t.category]||'';
+    const prioLabel = t.priority||'';
+    const prioIcon = prioLabel==='urgente'?'!!':prioLabel==='alta'?'↑':prioLabel==='baixa'?'↓':'–';
     let replyArea = '';
-    if(t.status==='open'){
-      replyArea = '<div class="reply-area"><input type="text" id="replyInput'+t.id+'" placeholder="Digite sua resposta..." maxlength="1000" onkeydown="if(event.key===\'Enter\')replyTicket('+t.id+')"><button onclick="replyTicket('+t.id+')">Responder</button><button onclick="closeTicket('+t.id+')" style="background:var(--border);color:var(--fg)">Fechar</button></div>';
+    if(isOpen){
+      replyArea = '<div class="reply-area"><input type="text" id="replyInput'+t.id+'" placeholder="Digite sua resposta..." maxlength="1000" onkeydown="if(event.key===\'Enter\')replyTicket('+t.id+')"><button onclick="replyTicket('+t.id+')">Responder e fechar</button></div>';
     }
     return html`
-      <div class="ticket-item-admin">
-        <strong>${t.subject}</strong> <span class="status-badge ${statusClass}">${statusLabel}</span>
+      <div class="ticket-item-admin ${isOpen?'ticket-open-row':''}">
+        <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
+          <strong>${t.subject}</strong>
+          <span class="status-badge ${isOpen?'status-open':'status-closed'}">${isOpen?'Aberto':'Fechado'}</span>
+          ${catLabel ? '<span class="meta-tag">'+catLabel+'</span>' : ''}
+          ${prioLabel ? '<span class="meta-prio prio-'+prioLabel+'">'+prioIcon+' '+prioLabel.charAt(0).toUpperCase()+prioLabel.slice(1)+'</span>' : ''}
+        </div>
         <div class="meta">${client.name} (${client.email}) · ${new Date(t.created_at).toLocaleDateString('pt-BR')}</div>
         <div style="font-size:0.875rem;margin:0.25rem 0">${t.message}</div>
-        ${t.reply ? html`<div class="ticket-reply" style="font-size:0.875rem;margin-top:0.5rem;padding:0.5rem 0.75rem;background:var(--bg);border-radius:var(--radius);border-left:3px solid var(--accent)"><strong>Resposta do admin</strong><br>${t.reply}</div>` : ''}
+        ${t.reply ? html`<div class="ticket-reply" style="font-size:0.875rem;margin-top:0.5rem;padding:0.5rem 0.75rem;background:var(--bg);border-radius:var(--radius);border-left:3px solid var(--accent)"><strong>Resposta enviada</strong><br>${t.reply}</div>` : ''}
         ${replyArea}
       </div>
     `;
@@ -351,6 +359,7 @@ function replyTicket(ticketId){
   const idx = all.findIndex(t=>t.id===ticketId);
   if(idx!==-1){
     all[idx].reply = reply;
+    all[idx].status = 'closed';
     localStorage.setItem('lrm_tickets', JSON.stringify(all));
   }
   loadTickets();
