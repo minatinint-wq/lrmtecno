@@ -65,8 +65,8 @@ export function useHeroAnimation(ref) {
 
       tl.fromTo(
         el.querySelectorAll('[data-hero="video"]'),
-        { opacity: 0, scale: 1.15 },
-        { opacity: 0.35, scale: 1, duration: 1.8, ease: 'power2.out' },
+        { scale: 1.12 },
+        { scale: 1, duration: 1.8, ease: 'power2.out' },
         '-=1.2'
       );
 
