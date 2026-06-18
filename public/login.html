@@ -169,18 +169,18 @@
 
   <!-- Verification Modal -->
   <div id="verifyOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;">
-    <div style="background:var(--surface);border-radius:12px;padding:2rem;max-width:400px;width:100%;text-align:center;box-shadow:0 8px 48px rgba(0,0,0,0.12)">
+    <div style="background:var(--surface);border-radius:var(--radius);padding:2rem;max-width:400px;width:100%;text-align:center;box-shadow:0 8px 48px rgba(0,0,0,0.12)">
       <h3 style="margin-bottom:0.5rem">Verifique seu email</h3>
       <p style="font-size:0.9375rem;color:var(--muted);margin-bottom:1.5rem">Enviamos um código de 6 dígitos para <strong id="verifyEmailDisplay">seu@email.com</strong></p>
       <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1.5rem" id="verifyCodeInputs">
-        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
-        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
-        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
-        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
-        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
-        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
+        <input type="text" maxlength="1" class="verify-digit" style="width:44px;height:52px;text-align:center;font-size:1.5rem;font-weight:700;font-family:monospace;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--fg);outline:none" inputmode="numeric" pattern="[0-9]">
       </div>
-      <div id="verifyError" style="display:none;color:oklch(50% 0.18 25);font-size:0.875rem;margin-bottom:1rem;padding:0.75rem;background:oklch(60% 0.2 25 / 0.1);border-radius:8px"></div>
+      <div id="verifyError" style="display:none;color:oklch(50% 0.18 25);font-size:0.875rem;margin-bottom:1rem;padding:0.75rem;background:oklch(60% 0.2 25 / 0.1);border-radius:var(--radius)"></div>
       <button class="auth-btn" id="verifyBtn" style="margin-bottom:0.75rem">Confirmar Código</button>
       <div style="font-size:0.8125rem;color:var(--muted)">
         Não recebeu? <a href="#" id="resendCode" style="font-weight:600">Reenviar</a>
@@ -323,7 +323,7 @@
           var wrap=document.createElement('div');
           wrap.id='verifyNewPassword';
           wrap.style.cssText='margin-bottom:1rem;display:none';
-          wrap.innerHTML='<input type="password" id="newPassInput" placeholder="Nova senha (mín. 6 caracteres)" style="width:100%;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.9375rem;color:var(--fg);background:var(--bg);outline:none" minlength="6">';
+          wrap.innerHTML='<input type="password" id="newPassInput" placeholder="Nova senha (mín. 6 caracteres)" style="width:100%;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:0.9375rem;color:var(--fg);background:var(--bg);outline:none" minlength="6">';
           if(existingInputs&&existingInputs.parentNode)existingInputs.parentNode.insertBefore(wrap,existingInputs.nextSibling);
         }
         var passWrap=document.getElementById('verifyNewPassword');
