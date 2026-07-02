@@ -604,18 +604,47 @@ function ServiceCarousel({ go }) {
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="carousel-card"
               >
-                <div className="carousel-card-top">
-                  <div className="service-icon"><Icon size={20} /></div>
-                  <span>{s.tag}</span>
+                <div className="carousel-copy">
+                  <div className="carousel-card-top">
+                    <div className="service-icon"><Icon size={20} /></div>
+                    <span>{s.tag}</span>
+                  </div>
+                  <h3>{s.title}</h3>
+                  <p>{s.desc}</p>
+                  <div className="carousel-bullets">
+                    {s.bullets.map((b) => <span key={b}>{b}</span>)}
+                  </div>
+                  <button className="carousel-cta" onClick={() => go(`/servicos/${s.slug}`)}>
+                    Ver pacotes e preços <ChevronRight size={15} />
+                  </button>
                 </div>
-                <h3>{s.title}</h3>
-                <p>{s.desc}</p>
-                <div className="carousel-bullets">
-                  {s.bullets.map((b) => <span key={b}>{b}</span>)}
+                <div className="carousel-media" aria-hidden="true">
+                  <img src={s.image} alt="" loading="lazy" />
+                  <div className="carousel-media-overlay" />
+                  <div className="carousel-media-panel">
+                    <div className="media-panel-top">
+                      <span />
+                      <span />
+                      <span />
+                      <strong>{s.slug}.lrm</strong>
+                    </div>
+                    <div className="media-panel-grid">
+                      <div>
+                        <strong>{String(idx + 1).padStart(2, '0')}</strong>
+                        <span>Especialidade</span>
+                      </div>
+                      <div>
+                        <strong>{s.bullets.length}</strong>
+                        <span>Frentes</span>
+                      </div>
+                    </div>
+                    <div className="media-flow">
+                      {s.bullets.slice(0, 3).map((b, i) => (
+                        <span key={b} style={{ '--bar': `${88 - i * 16}%` }}>{b}</span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <button className="carousel-cta" onClick={() => go(`/servicos/${s.slug}`)}>
-                  Ver pacotes e preços <ChevronRight size={15} />
-                </button>
               </motion.article>
             );
           })()}
@@ -641,10 +670,17 @@ function Home({ go }) {
         ))}
       </Reveal>
       <Reveal as="section" className="section carousel-section">
-        <div className="section-head">
-          <span className="eyebrow">Especialidades</span>
-          <WordReveal text="Engenharia digital para operações que exigem excelência" as="h2" />
-          <p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p>
+        <div className="section-head specialties-head">
+          <div>
+            <span className="eyebrow">Especialidades</span>
+            <WordReveal text="Engenharia digital para operações que exigem excelência" as="h2" />
+            <p>Cada serviço é desenhado a partir do processo real do cliente — sem pacotes genéricos, sem entrega padronizada.</p>
+          </div>
+          <div className="specialties-strip" aria-hidden="true">
+            <span><Sparkles size={15} /> Sob medida</span>
+            <span><Cpu size={15} /> Integração</span>
+            <span><ShieldCheck size={15} /> Operação assistida</span>
+          </div>
         </div>
         <ServiceCarousel go={go} />
       </Reveal>
