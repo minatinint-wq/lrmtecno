@@ -295,6 +295,10 @@ function clearCurrentUser() {
   localStorage.removeItem('lrm_react_session');
 }
 
+function requestTicket(serviceTitle, packageName = '', scope = '') {
+  write('lrm_pending_ticket', { subject: 'Solicitacao de proposta: ' + serviceTitle + (packageName ? ' - ' + packageName : ''), message: 'Gostaria de receber uma proposta para ' + serviceTitle + (scope ? ' (' + scope + ')' : '') + (packageName ? ', pacote ' + packageName : '') + '.', category: 'orcamento', priority: 'media' });
+}
+
 function useRoute() {
   const [route, setRoute] = useState(() => location.hash.replace('#', '') || '/');
   useEffect(() => {
@@ -826,9 +830,9 @@ function ServiceDetail({ slug, go }) {
               <ul className="pkg-features">
                 {pkg.features.map((f) => <li key={f}><Check size={13} /> {f}</li>)}
               </ul>
-              <a href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de solicitar ' + service.title + ' - ' + (hasSub ? activeData.label + ' - ' : '') + pkg.name + '.')}`} target="_blank" className="btn-whatsapp-pkg">
-                <MessageCircle size={15} /> Solicitar via WhatsApp
-              </a>
+              <button type="button" className="btn-whatsapp-pkg btn-ticket-pkg" onClick={() => { requestTicket(service.title, pkg.name, hasSub && activeData ? activeData.label : ''); go('/login'); }}>
+                <Send size={15} /> Receber proposta
+              </button>
             </div>
           ))}
         </div>
@@ -836,7 +840,7 @@ function ServiceDetail({ slug, go }) {
           <Reveal>
             <div className="hero-actions center">
               <MagneticButton className="primary" onClick={() => go('/login')}>Solicitar no portal <ArrowRight size={18} /></MagneticButton>
-              <MagneticButton className="whatsapp" href={`https://wa.me/5512987076691?text=${encodeURIComponent('Olá, vim pelo site LRM TECNO e gostaria de saber mais sobre ' + service.title + '.' + (hasSub && activeData ? ' (interesse: ' + activeData.label + ')' : '') + '')}`} target="_blank">Falar no WhatsApp</MagneticButton>
+              <MagneticButton className="outline" onClick={() => { requestTicket(service.title, '', hasSub && activeData ? activeData.label : ''); go('/login'); }}><Send size={17} /> Abrir chamado</MagneticButton>
             </div>
           </Reveal>
         </div>
@@ -1131,6 +1135,15 @@ function DashboardPage({ user, go, setUser }) {
   const [reviewHover, setReviewHover] = useState(0);
   const [quote, setQuote] = useState({ type: 'Site premium', project: '', budget: 'A definir', timeline: 'Até 30 dias', details: '' });
   const [ticket, setTicket] = useState({ subject: '', message: '', category: 'suporte', priority: 'media' });
+  const ticketFormRef = useRef(null);
+
+  useEffect(() => {
+    const pending = read('lrm_pending_ticket', null);
+    if (!pending) return;
+    setTicket((current) => ({ ...current, ...pending }));
+    localStorage.removeItem('lrm_pending_ticket');
+    window.setTimeout(() => ticketFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+  }, []);
 
   const refreshQuotes = () => setQuotes(read('lrm_react_quotes', []).filter((q) => q.userId === user.id));
   const refreshTickets = () => setTickets(read('lrm_tickets', []).filter((t) => t.userId === user.id));
@@ -1162,13 +1175,13 @@ function DashboardPage({ user, go, setUser }) {
   return (
     <Page>
       <PortalHeader user={user} logout={logout} title="Portal do Cliente" />
-      <section className="portal-dashboard">
+      <section className="portal-dashboard internal-dashboard">
         <div className="dash-tech-overlay" />
         <AnimatedMetric label="Orçamentos" value={quotes.length} />
         <AnimatedMetric label="Serviços" value={servicesList.length} />
         <AnimatedMetric label="Tickets" value={tickets.length} />
         <AnimatedMetric label="Em aberto" value={quotes.filter((q) => q.status !== 'approved').length + tickets.filter((t) => t.status === 'open').length} />
-        <div className="panel quote-panel">
+        <div className="panel internal-actions"><div><span className="eyebrow">Atendimento</span><h2>Central de solicitacoes</h2><p>Abra um chamado para orcamento, suporte ou acompanhamento. A equipe responde pelo portal.</p></div><button type="button" className="btn primary" onClick={() => ticketFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}><Send size={16} /> Abrir chamado</button></div><div className="panel internal-panel quote-panel quote-request-panel">
           <h2>Solicitar orçamento</h2>
           <form onSubmit={submitQuote} className="grid-form">
             <Input label="Tipo" value={quote.type} onChange={(v) => setQuote({ ...quote, type: v })} options={services.map((s) => s.title)} />
@@ -1182,7 +1195,7 @@ function DashboardPage({ user, go, setUser }) {
             </MagneticButton>
           </form>
         </div>
-        <div className="panel">
+        <div className="panel internal-panel quote-list-panel">
           <h2>Meus orçamentos</h2>
           <div className="list">
             {!quotes.length && <div className="empty">Nenhum orçamento solicitado ainda</div>}
@@ -1200,7 +1213,7 @@ function DashboardPage({ user, go, setUser }) {
             ))}
           </div>
         </div>
-        <div className="panel">
+        <div className="panel internal-panel services-panel">
           <h2>Serviços</h2>
           <div className="list">
             {!servicesList.length && <div className="empty">Nenhum serviço prestado ainda</div>}
@@ -1224,7 +1237,7 @@ function DashboardPage({ user, go, setUser }) {
             })}
           </div>
         </div>
-        <div className="panel">
+        <div className="panel internal-panel tickets-panel" ref={ticketFormRef}>
           <h2>Tickets {tickets.length > 0 && <span className="count-badge">{tickets.length}</span>}</h2>
           <div className="list">
             {!tickets.length && <div className="empty">Nenhum ticket aberto</div>}
