@@ -1396,8 +1396,9 @@ function AdminPage({ user, go, setUser }) {
         <AnimatedMetric label="Orçamentos" value={quotes.length} />
         <AnimatedMetric label="Tickets abertos" value={tickets.filter((t) => t.status === 'open').length} />
         <div className="admin-tabs">
-          {['quotes', 'clients', 'services', 'tickets'].map((t) => <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>{t === 'quotes' ? 'Orçamentos' : t === 'clients' ? 'Clientes' : t === 'services' ? 'Serviços' : 'Tickets'}</button>)}
+          {['companies', 'quotes', 'clients', 'services', 'tickets'].map((t) => <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>{t === 'companies' ? 'Empresas' : t === 'quotes' ? 'Orçamentos' : t === 'clients' ? 'Clientes' : t === 'services' ? 'Serviços' : 'Tickets'}</button>)}
         </div>
+        {tab === 'companies' && <AdminCompanies companies={companies} setCompanies={setCompanies} />}
         {tab === 'quotes' && <AdminQuotes quotes={quotes} saveQuote={saveQuote} />}
         {tab === 'clients' && <AdminClients users={users} />}
         {tab === 'services' && <AdminServices users={users} />}
@@ -1407,6 +1408,54 @@ function AdminPage({ user, go, setUser }) {
   );
 }
 
+function AdminCompanies({ companies, setCompanies }) {
+  const empty = { name: '', contact: '', email: '', phone: '', plan: 'Starter', status: 'prospect', instances: '1', nextContact: '', notes: '' };
+  const [form, setForm] = useState(empty);
+  const [query, setQuery] = useState('');
+
+  const addCompany = (event) => {
+    event.preventDefault();
+    if (!form.name.trim() || !form.contact.trim()) return;
+    const company = { ...form, id: nextId(), instances: Number(form.instances) || 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+    const next = [company, ...read('lrm_sales_companies', [])];
+    write('lrm_sales_companies', next);
+    setCompanies(next);
+    setForm(empty);
+  };
+  const updateCompany = (id, patch) => {
+    const next = read('lrm_sales_companies', []).map((company) => company.id === id ? { ...company, ...patch, updatedAt: new Date().toISOString() } : company);
+    write('lrm_sales_companies', next);
+    setCompanies(next);
+  };
+  const removeCompany = (id) => {
+    const next = read('lrm_sales_companies', []).filter((company) => company.id !== id);
+    write('lrm_sales_companies', next);
+    setCompanies(next);
+  };
+  const visible = companies.filter((company) => [company.name, company.contact, company.email, company.plan].join(' ').toLowerCase().includes(query.toLowerCase()));
+  const statusText = { prospect: 'Prospecção', proposal: 'Proposta enviada', active: 'Cliente ativo', paused: 'Em pausa', lost: 'Perdido' };
+
+  return <Reveal className="panel admin-panel companies-panel">
+    <div className="companies-heading"><div><span className="eyebrow">CRM comercial</span><h2>Empresas e clientes</h2><p>Cadastre quem está avaliando o LRM e acompanhe a evolução da contratação.</p></div><span className="count-badge">{companies.length} cadastradas</span></div>
+    <form className="company-form" onSubmit={addCompany}>
+      <input className="admin-input" placeholder="Nome da empresa *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+      <input className="admin-input" placeholder="Pessoa de contato *" value={form.contact} onChange={(e) => setForm({ ...form, contact: e.target.value })} />
+      <input className="admin-input" type="email" placeholder="E-mail" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+      <input className="admin-input" placeholder="WhatsApp / telefone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+      <select className="admin-select" value={form.plan} onChange={(e) => setForm({ ...form, plan: e.target.value })}><option>Starter</option><option>Pro</option><option>Enterprise</option><option>Personalizado</option></select>
+      <input className="admin-input" type="number" min="0" placeholder="Instâncias" value={form.instances} onChange={(e) => setForm({ ...form, instances: e.target.value })} />
+      <input className="admin-input" type="date" value={form.nextContact} onChange={(e) => setForm({ ...form, nextContact: e.target.value })} />
+      <input className="admin-input" placeholder="Observação inicial" value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
+      <button className="admin-btn" type="submit">Cadastrar empresa</button>
+    </form>
+    <div className="companies-toolbar"><input className="admin-input" placeholder="Buscar empresa, contato ou plano..." value={query} onChange={(e) => setQuery(e.target.value)} /><strong>{visible.length} resultados</strong></div>
+    <div className="company-list">{!visible.length && <div className="empty">Nenhuma empresa cadastrada ainda.</div>}{visible.map((company) => <article className="company-card" key={company.id}>
+      <div className="company-card-main"><div className="company-avatar">{company.name.slice(0, 1).toUpperCase()}</div><div><h3>{company.name}</h3><p>{company.contact}{company.email ? ` · ${company.email}` : ''}</p>{company.phone && <small>{company.phone}</small>}</div></div>
+      <div className="company-meta"><label>Status<select value={company.status} onChange={(e) => updateCompany(company.id, { status: e.target.value })}>{Object.entries(statusText).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label><label>Plano<select value={company.plan} onChange={(e) => updateCompany(company.id, { plan: e.target.value })}>{['Starter', 'Pro', 'Enterprise', 'Personalizado'].map((plan) => <option key={plan}>{plan}</option>)}</select></label><label>Instâncias<input type="number" min="0" value={company.instances} onChange={(e) => updateCompany(company.id, { instances: Number(e.target.value) || 0 })} /></label></div>
+      <div className="company-footer"><span>{company.nextContact ? `Próximo contato: ${new Date(company.nextContact + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'Sem próximo contato'}</span><button className="admin-btn danger" type="button" onClick={() => removeCompany(company.id)}>Remover</button></div>
+    </article>)}</div>
+  </Reveal>;
+}
 function AdminServices({ users }) {
   const [clientId, setClientId] = useState(null);
   const [services, setServices] = useState([]);
